@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 680" role="img" aria-label="Engineer-shaped harness: anything on the machine (pods, logs, RBAC, app code) flows into Claude Code (Shell, File R/W, Search, Reasoning), which produces an engineer workflow (git branch, edit file, gh pr create).">
+  <style>
+    svg { background: #0d1117; }
+    .universe-bg { fill: none; stroke: #3d4450; stroke-width: 1.2; rx: 6; }
+    .label-cut { fill: #0d1117; }
+    .label-text { font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; font-weight: 600; fill: #9a9890; letter-spacing: 1px; text-transform: uppercase; }
+    .resource-bg { fill: #161b22; stroke: #3d4450; stroke-width: 1; rx: 4; }
+    .resource-text { font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; fill: #f0f0f0; }
+    .sep { fill: #8a8880; }
+    .arrow-dark { stroke: #8a8880; stroke-width: 1.4; }
+    .arr-dark path { fill: #8a8880; }
+    .arrow-claude { stroke: #d97706; stroke-width: 1.8; }
+    .arr-claude path { fill: #d97706; }
+    .agent-bg { fill: #161b22; stroke: #d97706; stroke-width: 1.4; rx: 6; }
+    .agent-name { font-family: 'IBM Plex Sans', sans-serif; font-size: 20px; font-weight: 700; fill: #f0f0f0; }
+    .agent-role { font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; fill: #9a9890; font-style: italic; }
+    .tools-bg { fill: #1c2128; rx: 4; }
+    .tool-bg { fill: #0d1117; stroke: #3d4450; stroke-width: 1; }
+    .tool-text { font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; font-weight: 600; fill: #c0bdb5; }
+    .workflow-bg { fill: none; stroke: #3d4450; stroke-width: 1.2; stroke-dasharray: 6 4; rx: 6; }
+    .cmd-bg { fill: #161b22; stroke: #3d4450; stroke-width: 1; }
+    .cmd-text { font-family: 'JetBrains Mono', monospace; font-size: 14px; fill: #c0bdb5; }
+    .cmd-prompt { fill: #22c55e; }
+  </style>
+
+  <defs>
+
+
+    <marker id="ar-dark" class="arr-dark" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z"></path>
+    </marker>
+    <marker id="ar-claude" class="arr-claude" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z"></path>
+    </marker>
+  </defs>
+
+  
+  <rect x="40" y="70" width="1000" height="160" class="universe-bg"></rect>
+
+  
+  <rect x="62" y="60" width="280" height="20" class="label-cut"></rect>
+  <text x="76" y="76" class="label-text">Anything on the machine</text>
+
+  
+  <g>
+    <rect x="60" y="92" width="228" height="120" class="resource-bg"></rect>
+    <text x="174" y="158" text-anchor="middle" class="resource-text">Pods <tspan class="sep">/</tspan> Events</text>
+  </g>
+  <g>
+    <rect x="304" y="92" width="228" height="120" class="resource-bg"></rect>
+    <text x="418" y="158" text-anchor="middle" class="resource-text">Logs <tspan class="sep">/</tspan> Metrics</text>
+  </g>
+  <g>
+    <rect x="548" y="92" width="228" height="120" class="resource-bg"></rect>
+    <text x="662" y="158" text-anchor="middle" class="resource-text">RBAC <tspan class="sep">/</tspan> NetPol</text>
+  </g>
+  <g>
+    <rect x="792" y="92" width="228" height="120" class="resource-bg"></rect>
+    <text x="906" y="158" text-anchor="middle" class="resource-text">App Code</text>
+  </g>
+
+  
+  <line x1="540" y1="230" x2="540" y2="300" class="arrow-dark" marker-end="url(#ar-dark)"></line>
+
+  
+  <rect x="260" y="300" width="560" height="180" class="agent-bg"></rect>
+
+  
+  <text x="286" y="338" class="agent-name">Claude Code</text>
+  <text x="794" y="333" text-anchor="end" class="agent-role">general-purpose</text>
+
+  
+  <rect x="282" y="360" width="516" height="100" class="tools-bg"></rect>
+
+  
+  <g>
+    <rect x="294" y="372" width="120" height="76" class="tool-bg" rx="2"></rect>
+    <text x="354" y="416" text-anchor="middle" class="tool-text">Shell</text>
+  </g>
+  <g>
+    <rect x="422" y="372" width="120" height="76" class="tool-bg" rx="2"></rect>
+    <text x="482" y="416" text-anchor="middle" class="tool-text">File R/W</text>
+  </g>
+  <g>
+    <rect x="550" y="372" width="120" height="76" class="tool-bg" rx="2"></rect>
+    <text x="610" y="416" text-anchor="middle" class="tool-text">Search</text>
+  </g>
+  <g>
+    <rect x="678" y="372" width="120" height="76" class="tool-bg" rx="2"></rect>
+    <text x="738" y="416" text-anchor="middle" class="tool-text">Reasoning</text>
+  </g>
+
+  
+  <line x1="540" y1="480" x2="540" y2="550" class="arrow-claude" marker-end="url(#ar-claude)"></line>
+
+  
+  <rect x="230" y="550" width="620" height="92" class="workflow-bg"></rect>
+
+  
+  <g>
+    <rect x="240" y="560" width="198" height="72" class="cmd-bg" rx="2"></rect>
+    <text x="339" y="604" text-anchor="middle" class="cmd-text"><tspan class="cmd-prompt">$</tspan><tspan dx="8">git branch</tspan></text>
+  </g>
+  <g>
+    <rect x="441" y="560" width="198" height="72" class="cmd-bg" rx="2"></rect>
+    <text x="540" y="604" text-anchor="middle" class="cmd-text"><tspan class="cmd-prompt">$</tspan><tspan dx="8">edit file</tspan></text>
+  </g>
+  <g>
+    <rect x="642" y="560" width="198" height="72" class="cmd-bg" rx="2"></rect>
+    <text x="741" y="604" text-anchor="middle" class="cmd-text"><tspan class="cmd-prompt">$</tspan><tspan dx="8">gh pr create</tspan></text>
+  </g>
+</svg>

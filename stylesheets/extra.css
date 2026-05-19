@@ -1,0 +1,466 @@
+/* ──────────────────────────────────────────────────────────────────
+   The Claude Code SRE Handbook — visual overlay for MkDocs Material
+   ──────────────────────────────────────────────────────────────────
+   System: monochrome. Cool slate neutrals (dark) / warm parchment (light).
+   No brand color. Admonitions keep semantic hues only.
+   Type:    IBM Plex Sans (body) + JetBrains Mono (code).
+   Default: dark. Light derived.
+   ────────────────────────────────────────────────────────────────── */
+
+
+/* ── DARK (default — scheme: slate) ─────────────────────────────── */
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color:           #0E1116;
+  --md-default-bg-color--light:    #161A21;
+  --md-default-bg-color--lighter:  #1C2129;
+  --md-default-bg-color--lightest: #232A35;
+
+  --md-default-fg-color:           #D8DDE3;
+  --md-default-fg-color--light:    #8B95A5;
+  --md-default-fg-color--lighter:  #5A6472;
+  --md-default-fg-color--lightest: #232A35;
+
+  /* "primary" / "accent" both map to high-contrast neutral (ink). */
+  --md-primary-fg-color:         #EEF1F5;
+  --md-primary-fg-color--light:  #FFFFFF;
+  --md-primary-fg-color--dark:   #C8CFD8;
+  --md-primary-bg-color:         #0E1116;
+  --md-primary-bg-color--light:  #0E1116;
+
+  --md-accent-fg-color:               #FFFFFF;
+  --md-accent-fg-color--transparent:  #FFFFFF1A;
+  --md-accent-bg-color:               #0E1116;
+  --md-accent-bg-color--light:        #0E1116;
+
+  --md-typeset-color:    #D8DDE3;
+  --md-typeset-a-color:  #D8DDE3;
+
+  --md-code-fg-color:             #D8DDE3;
+  --md-code-bg-color:             #0A0D12;
+  --md-code-hl-color:             #FFFFFF22;
+  --md-code-hl-number-color:      #D8DDE3;
+  --md-code-hl-special-color:     #D8DDE3;
+  --md-code-hl-function-color:    #EEF1F5;
+  --md-code-hl-constant-color:    #D8DDE3;
+  --md-code-hl-keyword-color:     #EEF1F5;
+  --md-code-hl-string-color:      #8B95A5;
+  --md-code-hl-name-color:        #D8DDE3;
+  --md-code-hl-operator-color:    #8B95A5;
+  --md-code-hl-punctuation-color: #8B95A5;
+  --md-code-hl-comment-color:     #5A6472;
+  --md-code-hl-generic-color:     #8B95A5;
+  --md-code-hl-variable-color:    #D8DDE3;
+
+  --md-admonition-bg-color: #161A21;
+  --md-admonition-fg-color: #D8DDE3;
+
+  --md-footer-bg-color:       #0A0D12;
+  --md-footer-bg-color--dark: #0A0D12;
+  --md-footer-fg-color:       #D8DDE3;
+  --md-footer-fg-color--light:  #8B95A5;
+  --md-footer-fg-color--lighter:#5A6472;
+}
+
+
+/* ── LIGHT (derived — scheme: default) ──────────────────────────── */
+[data-md-color-scheme="default"] {
+  --md-default-bg-color:           #FAF9F5;
+  --md-default-bg-color--light:    #FFFFFF;
+  --md-default-bg-color--lighter:  #F5F3EC;
+  --md-default-bg-color--lightest: #E0DDD2;
+
+  --md-default-fg-color:           #1F2329;
+  --md-default-fg-color--light:    #5C6470;
+  --md-default-fg-color--lighter:  #8A909A;
+  --md-default-fg-color--lightest: #E0DDD2;
+
+  --md-primary-fg-color:         #0D1117;
+  --md-primary-fg-color--light:  #1F2329;
+  --md-primary-fg-color--dark:   #000000;
+  --md-primary-bg-color:         #FFFFFF;
+  --md-primary-bg-color--light:  #FFFFFF;
+
+  --md-accent-fg-color:               #000000;
+  --md-accent-fg-color--transparent:  #0D11171A;
+  --md-accent-bg-color:               #FFFFFF;
+  --md-accent-bg-color--light:        #FFFFFF;
+
+  --md-typeset-color:    #1F2329;
+  --md-typeset-a-color:  #1F2329;
+
+  --md-code-fg-color:             #1F2329;
+  --md-code-bg-color:             #F3F1EA;
+  --md-code-hl-color:             #0D111714;
+  --md-code-hl-number-color:      #1F2329;
+  --md-code-hl-special-color:     #1F2329;
+  --md-code-hl-function-color:    #0D1117;
+  --md-code-hl-constant-color:    #1F2329;
+  --md-code-hl-keyword-color:     #0D1117;
+  --md-code-hl-string-color:      #5C6470;
+  --md-code-hl-name-color:        #1F2329;
+  --md-code-hl-operator-color:    #5C6470;
+  --md-code-hl-punctuation-color: #5C6470;
+  --md-code-hl-comment-color:     #8A909A;
+  --md-code-hl-generic-color:     #5C6470;
+  --md-code-hl-variable-color:    #1F2329;
+
+  --md-admonition-bg-color: #FFFFFF;
+  --md-admonition-fg-color: #1F2329;
+}
+
+
+/* ── Typography ─────────────────────────────────────────────────── */
+.md-typeset {
+  font-size: 17px;
+  line-height: 1.72;
+  font-feature-settings: "ss01", "cv11";
+}
+
+.md-typeset h1 {
+  font-size: 2.35em;          /* ~40px */
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  color: var(--md-default-fg-color);
+  margin: 0 0 .6em;
+}
+
+.md-typeset h2 {
+  font-size: 1.55em;          /* ~26px */
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  margin-top: 2.2em;
+  padding-top: 1.1em;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset h3 {
+  font-size: 1.12em;          /* ~19px */
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-top: 1.8em;
+}
+
+.md-typeset h4 {
+  font-size: 1em;
+  font-weight: 600;
+  text-transform: none;
+  margin-top: 1.6em;
+}
+
+/* Comfortable measure for long-form reading. */
+.md-typeset p,
+.md-typeset li,
+.md-typeset blockquote { max-width: 70ch; }
+
+/* Lede paragraph — apply to the first <p><em>…</em></p> under an h1. */
+.md-typeset h1 + p > em:only-child,
+.md-typeset h1 + p.lede {
+  font-size: 1.06em;          /* ~18px */
+  line-height: 1.55;
+  color: var(--md-default-fg-color--light);
+  font-style: italic;
+  display: inline-block;
+}
+
+/* Article column — keep prose width comfortable with TOC nearby. */
+.md-content__inner {
+  max-width: 48rem;           /* ~768px article column */
+  margin: 0 auto;
+}
+
+
+/* Anchor on hover only */
+.md-typeset .headerlink {
+  color: var(--md-default-fg-color--light);
+  opacity: 0;
+  transition: opacity .15s;
+  margin-left: .3em;
+}
+.md-typeset h1:hover .headerlink,
+.md-typeset h2:hover .headerlink,
+.md-typeset h3:hover .headerlink,
+.md-typeset h4:hover .headerlink,
+.md-typeset h5:hover .headerlink,
+.md-typeset h6:hover .headerlink {
+  opacity: 1;
+}
+
+
+/* Links — same color as body, distinguished by an understated underline */
+.md-typeset a {
+  color: var(--md-typeset-a-color);
+  border-bottom: 1px solid color-mix(in oklab, var(--md-typeset-a-color) 35%, transparent);
+  text-decoration: none;
+  transition: border-color .15s, color .15s;
+}
+.md-typeset a:hover {
+  color: var(--md-default-fg-color);
+  border-bottom-color: var(--md-default-fg-color);
+}
+
+
+/* Inline code — bump up so it doesn't dip below body weight visually. */
+.md-typeset code {
+  font-size: 0.92em;
+  padding: 1px 6px;
+  border-radius: 2px;
+  background: var(--md-code-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color);
+}
+.md-typeset a code {
+  color: inherit;
+  border-color: color-mix(in oklab, currentColor 35%, transparent);
+}
+
+
+/* Fenced code blocks — ~14px, generous leading. */
+.md-typeset pre > code,
+.md-typeset .highlight pre {
+  background: var(--md-code-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 2px;
+  font-size: 14px;
+  line-height: 1.65;
+  box-shadow: none;
+}
+.md-typeset .highlight .filename {
+  background: var(--md-default-bg-color--lighter);
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  font: 500 11px/1 "JetBrains Mono", ui-monospace, monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color--light);
+  padding: 8px 14px;
+}
+.md-typeset .highlighttable .linenos {
+  color: var(--md-default-fg-color--lighter);
+  border-right: 1px solid var(--md-default-fg-color--lightest);
+  background: transparent;
+}
+.md-clipboard {
+  color: var(--md-default-fg-color--light);
+  opacity: 1;
+}
+.md-clipboard:hover { color: var(--md-default-fg-color); }
+
+
+/* Admonitions — hairline + 8%-tint, mono uppercase title, no icon glyph */
+.md-typeset .admonition,
+.md-typeset details {
+  border: 0;
+  border-left: 3px solid var(--md-default-fg-color--light);
+  border-radius: 0 2px 2px 0;
+  box-shadow: none;
+  background: color-mix(in oklab, var(--md-default-fg-color--light) 8%, var(--md-default-bg-color));
+  font-size: 0.95em;
+}
+.md-typeset .admonition-title,
+.md-typeset summary {
+  background: transparent !important;
+  font: 600 11px/1 "JetBrains Mono", ui-monospace, monospace !important;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding-left: 1.2rem !important;
+  margin: 0 0 .4em !important;
+}
+.md-typeset .admonition-title::before,
+.md-typeset summary::before {
+  display: none !important;
+}
+
+/* Variant colors — note · info/tip · warning · danger/failure */
+.md-typeset .admonition.note,
+.md-typeset details.note {
+  border-color: #5D9CC8;
+  background: color-mix(in oklab, #5D9CC8 8%, var(--md-default-bg-color));
+}
+.md-typeset .admonition.note > .admonition-title,
+.md-typeset details.note > summary { color: #5D9CC8; }
+
+.md-typeset .admonition.tip,
+.md-typeset details.tip,
+.md-typeset .admonition.info,
+.md-typeset details.info {
+  border-color: #5AA8A0;
+  background: color-mix(in oklab, #5AA8A0 8%, var(--md-default-bg-color));
+}
+.md-typeset .admonition.tip > .admonition-title,
+.md-typeset details.tip > summary,
+.md-typeset .admonition.info > .admonition-title,
+.md-typeset details.info > summary { color: #5AA8A0; }
+
+.md-typeset .admonition.warning,
+.md-typeset details.warning {
+  border-color: #D4A85A;
+  background: color-mix(in oklab, #D4A85A 8%, var(--md-default-bg-color));
+}
+.md-typeset .admonition.warning > .admonition-title,
+.md-typeset details.warning > summary { color: #D4A85A; }
+
+.md-typeset .admonition.danger,
+.md-typeset details.danger,
+.md-typeset .admonition.failure,
+.md-typeset details.failure,
+.md-typeset .admonition.bug,
+.md-typeset details.bug {
+  border-color: #C97373;
+  background: color-mix(in oklab, #C97373 8%, var(--md-default-bg-color));
+}
+.md-typeset .admonition.danger  > .admonition-title,
+.md-typeset details.danger  > summary,
+.md-typeset .admonition.failure > .admonition-title,
+.md-typeset details.failure > summary,
+.md-typeset .admonition.bug     > .admonition-title,
+.md-typeset details.bug     > summary { color: #C97373; }
+
+/* Light-mode variants — slightly darker hues for AA contrast on parchment */
+[data-md-color-scheme="default"] .md-typeset .admonition.note,
+[data-md-color-scheme="default"] .md-typeset details.note    { border-color: #3A7CA8; }
+[data-md-color-scheme="default"] .md-typeset .admonition.note > .admonition-title,
+[data-md-color-scheme="default"] .md-typeset details.note > summary { color: #3A7CA8; }
+[data-md-color-scheme="default"] .md-typeset .admonition.tip,
+[data-md-color-scheme="default"] .md-typeset details.tip,
+[data-md-color-scheme="default"] .md-typeset .admonition.info,
+[data-md-color-scheme="default"] .md-typeset details.info    { border-color: #3C8A80; }
+[data-md-color-scheme="default"] .md-typeset .admonition.tip > .admonition-title,
+[data-md-color-scheme="default"] .md-typeset details.tip > summary,
+[data-md-color-scheme="default"] .md-typeset .admonition.info > .admonition-title,
+[data-md-color-scheme="default"] .md-typeset details.info > summary { color: #3C8A80; }
+[data-md-color-scheme="default"] .md-typeset .admonition.warning,
+[data-md-color-scheme="default"] .md-typeset details.warning { border-color: #A87C1F; }
+[data-md-color-scheme="default"] .md-typeset .admonition.warning > .admonition-title,
+[data-md-color-scheme="default"] .md-typeset details.warning > summary { color: #A87C1F; }
+[data-md-color-scheme="default"] .md-typeset .admonition.danger,
+[data-md-color-scheme="default"] .md-typeset details.danger,
+[data-md-color-scheme="default"] .md-typeset .admonition.failure,
+[data-md-color-scheme="default"] .md-typeset details.failure,
+[data-md-color-scheme="default"] .md-typeset .admonition.bug,
+[data-md-color-scheme="default"] .md-typeset details.bug     { border-color: #A8443F; }
+[data-md-color-scheme="default"] .md-typeset .admonition.danger > .admonition-title,
+[data-md-color-scheme="default"] .md-typeset details.danger > summary,
+[data-md-color-scheme="default"] .md-typeset .admonition.failure > .admonition-title,
+[data-md-color-scheme="default"] .md-typeset details.failure > summary,
+[data-md-color-scheme="default"] .md-typeset .admonition.bug > .admonition-title,
+[data-md-color-scheme="default"] .md-typeset details.bug > summary { color: #A8443F; }
+
+
+/* ── Header / topbar / tabs ─────────────────────────────────────── */
+.md-header {
+  background: var(--md-default-bg-color--light);
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  box-shadow: none;
+  color: var(--md-default-fg-color);
+}
+.md-header__title {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--md-default-fg-color);
+}
+.md-header__button {
+  color: var(--md-default-fg-color);
+}
+.md-header__button:hover {
+  color: var(--md-primary-fg-color--light);
+}
+.md-tabs {
+  background: var(--md-default-bg-color--light);
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color);
+}
+.md-tabs__link {
+  color: var(--md-default-fg-color--light);
+  opacity: 1;
+}
+.md-tabs__link:hover {
+  color: var(--md-default-fg-color);
+}
+.md-tabs__link--active {
+  color: var(--md-default-fg-color);
+  border-bottom: 2px solid var(--md-primary-fg-color);
+  padding-bottom: 2px;
+}
+
+
+/* ── Left navigation ────────────────────────────────────────────── */
+.md-nav__title {
+  font: 500 11px/1.2 "JetBrains Mono", ui-monospace, monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color--lighter);
+}
+.md-nav__link {
+  color: var(--md-default-fg-color--light);
+  transition: color .15s;
+}
+.md-nav__link:hover { color: var(--md-default-fg-color); }
+.md-nav__link--active,
+.md-nav__item--active > .md-nav__link {
+  color: var(--md-default-fg-color);
+  font-weight: 500;
+}
+.md-nav__item .md-nav__link--active {
+  border-left: 1px solid #EEF1F5;
+  padding-left: .6rem;
+  margin-left: -1px;
+}
+[data-md-color-scheme="default"] .md-nav__item .md-nav__link--active {
+  border-left-color: #0D1117;
+}
+
+
+/* ── Search ─────────────────────────────────────────────────────── */
+.md-search__form {
+  background: var(--md-default-bg-color--light);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 2px;
+  box-shadow: none;
+}
+.md-search__input {
+  font: 500 13px/1 "JetBrains Mono", ui-monospace, monospace;
+}
+.md-search__input::placeholder {
+  color: var(--md-default-fg-color--lighter);
+}
+.md-search-result__meta {
+  background: transparent;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+
+/* ── Tables ─────────────────────────────────────────────────────── */
+.md-typeset table:not([class]) {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  font-size: 0.92em;
+}
+.md-typeset table:not([class]) th {
+  background: var(--md-default-bg-color--lighter);
+  font: 500 11px/1.4 "JetBrains Mono", ui-monospace, monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color);
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+.md-typeset table:not([class]) td {
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+
+/* ── Footer — quiet ─────────────────────────────────────────────── */
+.md-footer {
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+.md-footer-meta {
+  background: transparent;
+}
+
+
+/* ── Blockquote ─────────────────────────────────────────────────── */
+.md-typeset blockquote {
+  border-left: 2px solid var(--md-default-fg-color--lighter);
+  color: var(--md-default-fg-color--light);
+  padding-left: 1rem;
+}

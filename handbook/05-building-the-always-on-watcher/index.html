@@ -1,0 +1,1274 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Notes on running AI agents against real Kubernetes clusters. Code included.">
+      
+      
+        <meta name="author" content="The Claude Code SRE Handbook Authors">
+      
+      
+      
+        <link rel="prev" href="../04-on-demand-vs-always-on-choosing/">
+      
+      
+        <link rel="next" href="../whats-next/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>5. Building the Always-On Watcher - The Claude Code SRE Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#05-building-the-always-on-watcher" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="The Claude Code SRE Handbook" class="md-header__button md-logo" aria-label="The Claude Code SRE Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 2-5 4.5v11l5-4.5zM6.5 5C4.55 5 2.45 5.4 1 6.5v14.66c0 .25.25.5.5.5.1 0 .15-.07.25-.07 1.35-.65 3.3-1.09 4.75-1.09 1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.31 4.75 1.06.1.05.15.03.25.03.25 0 .5-.25.5-.5V6.5c-.6-.45-1.25-.75-2-1V19c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V6.5C10.55 5.4 8.45 5 6.5 5"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Claude Code SRE Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5. Building the Always-On Watcher
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/har-ki/claude-code-sre-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    claude-code-sre-handbook
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="The Claude Code SRE Handbook" class="md-nav__button md-logo" aria-label="The Claude Code SRE Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 2-5 4.5v11l5-4.5zM6.5 5C4.55 5 2.45 5.4 1 6.5v14.66c0 .25.25.5.5.5.1 0 .15-.07.25-.07 1.35-.65 3.3-1.09 4.75-1.09 1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.31 4.75 1.06.1.05.15.03.25.03.25 0 .5-.25.5-.5V6.5c-.6-.45-1.25-.75-2-1V19c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V6.5C10.55 5.4 8.45 5 6.5 5"/></svg>
+
+    </a>
+    The Claude Code SRE Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/har-ki/claude-code-sre-handbook" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    claude-code-sre-handbook
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handbook
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Handbook
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 — Frontier
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 — Frontier
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-harness-problem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. The Harness Problem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-investigation-to-pr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. From Investigation to PR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-five-incidents-frontier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Claude Code on k8s-ai-bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-on-demand-vs-always-on-choosing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. On-Demand vs Always-On — Choosing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Building the Always-On Watcher
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Building the Always-On Watcher
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-two-prompts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The two prompts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The gate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dedup-and-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dedup and recovery
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-reviewer-sees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the reviewer sees
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-watcher-did" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the watcher did
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#production-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Production considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Production considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#guardrails-to-add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guardrails to add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#improving-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Improving memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-modes-to-watch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure modes to watch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../whats-next/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What's Next
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-two-prompts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The two prompts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The gate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dedup-and-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dedup and recovery
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-reviewer-sees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the reviewer sees
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-watcher-did" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the watcher did
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#production-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Production considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Production considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#guardrails-to-add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guardrails to add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#improving-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Improving memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-modes-to-watch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure modes to watch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="05-building-the-always-on-watcher">05 — Building the Always-On Watcher<a class="headerlink" href="#05-building-the-always-on-watcher" title="Anchor link">¶</a></h1>
+<p><em>A Python daemon, two Claude Code invocations, a draft PR.</em></p>
+<p><em>A Python daemon watches error rates, hands broken services to Claude Code in two phases, and produces a draft PR. Six minutes, $0.68, one human review step. The reference implementation is in the repo — fork it before pointing it at a real service.</em></p>
+<p>A human SRE team works a well-worn loop. A monitoring system fires an alert. The on-call engineer opens a laptop, checks dashboards and logs, reads the relevant source code, identifies the root cause, writes a fix, opens a pull request, and hands it to a teammate for review. The fix doesn't go to production until that teammate approves.</p>
+<p>This post builds the same loop with Claude Code. A Python daemon watches error rates. When something breaks, it hands the problem to Claude in two phases: investigate, then propose a fix. The result is a draft pull request with a root-cause analysis and a working code change. A human still reviews and merges. The system cannot deploy its own work.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Human on-call team</th>
+<th>This system</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Detect</td>
+<td>PagerDuty/Grafana alert wakes engineer</td>
+<td>Watcher polls error rates, fires on threshold breach</td>
+</tr>
+<tr>
+<td>Triage</td>
+<td>Engineer checks if it's a known issue</td>
+<td>Watcher fingerprints the error, deduplicates against open PRs</td>
+</tr>
+<tr>
+<td>Investigate</td>
+<td>Engineer reads logs, traces, source code</td>
+<td>Phase 1: Claude queries observability data + reads source</td>
+</tr>
+<tr>
+<td>Fix</td>
+<td>Engineer writes a patch, opens a PR</td>
+<td>Phase 2: Claude commits a fix to a feature branch</td>
+</tr>
+<tr>
+<td>Document</td>
+<td>Engineer writes a post-mortem</td>
+<td>Phase 2: Claude commits a structured incident report</td>
+</tr>
+<tr>
+<td>Review</td>
+<td>Teammate reviews and merges</td>
+<td>Human un-drafts the PR and merges — the only manual step</td>
+</tr>
+</tbody>
+</table>
+<p>We ran it against a live race condition in an ecommerce checkout service. Six minutes from alert to a draft PR containing root-cause analysis, trace correlation, and a working fix. Total cost: $0.68. That's a page that never wakes anyone up, and MTTR measured in minutes instead of hours. <a href="https://github.com/har-ki/claude-code-sre-handbook/pull/28">PR #28</a> is the evidence — open it, read the investigation, inspect the diff.</p>
+<p>The architecture decision is <a href="../04-on-demand-vs-always-on-choosing/">Post 4</a>. The scenario is <a href="../02-investigation-to-pr/">Post 2's</a> ecommerce TOCTOU bug, now running headless. The reference implementation lives in <a href="https://github.com/har-ki/claude-code-sre-handbook/tree/main/watcher-example"><code>watcher-example/</code></a>. The rest of this post is the technical how-to.</p>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Anchor link">¶</a></h2>
+<p>Four components, one <code>docker compose up</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>alert-watcher/</code></td>
+<td>Python daemon. Polls, fingerprints, dedups, opens PRs, orchestrates phases.</td>
+</tr>
+<tr>
+<td><code>claude-runner/</code></td>
+<td>Docker container with <code>claude</code>, <code>kubectl</code>, <code>gh</code>, <code>git</code>. One invocation per phase.</td>
+</tr>
+<tr>
+<td><code>memory-store/incidents.jsonl</code></td>
+<td>Append-only log. One line per completed incident.</td>
+</tr>
+<tr>
+<td><code>audit-log/</code></td>
+<td>Stream-json transcript per phase per incident. Every tool call recorded.</td>
+</tr>
+</tbody>
+</table>
+<p>The runner mounts <code>~/.kube/config</code> read-only. No in-cluster service.</p>
+<p><img alt="Always-on watcher architecture" src="../../assets/05-always-on-watcher.svg" /></p>
+<p>The watcher is the orchestrator. It creates the draft PR, then makes two blocking calls — one per phase. Phase 1 and Phase 2 are separate Claude Code sessions with no shared memory. The PR body is the only state that crosses the boundary: Phase 1 writes the investigation, the watcher parses out <code>root_cause</code> and <code>confidence</code>, Phase 2 reads the investigation and adds the fix. Neither phase can un-draft the PR.</p>
+<h2 id="the-two-prompts">The two prompts<a class="headerlink" href="#the-two-prompts" title="Anchor link">¶</a></h2>
+<p>Phase 1 — investigate. Read-only on the cluster, read-only on git, writes only the PR body:</p>
+<div class="highlight"><pre><span></span><code>claude<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>envsubst<span class="w"> </span>&lt;<span class="w"> </span>prompts/01-investigate.md<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--allowedTools<span class="w"> </span><span class="s2">&quot;Bash(clickhouse client*),Bash(kubectl get*),Bash(kubectl describe*),Bash(kubectl logs*),Bash(gh pr edit*),Bash(gh pr comment*),Read,Write,Glob,Grep&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output-format<span class="w"> </span>stream-json<span class="w"> </span>--verbose<span class="w"> </span>--max-turns<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model<span class="w"> </span>claude-sonnet-4-6
+</code></pre></div>
+<p>Phase 2 — propose fix. Writes a feature branch and the PR body, no cluster:</p>
+<div class="highlight"><pre><span></span><code>claude<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>envsubst<span class="w"> </span>&lt;<span class="w"> </span>prompts/02-propose-fix.md<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--allowedTools<span class="w"> </span><span class="s2">&quot;Bash(git*),Bash(gh pr edit*),Bash(gh pr comment*),Edit,Write,Read,Glob,Grep&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output-format<span class="w"> </span>stream-json<span class="w"> </span>--verbose<span class="w"> </span>--max-turns<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model<span class="w"> </span>claude-sonnet-4-6
+</code></pre></div>
+<p>A few things worth calling out:</p>
+<ul>
+<li>Prompts are under 30 lines each. Domain knowledge lives in the same Skills as Post 2 — <code>skills/clickhouse</code>, <code>skills/k8s</code>, <code>skills/gh</code>.</li>
+<li><code>--verbose</code> is mandatory with <code>stream-json</code>. The audit log is empty without it.</li>
+<li><code>--max-turns 15</code> in the examples above. The production config (<code>config.yaml</code>) defaults to 40 — unused turns cost nothing. 15 was the smoke-test value during development.</li>
+<li>The phases are stateless. Context flows through the PR body, not session state.</li>
+</ul>
+<h2 id="the-gate">The gate<a class="headerlink" href="#the-gate" title="Anchor link">¶</a></h2>
+<p><code>--allowedTools</code> is the first layer. <code>Bash(gh pr ready*)</code> is absent from both phases, so Claude cannot un-draft a PR through the Bash tool. But <code>--allowedTools</code> is a Bash command filter, not a full sandbox — Skills and Subagents pass through even when not listed. The gate holds today because the bundled <code>gh</code> Skill doesn't document an un-draft path. Add a Skill that wraps <code>gh pr ready</code> and you've punched a hole in your own gate.</p>
+<p>The real gate lives outside Claude Code. Scope the <code>GH_TOKEN</code> so the credential itself cannot mark a PR as ready. GitHub fine-grained personal access tokens let you grant <code>pull_requests: write</code> (create and edit PRs) while branch protection rules on the repo require a human review before merge. If the token can't do it, no amount of prompt creativity helps. <code>--allowedTools</code> reduces noise; token scoping and branch protection enforce the boundary.</p>
+<h2 id="dedup-and-recovery">Dedup and recovery<a class="headerlink" href="#dedup-and-recovery" title="Anchor link">¶</a></h2>
+<p>Fingerprint:</p>
+<div class="highlight"><pre><span></span><code><span class="n">fingerprint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">service_name</span><span class="si">}</span><span class="s2">|</span><span class="si">{</span><span class="n">top_exception_class</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">fp_hash</span>     <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="n">fingerprint</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">8</span><span class="p">]</span>
+</code></pre></div>
+<p>Before opening a PR, the watcher queries open PRs labeled <code>incident-fp:&lt;hash&gt;</code>. If one exists, it comments the new sample count and returns. Labels are created on demand by <code>gh pr create --label</code>.</p>
+<p>If a phase fails — git push rejected, rate limit, API timeout — the watcher comments the audit-log path on the PR and retries on the next poll. Dedup keeps the retries on the same PR. The loop is self-healing. It is also slower when it heals: a failed phase typically adds a poll interval (60 seconds) plus a few dedup-hit comments before the retry lands.</p>
+<p>On Phase 2 success, one line appends to <code>memory-store/incidents.jsonl</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2026-05-17T21:28:00.001141+00:00&quot;</span><span class="p">,</span><span class="nt">&quot;fingerprint&quot;</span><span class="p">:</span><span class="s2">&quot;ecommerce-api|Error&quot;</span><span class="p">,</span><span class="nt">&quot;fp_hash&quot;</span><span class="p">:</span><span class="s2">&quot;6e14cf73&quot;</span><span class="p">,</span><span class="nt">&quot;pr_url&quot;</span><span class="p">:</span><span class="s2">&quot;https://github.com/har-ki/claude-code-sre-handbook/pull/28&quot;</span><span class="p">,</span><span class="nt">&quot;incident_report_path&quot;</span><span class="p">:</span><span class="s2">&quot;docs/incidents/2026-05-17-6e14cf73.md&quot;</span><span class="p">,</span><span class="nt">&quot;root_cause&quot;</span><span class="p">:</span><span class="s2">&quot;TOCTOU race condition in inventory.js:reserveInventory() — non-atomic check-then-act under concurrent load&quot;</span><span class="p">,</span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span><span class="nt">&quot;phase_durations_sec&quot;</span><span class="p">:{</span><span class="nt">&quot;phase1&quot;</span><span class="p">:</span><span class="mf">237.3</span><span class="p">,</span><span class="nt">&quot;phase2&quot;</span><span class="p">:</span><span class="mf">100.0</span><span class="p">}}</span>
+</code></pre></div>
+<p>Not a vector store, not a graph — an append-only log to grep. A future Phase 1 prompt can read this file and link prior incidents. Not shipped yet.</p>
+<h2 id="what-the-reviewer-sees">What the reviewer sees<a class="headerlink" href="#what-the-reviewer-sees" title="Anchor link">¶</a></h2>
+<p>When the system finishes, the human reviewer gets a draft PR with three things:</p>
+<p><strong>1. The investigation.</strong> The PR body's Investigation section contains the root-cause analysis — error timeline, trace correlation, affected endpoints, Kubernetes pod health, and the exact code path. This is what you'd write in a Slack thread or a war-room doc during a live incident. Here it's written directly into the PR so the reviewer has context without asking questions.</p>
+<p><strong>2. The fix.</strong> A commit on the feature branch with the minimal code change. The reviewer reads the diff the same way they'd review any teammate's PR.</p>
+<p><strong>3. The incident report.</strong> A structured post-mortem committed at <code>docs/incidents/&lt;date&gt;-&lt;fingerprint&gt;.md</code>. Timeline, root cause, contributing factors, fix summary, action items. This is the artifact that outlives the PR — it stays in the repo as institutional memory, searchable and version-controlled.</p>
+<p>GitHub labels track lifecycle state:</p>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>incident-fp:&lt;hash&gt;</code></td>
+<td>Fingerprint. Used for dedup — prevents duplicate PRs for the same bug.</td>
+</tr>
+<tr>
+<td><code>incident:active</code></td>
+<td>Incident is open and being worked.</td>
+</tr>
+<tr>
+<td><code>incident:investigating</code> → <code>incident:fix-proposed</code></td>
+<td>Phase transition. Queryable for dashboards or SLA tracking.</td>
+</tr>
+</tbody>
+</table>
+<p>The labels are simple but composable. A team can wire Slack notifications on <code>fix-proposed</code>, build a "time to first fix" dashboard, or use the fingerprint label to link related incidents across services.</p>
+<h2 id="what-the-watcher-did">What the watcher did<a class="headerlink" href="#what-the-watcher-did" title="Anchor link">¶</a></h2>
+<p>Scale the load generator to 3 replicas. Watch.</p>
+<p><a href="https://github.com/har-ki/claude-code-sre-handbook/pull/28">PR #28</a> opened at 21:22 UTC on branch <code>incident/6e14cf73</code>. Three commits land on it:</p>
+<div class="highlight"><pre><span></span><code>939a056  incident: ecommerce-api elevated error rate (19%)
+e66e699  fix(inventory): prevent TOCTOU race in reserveInventory
+1e59470  docs(incidents): add incident report for 2026-05-17-6e14cf73
+</code></pre></div>
+<p>Phase 1's investigation, abridged:</p>
+<div class="highlight"><pre><span></span><code>Minute (UTC)   Errors   Total   Rate
+21:21             48      251    19.1%  ← race fires at 21:21:21, stock → -3
+21:22             36      191    18.8%  ← trigger fired 21:22:12Z
+</code></pre></div>
+<p>Two race-condition log entries, five milliseconds apart, captured the onset:</p>
+<div class="highlight"><pre><span></span><code>21:21:21.633  StockMismatchError: stock for product 7 is -1
+              &quot;stock was read as 5 but another request decremented it&quot;
+21:21:21.638  StockMismatchError: stock for product 7 is -3
+              (second concurrent write resolves)
+</code></pre></div>
+<p>Root cause: TOCTOU race in <code>inventory.js</code> between an async <code>getStock()</code> and a non-atomic decrement. Confidence stated as high, with the millisecond-precision log entries cited as supporting evidence. Phase 2's fix adds a synchronous re-read of inventory immediately before the decrement — no <code>await</code> in the gap, no interleave.</p>
+<p>Cost: ~$0.68 end-to-end. Phase 1 $0.44, Phase 2 $0.24.</p>
+<h2 id="production-considerations">Production considerations<a class="headerlink" href="#production-considerations" title="Anchor link">¶</a></h2>
+<p>The reference implementation works. It is not production-hardened. Here's what to add before pointing it at a real service.</p>
+<h3 id="guardrails-to-add">Guardrails to add<a class="headerlink" href="#guardrails-to-add" title="Anchor link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Gap</th>
+<th>Risk</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No cost cap</td>
+<td>A pathological loop or prompt injection burns budget before <code>--max-turns</code> kicks in</td>
+<td>Kill the runner if accumulated cost exceeds a dollar threshold. Check <code>total_cost_usd</code> in the audit stream.</td>
+</tr>
+<tr>
+<td>No rate limit on PR creation</td>
+<td>Broken fingerprinting (empty error class) opens dozens of PRs in minutes</td>
+<td>Global rate limit: max N PRs per hour. Alert if the limit fires.</td>
+</tr>
+<tr>
+<td>No circuit breaker</td>
+<td>Same fingerprint fails Phase 1 five times in a row — keeps retrying every poll</td>
+<td>Exponential backoff or "give up after N failures" and page a human.</td>
+</tr>
+<tr>
+<td>No content validation</td>
+<td>Phase 2 could commit secrets, large binaries, or introduce vulnerabilities</td>
+<td>Pre-push hook: run a secret scanner and linter on the diff before <code>git push</code>.</td>
+</tr>
+<tr>
+<td>No dry-run mode</td>
+<td>Can't test the system without it actually opening PRs and invoking Claude</td>
+<td>Add a <code>--dry-run</code> flag that logs what would happen without creating PRs.</td>
+</tr>
+<tr>
+<td>Token too broad</td>
+<td>A PAT with full <code>repo</code> scope can merge, delete branches, or change settings</td>
+<td>Use a fine-grained PAT scoped to <code>pull_requests: write</code> and <code>contents: write</code> only. No admin, no merge permission.</td>
+</tr>
+</tbody>
+</table>
+<p>The draft gate (human reviews before merge) is the critical safety net, but only if it's enforced outside the agent. <code>--allowedTools</code> is a behavioral hint — it reduces what Claude attempts, but it's not a security boundary. The actual enforcement stack is: a scoped token that cannot mark PRs as ready, branch protection rules that require human review, and <code>--allowedTools</code> as a first filter that keeps the agent from wasting turns on disallowed commands. If any one layer fails, the others still hold.</p>
+<h3 id="improving-memory">Improving memory<a class="headerlink" href="#improving-memory" title="Anchor link">¶</a></h3>
+<p><code>incidents.jsonl</code> is a simple starting point. Flat files work for low incident volume, but don't scale when you need to search hundreds of incidents or tell apart different root causes that share an error class.</p>
+<p>To make this production-ready:</p>
+<ul>
+<li><strong>Feed incident history into Phase 1 prompts.</strong> The watcher populates <code>root_cause</code> and <code>confidence</code> in <code>incidents.jsonl</code> by parsing Phase 1's PR body. The next step is injecting relevant prior incidents into the Phase 1 prompt so the model can recognize repeating patterns. A naive <code>cat incidents.jsonl</code> works for a handful of incidents but doesn't scale — semantic retrieval is the right path here.</li>
+<li><strong>Fingerprint by root cause, not just error class.</strong> <code>ecommerce-api|Error</code> is too broad — distinct bugs look the same. Refine fingerprints after investigation.</li>
+<li><strong>Add semantic retrieval.</strong> As incidents grow, grep falls short. Using a vector store (Postgres with pgvector, Pinecone, Weaviate) lets Phase 1 embed error signatures and find similar incidents. Managed services like <a href="https://github.com/mem0ai/mem0">Mem0</a> can handle embedding, storage, and retrieval.</li>
+<li><strong>Build a structured knowledge graph.</strong> Repeated incidents reveal relationships: service A's timeout causes service B's errors, or service C deploys break checkout. Knowledge graphs (Neo4j or Mem0's graph memory) make these links explicit and queryable. Now Phase 1 can ask, "What usually breaks when this service fails?" instead of just matching error strings.</li>
+<li><strong>Apply TTL and relevance decay.</strong> Old incidents add noise — keep the last 30 days in your main index. With a vector store, weight recent incidents higher so last week's data outranks last quarter's.</li>
+</ul>
+<h3 id="failure-modes-to-watch">Failure modes to watch<a class="headerlink" href="#failure-modes-to-watch" title="Anchor link">¶</a></h3>
+<ul>
+<li><strong>Alert fatigue 2.0.</strong> If the watcher creates PRs faster than humans can review them, the backlog grows and PRs become stale. While deduplication stops exact duplicates, similar but distinct issues can still accumulate.</li>
+<li><strong>Confident but wrong.</strong> The model may claim "high confidence" in a root cause that's actually just a symptom. Human reviewers are the safeguard — but only if they read the investigation section, not just the code diff.</li>
+<li><strong>Cost at scale.</strong> $0.68 per incident is inexpensive, but with twenty incidents a day across ten services, that's $14 per day or about $400 per month. This is manageable for most teams, but costs scale linearly. Noisy services with frequent alerts will need a circuit breaker.</li>
+</ul>
+<h2 id="try-it-yourself">Try it yourself<a class="headerlink" href="#try-it-yourself" title="Anchor link">¶</a></h2>
+<p>Start by testing with the bundled demo before connecting to a live service. The prompts, allowedTools strings, and gate policy are tuned for demo scenarios.</p>
+<p>Prerequisites: Docker, <code>kubectl</code> with a kind cluster, a GitHub token (<code>repo</code> scope), and a Claude API key.</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/har-ki/claude-code-sre-handbook
+<span class="nb">cd</span><span class="w"> </span>claude-code-sre-handbook/watcher-example
+<span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span>
+./setup-post05.sh
+</code></pre></div>
+<p>This stands up the kind cluster, bootstraps the repo for incident PRs, configures and starts the watcher, and scales the load generator to trigger the bug. The script picks up <code>GH_TOKEN</code> from your <code>gh auth login</code> session automatically. Set <code>ANTHROPIC_API_KEY</code> in the environment or edit <code>.env</code> after the script creates it.</p>
+<p>Once the load generator scales up, the race condition fires within 30 seconds — stock for product 7 goes permanently negative and every subsequent checkout fails. The error rate climbs past the 15% threshold within a couple of minutes as request volume builds. The watcher picks it up on its next poll (every 60 seconds), opens a draft PR, and kicks off Phase 1. Expect about two to three minutes from setup to the first PR. Watch it work:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Follow the watcher logs</span>
+docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>alert-watcher
+</code></pre></div>
+<p>Within about six minutes you should see a draft PR appear on your repo with a root-cause investigation and a proposed fix. Open it, read the investigation section, inspect the diff, and check the incident report in <code>docs/incidents/</code>. When you're satisfied, mark it ready for review and merge — that's the one human step.</p>
+<p>Three config knobs in <code>alert-watcher/config.yaml</code>: <strong><code>threshold</code></strong> (error rate to trigger, default 0.15), <strong><code>max_turns</code></strong> (turns per phase, default 40), and <strong><code>poll_interval_seconds</code></strong> (polling frequency, default 60).</p>
+<p>Teardown: <code>./teardown-post05.sh</code></p>
+<p>Full setup details: <a href="https://github.com/har-ki/claude-code-sre-handbook/tree/main/watcher-example">watcher-example README</a>.</p>
+<hr />
+<p><em>Working through this on your own infrastructure? Happy to jam — <a href="https://github.com/har-ki">drop me a line</a>.</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../04-on-demand-vs-always-on-choosing/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 4. On-Demand vs Always-On — Choosing">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                4. On-Demand vs Always-On — Choosing
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../whats-next/" class="md-footer__link md-footer__link--next" aria-label="Next: What&#39;s Next">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                What's Next
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "navigation.tracking", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/external-links.js"></script>
+      
+    
+  </body>
+</html>
