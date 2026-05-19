@@ -49,7 +49,8 @@ WORKSPACE="${WORKSPACE_CLONE_DIR:-/workspace/ecommerce}"
 # Phase 2: align local branch to remote before handing control to Claude
 if [[ "$PHASE" == "2" ]]; then
   BASE_BRANCH="${BASE_BRANCH:-main}"
-  export INCIDENT_BRANCH="incident/${FP_HASH}"
+  : "${INCIDENT_BRANCH:=incident/${FP_HASH}}"
+  export INCIDENT_BRANCH
 
   git -C "$WORKSPACE" fetch origin --prune
   if git -C "$WORKSPACE" show-ref --verify --quiet "refs/remotes/origin/${INCIDENT_BRANCH}"; then

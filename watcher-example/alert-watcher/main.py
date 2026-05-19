@@ -196,7 +196,8 @@ def open_draft_pr(repo: str, base_branch: str, branch: str, service: str,
 # ── Claude runner ─────────────────────────────────────────────────────
 def run_phase(phase: int, fp: str, fp_hash: str, service: str,
               rate_pct: str, pr_num: str, repo: str,
-              model: str, root_cause: str = "", evidence: str = "",
+              model: str, branch: str = "", root_cause: str = "",
+              evidence: str = "",
               detection: str = "", trigger_stats: dict | None = None) -> tuple[int, float]:
     """Shell out to claude-runner/invoke.sh. Returns (exit_code, duration_sec)."""
     date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -216,6 +217,7 @@ def run_phase(phase: int, fp: str, fp_hash: str, service: str,
         "EVIDENCE": evidence,
         "DETECTION": detection,
         "DATE": date_str,
+        "INCIDENT_BRANCH": branch,
     }
     if trigger_stats:
         env["TRIGGER_RATE_PCT"] = str(trigger_stats.get("trigger_rate_pct", ""))
@@ -394,8 +396,13 @@ def ensure_workspace_clone(repo: str):
                        check=False)
         return
     os.makedirs(WORKSPACE_DIR, exist_ok=True)
+    token = os.environ.get("GH_TOKEN", "")
+    if token:
+        clone_url = f"https://x-access-token:{token}@github.com/{repo}.git"
+    else:
+        clone_url = f"https://github.com/{repo}.git"
     subprocess.run(
-        ["git", "clone", f"https://github.com/{repo}.git", WORKSPACE_DIR],
+        ["git", "clone", clone_url, WORKSPACE_DIR],
         check=True,
     )
     log("workspace cloned", path=WORKSPACE_DIR)
@@ -463,7 +470,7 @@ def main():
                 exit_code_1, dur_1 = run_phase(
                     phase=1, fp=fp, fp_hash=fp_hash, service=service,
                     rate_pct=rate_pct, pr_num=pr_num, repo=repo, model=model,
-                    trigger_stats=trigger_stats,
+                    branch=branch, trigger_stats=trigger_stats,
                 )
                 if exit_code_1 != 0:
                     log("phase 1 failed, skipping phase 2", fp_hash=fp_hash)
@@ -478,7 +485,7 @@ def main():
                 exit_code_2, dur_2 = run_phase(
                     phase=2, fp=fp, fp_hash=fp_hash, service=service,
                     rate_pct=rate_pct, pr_num=pr_num, repo=repo, model=model,
-                    root_cause=root_cause,
+                    branch=branch, root_cause=root_cause,
                 )
                 if exit_code_2 != 0:
                     log("phase 2 failed", fp_hash=fp_hash)

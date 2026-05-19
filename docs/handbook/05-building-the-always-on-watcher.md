@@ -2,7 +2,7 @@
 # 05 — Building the Always-On Watcher
 *A Python daemon, two Claude Code invocations, a draft PR.*
 
-*A Python daemon watches error rates, hands broken services to Claude Code in two phases, and produces a draft PR. Six minutes, $0.68, one human review step. The reference implementation is in the repo — fork it before pointing it at a real service.*
+*A Python daemon watches error rates, hands broken services to Claude Code in two phases, and produces a draft PR. Five minutes, $0.62, one human review step. The reference implementation is in the repo — fork it before pointing it at a real service.*
 
 A human SRE team works a well-worn loop. A monitoring system fires an alert. The on-call engineer opens a laptop, checks dashboards and logs, reads the relevant source code, identifies the root cause, writes a fix, opens a pull request, and hands it to a teammate for review. The fix doesn't go to production until that teammate approves.
 
@@ -17,7 +17,7 @@ This post builds the same loop with Claude Code. A Python daemon watches error r
 | Document | Engineer writes a post-mortem | Phase 2: Claude commits a structured incident report |
 | Review | Teammate reviews and merges | Human un-drafts the PR and merges — the only manual step |
 
-We ran it against a live race condition in an ecommerce checkout service. Six minutes from alert to a draft PR containing root-cause analysis, trace correlation, and a working fix. Total cost: $0.68. That's a page that never wakes anyone up, and MTTR measured in minutes instead of hours. [PR #28](https://github.com/har-ki/claude-code-sre-handbook/pull/28) is the evidence — open it, read the investigation, inspect the diff.
+We ran it against a live race condition in an ecommerce checkout service. Five minutes from alert to a draft PR containing root-cause analysis, trace correlation, and a working fix. Total cost: $0.62. That's a page that never wakes anyone up, and MTTR measured in minutes instead of hours. [PR #3](https://github.com/har-ki/claude-code-sre-handbook/pull/3) is the evidence — open it, read the investigation, inspect the diff.
 
 The architecture decision is [Post 4](04-on-demand-vs-always-on-choosing.md). The scenario is [Post 2's](02-investigation-to-pr.md) ecommerce TOCTOU bug, now running headless. The reference implementation lives in [`watcher-example/`](https://github.com/har-ki/claude-code-sre-handbook/tree/main/watcher-example). The rest of this post is the technical how-to.
 
@@ -87,7 +87,7 @@ If a phase fails — git push rejected, rate limit, API timeout — the watcher 
 On Phase 2 success, one line appends to `memory-store/incidents.jsonl`:
 
 ```json
-{"ts":"2026-05-17T21:28:00.001141+00:00","fingerprint":"ecommerce-api|Error","fp_hash":"6e14cf73","pr_url":"https://github.com/har-ki/claude-code-sre-handbook/pull/28","incident_report_path":"docs/incidents/2026-05-17-6e14cf73.md","root_cause":"TOCTOU race condition in inventory.js:reserveInventory() — non-atomic check-then-act under concurrent load","confidence":1.0,"phase_durations_sec":{"phase1":237.3,"phase2":100.0}}
+{"ts":"2026-05-19T22:05:37.338764+00:00","fingerprint":"ecommerce-api|Error","fp_hash":"6e14cf73","pr_url":"https://github.com/har-ki/claude-code-sre-handbook/pull/3","incident_report_path":"docs/incidents/2026-05-19-6e14cf73.md","root_cause":"TOCTOU race condition in inventory.js:reserveInventory() — non-atomic check-then-act under concurrent load","confidence":1.0,"phase_durations_sec":{"phase1":136.0,"phase2":143.3}}
 ```
 
 Not a vector store, not a graph — an append-only log to grep. A future Phase 1 prompt can read this file and link prior incidents. Not shipped yet.
@@ -116,34 +116,34 @@ The labels are simple but composable. A team can wire Slack notifications on `fi
 
 Scale the load generator to 3 replicas. Watch.
 
-[PR #28](https://github.com/har-ki/claude-code-sre-handbook/pull/28) opened at 21:22 UTC on branch `incident/6e14cf73`. Three commits land on it:
+[PR #3](https://github.com/har-ki/claude-code-sre-handbook/pull/3) opened at 22:00 UTC on branch `incident/6e14cf73`. Three commits land on it:
 
 ```
-939a056  incident: ecommerce-api elevated error rate (19%)
-e66e699  fix(inventory): prevent TOCTOU race in reserveInventory
-1e59470  docs(incidents): add incident report for 2026-05-17-6e14cf73
+839e5e6  incident: ecommerce-api elevated error rate (20%)
+3029310  fix(inventory): eliminate TOCTOU race in reserveInventory()
+df6cede  docs(incidents): add incident report for 2026-05-19-6e14cf73
 ```
 
 Phase 1's investigation, abridged:
 
 ```
 Minute (UTC)   Errors   Total   Rate
-21:21             48      251    19.1%  ← race fires at 21:21:21, stock → -3
-21:22             36      191    18.8%  ← trigger fired 21:22:12Z
+21:59             20       —          ← race fires at 21:59:35, stock → -3
+22:00             68       —          ← trigger fired 22:00:46Z
 ```
 
-Two race-condition log entries, five milliseconds apart, captured the onset:
+Two race-condition log entries, one millisecond apart, captured the onset:
 
 ```
-21:21:21.633  StockMismatchError: stock for product 7 is -1
+21:59:35.231  StockMismatchError: stock for product 7 is -1
               "stock was read as 5 but another request decremented it"
-21:21:21.638  StockMismatchError: stock for product 7 is -3
+21:59:35.232  StockMismatchError: stock for product 7 is -3
               (second concurrent write resolves)
 ```
 
 Root cause: TOCTOU race in `inventory.js` between an async `getStock()` and a non-atomic decrement. Confidence stated as high, with the millisecond-precision log entries cited as supporting evidence. Phase 2's fix adds a synchronous re-read of inventory immediately before the decrement — no `await` in the gap, no interleave.
 
-Cost: ~$0.68 end-to-end. Phase 1 $0.44, Phase 2 $0.24.
+Cost: ~$0.62 end-to-end. Phase 1 $0.30, Phase 2 $0.32.
 
 ## Production considerations
 
@@ -178,7 +178,7 @@ To make this production-ready:
 
 - **Alert fatigue 2.0.** If the watcher creates PRs faster than humans can review them, the backlog grows and PRs become stale. While deduplication stops exact duplicates, similar but distinct issues can still accumulate.
 - **Confident but wrong.** The model may claim "high confidence" in a root cause that's actually just a symptom. Human reviewers are the safeguard — but only if they read the investigation section, not just the code diff.
-- **Cost at scale.** $0.68 per incident is inexpensive, but with twenty incidents a day across ten services, that's $14 per day or about $400 per month. This is manageable for most teams, but costs scale linearly. Noisy services with frequent alerts will need a circuit breaker.
+- **Cost at scale.** $0.62 per incident is inexpensive, but with twenty incidents a day across ten services, that's $12 per day or about $370 per month. This is manageable for most teams, but costs scale linearly. Noisy services with frequent alerts will need a circuit breaker.
 
 ## Try it yourself
 
@@ -202,7 +202,7 @@ Once the load generator scales up, the race condition fires within 30 seconds �
 docker compose logs -f alert-watcher
 ```
 
-Within about six minutes you should see a draft PR appear on your repo with a root-cause investigation and a proposed fix. Open it, read the investigation section, inspect the diff, and check the incident report in `docs/incidents/`. When you're satisfied, mark it ready for review and merge — that's the one human step.
+Within about five minutes you should see a draft PR appear on your repo with a root-cause investigation and a proposed fix. Open it, read the investigation section, inspect the diff, and check the incident report in `docs/incidents/`. When you're satisfied, mark it ready for review and merge — that's the one human step.
 
 Three config knobs in `alert-watcher/config.yaml`: **`threshold`** (error rate to trigger, default 0.15), **`max_turns`** (turns per phase, default 40), and **`poll_interval_seconds`** (polling frequency, default 60).
 
