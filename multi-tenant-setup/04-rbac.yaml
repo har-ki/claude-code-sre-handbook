@@ -1,0 +1,214 @@
+---
+# Role for full access within a developer namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: dev-alice
+  name: developer-full-access
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["apps"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["extensions"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["autoscaling"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["batch"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: dev-bob
+  name: developer-full-access
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["apps"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["extensions"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["autoscaling"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["batch"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: dev-charlie
+  name: developer-full-access
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["apps"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["extensions"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["autoscaling"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["batch"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+# Role for read-only access to dev-shared
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: dev-shared
+  name: developer-read-access
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "configmaps", "secrets", "persistentvolumeclaims", "events"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets", "statefulsets", "daemonsets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["extensions"]
+  resources: ["deployments", "replicasets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["networkpolicies", "ingresses"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["autoscaling"]
+  resources: ["horizontalpodautoscalers"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["batch"]
+  resources: ["jobs", "cronjobs"]
+  verbs: ["get", "list", "watch"]
+---
+# RoleBinding: Alice full access to dev-alice
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: alice-full-access
+  namespace: dev-alice
+subjects:
+- kind: User
+  name: alice
+  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: alice-sa
+  namespace: dev-alice
+roleRef:
+  kind: Role
+  name: developer-full-access
+  apiGroup: rbac.authorization.k8s.io
+---
+# RoleBinding: Bob full access to dev-bob
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: bob-full-access
+  namespace: dev-bob
+subjects:
+- kind: User
+  name: bob
+  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: bob-sa
+  namespace: dev-bob
+roleRef:
+  kind: Role
+  name: developer-full-access
+  apiGroup: rbac.authorization.k8s.io
+---
+# RoleBinding: Charlie full access to dev-charlie
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: charlie-full-access
+  namespace: dev-charlie
+subjects:
+- kind: User
+  name: charlie
+  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: charlie-sa
+  namespace: dev-charlie
+roleRef:
+  kind: Role
+  name: developer-full-access
+  apiGroup: rbac.authorization.k8s.io
+---
+# RoleBinding: All developers read access to dev-shared
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developers-read-access
+  namespace: dev-shared
+subjects:
+- kind: User
+  name: alice
+  apiGroup: rbac.authorization.k8s.io
+- kind: User
+  name: bob
+  apiGroup: rbac.authorization.k8s.io
+- kind: User
+  name: charlie
+  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: alice-sa
+  namespace: dev-alice
+- kind: ServiceAccount
+  name: bob-sa
+  namespace: dev-bob
+- kind: ServiceAccount
+  name: charlie-sa
+  namespace: dev-charlie
+roleRef:
+  kind: Role
+  name: developer-read-access
+  apiGroup: rbac.authorization.k8s.io
+---
+# ClusterRole for admin access to staging and prod
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: admin-staging-prod
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["*"]
+  resourceNames: []
+- apiGroups: ["apps"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["extensions"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["autoscaling"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["batch"]
+  resources: ["*"]
+  verbs: ["*"]
+# Note: ClusterRoleBinding for admin users would be created separately as needed
+# for specific admin users, not included here for security

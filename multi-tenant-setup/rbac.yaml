@@ -1,0 +1,176 @@
+---
+# Role for full access within a namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: dev-alice
+  name: dev-full-access
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["apps"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["extensions"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: dev-bob
+  name: dev-full-access
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["apps"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["extensions"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: dev-charlie
+  name: dev-full-access
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["apps"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["extensions"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+# Read-only role for shared namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: dev-shared
+  name: dev-read-only
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "configmaps", "secrets", "persistentvolumeclaims"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets", "statefulsets", "daemonsets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["networkpolicies", "ingresses"]
+  verbs: ["get", "list", "watch"]
+---
+# Service Accounts for each developer
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: alice-sa
+  namespace: dev-alice
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bob-sa
+  namespace: dev-bob
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: charlie-sa
+  namespace: dev-charlie
+---
+# RoleBindings for full access to own namespaces
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: alice-full-access
+  namespace: dev-alice
+subjects:
+- kind: User
+  name: alice
+  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: alice-sa
+  namespace: dev-alice
+roleRef:
+  kind: Role
+  name: dev-full-access
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: bob-full-access
+  namespace: dev-bob
+subjects:
+- kind: User
+  name: bob
+  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: bob-sa
+  namespace: dev-bob
+roleRef:
+  kind: Role
+  name: dev-full-access
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: charlie-full-access
+  namespace: dev-charlie
+subjects:
+- kind: User
+  name: charlie
+  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: charlie-sa
+  namespace: dev-charlie
+roleRef:
+  kind: Role
+  name: dev-full-access
+  apiGroup: rbac.authorization.k8s.io
+---
+# RoleBindings for read-only access to dev-shared
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developers-shared-read
+  namespace: dev-shared
+subjects:
+- kind: User
+  name: alice
+  apiGroup: rbac.authorization.k8s.io
+- kind: User
+  name: bob
+  apiGroup: rbac.authorization.k8s.io
+- kind: User
+  name: charlie
+  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: alice-sa
+  namespace: dev-alice
+- kind: ServiceAccount
+  name: bob-sa
+  namespace: dev-bob
+- kind: ServiceAccount
+  name: charlie-sa
+  namespace: dev-charlie
+roleRef:
+  kind: Role
+  name: dev-read-only
+  apiGroup: rbac.authorization.k8s.io

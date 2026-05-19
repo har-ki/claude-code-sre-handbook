@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 720" role="img" aria-label="Flow of control: ClickHouse feeds the Alert Watcher, which sequentially launches Phase 1 (investigate) and Phase 2 (fix). The phases share state only through the PR body. Output is a Draft PR awaiting human merge.">
+  <style>
+    .surface { fill: #161b22; stroke: #3d4450; stroke-width: 1.2; }
+    .t-title { font-family: 'IBM Plex Sans', sans-serif; font-size: 18px; font-weight: 600; fill: #f0f0f0; }
+    .t-sub { font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; fill: #c0bdb5; }
+    .t-eyebrow { font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; font-weight: 600; fill: #9a9890; letter-spacing: 1.5px; text-transform: uppercase; }
+    .t-arrow { font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; fill: #c0bdb5; }
+    .t-arrow-strong { font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; font-weight: 600; fill: #f0f0f0; }
+    .arrow { stroke: #8a8880; stroke-width: 1.2; }
+    .arrow-strong { stroke: #f0f0f0; stroke-width: 1.8; }
+    .head.muted path { fill: #8a8880; }
+    .head.strong path { fill: #f0f0f0; }
+    .accent-watch { fill: #d97706; }
+    .accent-p1 { fill: #3b82f6; }
+    .accent-p2 { fill: #22c55e; }
+    .accent-draft { fill: #eab308; }
+    .chip-rect-warn { fill: none; stroke: #b8861f; stroke-width: 1; rx: 4; }
+    .chip-text-warn { font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; font-weight: 600; fill: #b8861f; }
+    svg { background: #0d1117; }
+  </style>
+
+  <defs>
+    <marker id="ar-r" class="head muted" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z"></path>
+    </marker>
+    <marker id="ar-u" class="head muted" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z"></path>
+    </marker>
+    <marker id="ar-d" class="head muted" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z"></path>
+    </marker>
+    <marker id="ar-d-strong" class="head strong" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z"></path>
+    </marker>
+  </defs>
+
+  
+  <g>
+    <rect x="450" y="30" width="180" height="64" class="surface"></rect>
+    <text x="540" y="60" text-anchor="middle" class="t-title">ClickHouse</text>
+    <text x="540" y="80" text-anchor="middle" class="t-sub">otel_logs</text>
+  </g>
+  <line x1="540" y1="94" x2="540" y2="148" class="arrow-strong" marker-end="url(#ar-d-strong)"></line>
+  <text x="555" y="124" class="t-arrow-strong">poll · 60s</text>
+
+  
+  <g>
+    <rect x="80" y="150" width="920" height="72" class="surface"></rect>
+    <rect x="80" y="150" width="920" height="3" class="accent-watch"></rect>
+    <text x="100" y="184" class="t-title">Alert Watcher</text>
+    <text x="100" y="204" class="t-sub">Python daemon · sequences the run</text>
+  </g>
+
+  <line x1="220" y1="222" x2="220" y2="300" class="arrow" marker-end="url(#ar-d)"></line>
+  <text x="232" y="258" class="t-arrow">launch</text>
+  <text x="232" y="274" class="t-arrow">phase 1</text>
+
+  <line x1="540" y1="300" x2="540" y2="222" class="arrow" marker-end="url(#ar-u)"></line>
+  <text x="552" y="258" class="t-arrow">parse</text>
+  <text x="552" y="274" class="t-arrow">root_cause</text>
+
+  <line x1="860" y1="222" x2="860" y2="300" class="arrow" marker-end="url(#ar-d)"></line>
+  <text x="780" y="258" class="t-arrow" text-anchor="end">launch</text>
+  <text x="780" y="274" class="t-arrow" text-anchor="end">phase 2</text>
+
+  
+  <g>
+    <rect x="80" y="300" width="280" height="200" class="surface"></rect>
+    <rect x="80" y="300" width="280" height="3" class="accent-p1"></rect>
+    <text x="100" y="334" class="t-eyebrow">PHASE 01</text>
+    <text x="100" y="362" class="t-title">Investigate</text>
+    <text x="100" y="382" class="t-sub">read-only</text>
+    <text x="100" y="464" class="t-sub" style="opacity: 0.85">claude -p · ephemeral</text>
+    <text x="100" y="482" class="t-sub" style="opacity: 0.85">clickhouse · kubectl · src</text>
+  </g>
+
+  
+  <g>
+    <path d="M 410 308 L 638 308 L 660 330 L 660 492 L 410 492 Z" fill="#161b22" stroke="#3d4450" stroke-width="1.5"></path>
+    <path d="M 638 308 L 638 330 L 660 330" fill="none" stroke="#3d4450" stroke-width="1.5"></path>
+    <text x="535" y="350" text-anchor="middle" class="t-title">PR body</text>
+    <text x="535" y="370" text-anchor="middle" class="t-sub">the only shared state</text>
+    <text x="430" y="408" class="t-sub" style="fill: #e8e6e1">## Trigger</text>
+    <text x="430" y="428" class="t-sub" style="fill: #e8e6e1">## Investigation</text>
+    <text x="430" y="448" class="t-sub" style="fill: #e8e6e1">## Proposed fix</text>
+    <text x="430" y="468" class="t-sub" style="fill: #e8e6e1">## Incident report</text>
+  </g>
+
+  <line x1="360" y1="400" x2="408" y2="400" class="arrow" marker-end="url(#ar-r)"></line>
+  <text x="384" y="392" text-anchor="middle" class="t-arrow">writes</text>
+
+  <line x1="662" y1="400" x2="708" y2="400" class="arrow" marker-end="url(#ar-r)"></line>
+  <text x="685" y="392" text-anchor="middle" class="t-arrow">reads</text>
+
+  
+  <g>
+    <rect x="710" y="300" width="290" height="200" class="surface"></rect>
+    <rect x="710" y="300" width="290" height="3" class="accent-p2"></rect>
+    <text x="730" y="334" class="t-eyebrow">PHASE 02</text>
+    <text x="730" y="362" class="t-title">Propose fix</text>
+    <text x="730" y="382" class="t-sub">edits source · opens PR</text>
+    <text x="730" y="464" class="t-sub" style="opacity: 0.85">claude -p · fresh session</text>
+    <text x="730" y="482" class="t-sub" style="opacity: 0.85">edit · commit · push</text>
+  </g>
+
+  <line x1="855" y1="500" x2="855" y2="560" class="arrow-strong" marker-end="url(#ar-d-strong)"></line>
+
+  
+  <g>
+    <rect x="280" y="562" width="640" height="120" class="surface"></rect>
+    <rect x="280" y="562" width="640" height="3" class="accent-draft"></rect>
+
+    <text x="300" y="596" class="t-eyebrow">ARTIFACT</text>
+    <text x="300" y="624" class="t-title">Draft PR #N</text>
+    <text x="300" y="644" class="t-sub">trigger · investigation · fix · report · diff</text>
+    <text x="300" y="664" class="t-sub" style="opacity: 0.85">human reviews and merges — the only manual step</text>
+
+    <g transform="translate(760, 596)">
+      <rect x="0" y="0" width="140" height="28" class="chip-rect-warn"></rect>
+      <g transform="translate(12, 7)">
+        <rect x="0" y="6" width="12" height="9" fill="none" stroke="#b8861f" stroke-width="1.3"></rect>
+        <path d="M 2 6 L 2 4 A 4 4 0 0 1 10 4 L 10 6" fill="none" stroke="#b8861f" stroke-width="1.3"></path>
+      </g>
+      <text x="32" y="18" class="chip-text-warn">draft · locked</text>
+    </g>
+  </g>
+</svg>

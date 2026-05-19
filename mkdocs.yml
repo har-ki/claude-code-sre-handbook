@@ -1,0 +1,84 @@
+site_name: "The Claude Code SRE Handbook"
+site_description: "Notes on running AI agents against real Kubernetes clusters. Code included."
+site_author: "The Claude Code SRE Handbook Authors"
+repo_url: https://github.com/har-ki/claude-code-sre-handbook
+repo_name: claude-code-sre-handbook
+
+theme:
+  name: material
+  language: en
+  favicon: assets/favicon.svg
+  font:
+    text: IBM Plex Sans
+    code: JetBrains Mono
+  icon:
+    logo: material/book-open-page-variant
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.tracking
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/external-links.js
+
+plugins:
+  - search
+
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - footnotes
+  - tables
+  - toc:
+      permalink: "¶"
+      permalink_title: "Anchor link"
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist
+  - pymdownx.keys
+
+nav:
+  - Handbook:
+    - handbook/index.md
+    - "Part 1 — Frontier":
+      - "1. The Harness Problem": handbook/01-harness-problem.md
+      - "2. From Investigation to PR": handbook/02-investigation-to-pr.md
+      - "3. Claude Code on k8s-ai-bench": handbook/03-five-incidents-frontier.md
+      - "4. On-Demand vs Always-On — Choosing": handbook/04-on-demand-vs-always-on-choosing.md
+      - "5. Building the Always-On Watcher": handbook/05-building-the-always-on-watcher.md
+    - "What's Next": handbook/whats-next.md

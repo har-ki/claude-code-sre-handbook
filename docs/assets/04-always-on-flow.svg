@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 200" role="img" aria-label="Always-on posture: a headless claude -p run triggered by a system event produces artifacts (PR + incident report). The only human checkpoint is the review step before merge.">
+  <style>
+    svg { background: #0d1117; }
+    .lane-label { font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; font-weight: 600; fill: #d97706; letter-spacing: 1px; text-transform: uppercase; }
+    .lane-tag { font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; fill: #d97706; }
+    .lane-tag-muted { font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; fill: #8a8880; }
+    .lane-track-active { stroke: #d97706; stroke-width: 2; }
+    .lane-track-dashed { stroke: #3d4450; stroke-width: 1.2; stroke-dasharray: 6 4; }
+    .lane-tick { stroke: #d97706; stroke-width: 1.4; }
+    .box-rect { fill: #161b22; stroke: #3d4450; stroke-width: 1.2; rx: 6; }
+    .box-title { font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; fill: #f0f0f0; }
+    .box-sub { font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; fill: #9a9890; }
+    .arrow-line { stroke: #8a8880; stroke-width: 1.4; }
+    .arr path { fill: #8a8880; }
+  </style>
+
+  <defs>
+    <marker id="ar-r" class="arr" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z"></path>
+    </marker>
+  </defs>
+
+  <text x="20" y="22" class="lane-label">Human gate</text>
+  <text x="1080" y="22" text-anchor="end" class="lane-tag">one checkpoint</text>
+
+  <line x1="20" y1="44" x2="680" y2="44" class="lane-track-dashed"></line>
+  <line x1="680" y1="44" x2="860" y2="44" class="lane-track-active"></line>
+  <line x1="860" y1="44" x2="1080" y2="44" class="lane-track-dashed"></line>
+  <line x1="770" y1="48" x2="770" y2="86" class="lane-tick"></line>
+
+  <text x="110" y="62" text-anchor="middle" class="lane-tag-muted">auto</text>
+  <text x="330" y="62" text-anchor="middle" class="lane-tag-muted">auto</text>
+  <text x="550" y="62" text-anchor="middle" class="lane-tag-muted">auto</text>
+  <text x="990" y="62" text-anchor="middle" class="lane-tag-muted">auto</text>
+
+  <g>
+    <rect x="20" y="92" width="180" height="88" class="box-rect"></rect>
+    <text x="110" y="128" text-anchor="middle" class="box-title">Trigger</text>
+    <text x="110" y="152" text-anchor="middle" class="box-sub">system event</text>
+  </g>
+  <g>
+    <rect x="240" y="92" width="180" height="88" class="box-rect"></rect>
+    <text x="330" y="128" text-anchor="middle" class="box-title">claude -p</text>
+    <text x="330" y="152" text-anchor="middle" class="box-sub">headless runner</text>
+  </g>
+  <g>
+    <rect x="460" y="92" width="180" height="88" class="box-rect"></rect>
+    <text x="550" y="128" text-anchor="middle" class="box-title">Artifacts</text>
+    <text x="550" y="152" text-anchor="middle" class="box-sub">PR + incident report</text>
+  </g>
+  <g>
+    <rect x="680" y="92" width="180" height="88" class="box-rect"></rect>
+    <text x="770" y="128" text-anchor="middle" class="box-title">Human review</text>
+    <text x="770" y="152" text-anchor="middle" class="box-sub">one checkpoint</text>
+  </g>
+  <g>
+    <rect x="900" y="92" width="180" height="88" class="box-rect"></rect>
+    <text x="990" y="128" text-anchor="middle" class="box-title">Merge</text>
+    <text x="990" y="152" text-anchor="middle" class="box-sub">ship</text>
+  </g>
+
+  <line x1="202" y1="136" x2="238" y2="136" class="arrow-line" marker-end="url(#ar-r)"></line>
+  <line x1="422" y1="136" x2="458" y2="136" class="arrow-line" marker-end="url(#ar-r)"></line>
+  <line x1="642" y1="136" x2="678" y2="136" class="arrow-line" marker-end="url(#ar-r)"></line>
+  <line x1="862" y1="136" x2="898" y2="136" class="arrow-line" marker-end="url(#ar-r)"></line>
+</svg>

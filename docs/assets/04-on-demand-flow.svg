@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 200" role="img" aria-label="On-demand posture: Operator runs an interactive claude session that loops through tool calls. Every step requires human review before merging. The human-gate lane spans the entire flow.">
+  <style>
+    svg { background: #0d1117; }
+    .lane-label { font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; font-weight: 600; fill: #d97706; letter-spacing: 1px; text-transform: uppercase; }
+    .lane-tag { font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; fill: #d97706; }
+    .lane-track-active { stroke: #d97706; stroke-width: 2; }
+    .lane-tick { stroke: #d97706; stroke-width: 1.4; }
+    .box-rect { fill: #161b22; stroke: #3d4450; stroke-width: 1.2; rx: 6; }
+    .box-title { font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; fill: #f0f0f0; }
+    .box-sub { font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; fill: #9a9890; }
+    .arrow-line { stroke: #8a8880; stroke-width: 1.4; }
+    .arr path { fill: #8a8880; }
+    .loop-label { font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; fill: #8a8880; font-style: italic; }
+  </style>
+
+  <defs>
+    <marker id="ar-r" class="arr" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z"></path>
+    </marker>
+  </defs>
+
+  <text x="20" y="22" class="lane-label">Human gate</text>
+  <text x="1080" y="22" text-anchor="end" class="lane-tag">decision at every step</text>
+
+  <line x1="20" y1="44" x2="1080" y2="44" class="lane-track-active"></line>
+  <line x1="110" y1="48" x2="110" y2="86" class="lane-tick"></line>
+  <line x1="330" y1="48" x2="330" y2="86" class="lane-tick"></line>
+  <line x1="550" y1="48" x2="550" y2="86" class="lane-tick"></line>
+  <line x1="770" y1="48" x2="770" y2="86" class="lane-tick"></line>
+  <line x1="990" y1="48" x2="990" y2="86" class="lane-tick"></line>
+
+  <g>
+    <rect x="20" y="92" width="180" height="88" class="box-rect"></rect>
+    <text x="110" y="128" text-anchor="middle" class="box-title">Operator</text>
+    <text x="110" y="152" text-anchor="middle" class="box-sub">decides each step</text>
+  </g>
+  <g>
+    <rect x="240" y="92" width="180" height="88" class="box-rect"></rect>
+    <text x="330" y="128" text-anchor="middle" class="box-title">claude session</text>
+    <text x="330" y="152" text-anchor="middle" class="box-sub">interactive shell</text>
+  </g>
+  <g>
+    <rect x="460" y="92" width="180" height="88" class="box-rect"></rect>
+    <text x="550" y="128" text-anchor="middle" class="box-title">Tool calls</text>
+    <text x="550" y="152" text-anchor="middle" class="box-sub">kubectl · gh · sql</text>
+  </g>
+  <g>
+    <rect x="680" y="92" width="180" height="88" class="box-rect"></rect>
+    <text x="770" y="128" text-anchor="middle" class="box-title">Review</text>
+    <text x="770" y="152" text-anchor="middle" class="box-sub">per tool call</text>
+  </g>
+  <g>
+    <rect x="900" y="92" width="180" height="88" class="box-rect"></rect>
+    <text x="990" y="128" text-anchor="middle" class="box-title">PR merged</text>
+    <text x="990" y="152" text-anchor="middle" class="box-sub">ship</text>
+  </g>
+
+  <line x1="202" y1="136" x2="238" y2="136" class="arrow-line" marker-end="url(#ar-r)"></line>
+
+  <line x1="422" y1="124" x2="458" y2="124" class="arrow-line" marker-end="url(#ar-r)"></line>
+  <line x1="458" y1="148" x2="422" y2="148" class="arrow-line" marker-end="url(#ar-r)"></line>
+  <text x="440" y="172" text-anchor="middle" class="loop-label">loop</text>
+
+  <line x1="642" y1="136" x2="678" y2="136" class="arrow-line" marker-end="url(#ar-r)"></line>
+  <line x1="862" y1="136" x2="898" y2="136" class="arrow-line" marker-end="url(#ar-r)"></line>
+</svg>

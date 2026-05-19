@@ -1,0 +1,51 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-alice
+  labels:
+    environment: development
+    tenant: alice
+    tier: dev
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-bob
+  labels:
+    environment: development
+    tenant: bob
+    tier: dev
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-charlie
+  labels:
+    environment: development
+    tenant: charlie
+    tier: dev
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-shared
+  labels:
+    environment: development
+    tier: shared
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: staging
+  labels:
+    environment: staging
+    tier: staging
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prod
+  labels:
+    environment: production
+    tier: production

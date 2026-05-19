@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: restrict-egress
+  namespace: ecommerce
+  annotations:
+    change-ticket: "SEC-2847"
+    applied-by: "platform-team"
+    description: "Restrict ecommerce egress — allow DNS, database, and external HTTPS only"
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  # Allow DNS
+  - ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow postgres traffic
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          role: data-tier
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow HTTPS to external services
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 10.0.0.0/8
+    ports:
+    - protocol: TCP
+      port: 443

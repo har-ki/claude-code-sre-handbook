@@ -1,0 +1,237 @@
+---
+# Default deny all ingress traffic for dev-alice
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: dev-alice
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+---
+# Allow dev-alice to access dev-shared and system services
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dev-alice-egress
+  namespace: dev-alice
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  # Allow access to dev-shared namespace
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          tier: shared
+  # Allow access to system services (DNS, etc.)
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+  # Allow DNS queries to any destination
+  - ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow all egress within same namespace
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          tenant: alice
+---
+# Default deny all ingress traffic for dev-bob
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: dev-bob
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+---
+# Allow dev-bob to access dev-shared and system services
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dev-bob-egress
+  namespace: dev-bob
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  # Allow access to dev-shared namespace
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          tier: shared
+  # Allow access to system services (DNS, etc.)
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+  # Allow DNS queries to any destination
+  - ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow all egress within same namespace
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          tenant: bob
+---
+# Default deny all ingress traffic for dev-charlie
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: dev-charlie
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+---
+# Allow dev-charlie to access dev-shared and system services
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dev-charlie-egress
+  namespace: dev-charlie
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  # Allow access to dev-shared namespace
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          tier: shared
+  # Allow access to system services (DNS, etc.)
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+  # Allow DNS queries to any destination
+  - ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow all egress within same namespace
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          tenant: charlie
+---
+# Network policies for dev-shared namespace
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dev-shared-access
+  namespace: dev-shared
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow access from all dev namespaces
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          tier: dev
+  egress:
+  # Allow access to system services
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+  # Allow DNS queries to any destination
+  - ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow access to dev namespaces
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          tier: dev
+---
+# Complete isolation for staging
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: staging-isolation
+  namespace: staging
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Only allow access from within staging namespace
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          tier: staging
+  egress:
+  # Allow access to system services only
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+  # Allow DNS queries to any destination
+  - ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow egress within staging namespace
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          tier: staging
+---
+# Complete isolation for prod
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: prod-isolation
+  namespace: prod
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Only allow access from within prod namespace
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          tier: production
+  egress:
+  # Allow access to system services only
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+  # Allow DNS queries to any destination
+  - ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow egress within prod namespace
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          tier: production

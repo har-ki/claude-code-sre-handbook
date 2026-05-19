@@ -1,0 +1,35 @@
+{
+  "experiment": "harness-vs-model",
+  "harness": "k8sgpt-style",
+  "timestamp": "20260512-160626",
+  "model": "claude-sonnet-4-20250514",
+  "error_string": "back-off 5m0s restarting failed container=checkout pod=checkout-8cfb986d9-pkgzp_ecommerce(7d5394d7-c395-43f9-8d0d-54043b3dc90a)",
+  "prompt": "Simplify the following Kubernetes error message delimited by triple dashes written in --- english --- language; --- back-off 5m0s restarting failed container=checkout pod=checkout-8cfb986d9-pkgzp_ecommerce(7d5394d7-c395-43f9-8d0d-54043b3dc90a) ---.\nProvide the most possible solution in a step by step style in no more than 280 characters. Write the output in the following format:\nError: {Explain error here}\nSolution: {Step by step solution here}",
+  "response": {
+    "model": "claude-sonnet-4-20250514",
+    "id": "msg_018ektSeHd4tCe9PzkWApfQ1",
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "**Error:** The \"checkout\" container in pod \"checkout-8cfb986d9-pkgzp\" keeps crashing and Kubernetes is waiting 5 minutes before attempting another restart due to repeated failures.\n\n**Solution:** 1) Check logs: `kubectl logs checkout-8cfb986d9-pkgzp -c checkout` 2) Fix app issues 3) Update image 4) Redeploy"
+      }
+    ],
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "stop_details": null,
+    "usage": {
+      "input_tokens": 143,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 97,
+      "service_tier": "standard",
+      "inference_geo": "not_available"
+    }
+  }
+}

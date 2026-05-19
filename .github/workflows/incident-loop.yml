@@ -1,0 +1,21 @@
+name: Incident PR Closed
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  notify-watcher:
+    if: contains(join(github.event.pull_request.labels.*.name, ','), 'incident-fp:')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify watcher
+        run: |
+          curl -sf -X POST "${{ secrets.WATCHER_WEBHOOK_URL }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "pr_number": ${{ github.event.pull_request.number }},
+              "merged": ${{ github.event.pull_request.merged }},
+              "merged_by": "${{ github.event.pull_request.merged_by.login }}",
+              "closed_at": "${{ github.event.pull_request.closed_at }}"
+            }'

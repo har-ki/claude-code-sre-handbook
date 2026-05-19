@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout
+  namespace: ecommerce
+  labels:
+    app: checkout
+    version: v1.4.2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: checkout
+  template:
+    metadata:
+      labels:
+        app: checkout
+        version: v1.4.2
+    spec:
+      containers:
+      - name: checkout
+        image: alpine:3.20
+        env:
+        - name: DATABASE_HOST
+          value: "postgres.database.svc.cluster.local"
+        - name: DATABASE_PORT
+          value: "5432"
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          echo "checkout service starting..."
+          echo "connecting to database at ${DATABASE_HOST}:${DATABASE_PORT}"
+          for i in $(seq 1 3); do
+            if nc -z -w2 "${DATABASE_HOST}" "${DATABASE_PORT}" 2>/dev/null; then
+              echo "database connection established"
+              exec sleep infinity
+            fi
+            echo "attempt $i: connection to ${DATABASE_HOST}:${DATABASE_PORT} failed"
+            sleep 2
+          done
+          echo "FATAL: unable to reach database at ${DATABASE_HOST}:${DATABASE_PORT} after 3 attempts"
+          exit 1

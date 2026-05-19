@@ -1,0 +1,108 @@
+---
+# Resource quota for dev-alice
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: dev-alice-quota
+  namespace: dev-alice
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: 4Gi
+    limits.cpu: "2"
+    limits.memory: 4Gi
+    pods: "10"
+    services: "5"
+    persistentvolumeclaims: "3"
+    secrets: "10"
+    configmaps: "10"
+---
+# Resource quota for dev-bob
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: dev-bob-quota
+  namespace: dev-bob
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: 4Gi
+    limits.cpu: "2"
+    limits.memory: 4Gi
+    pods: "10"
+    services: "5"
+    persistentvolumeclaims: "3"
+    secrets: "10"
+    configmaps: "10"
+---
+# Resource quota for dev-charlie
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: dev-charlie-quota
+  namespace: dev-charlie
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: 4Gi
+    limits.cpu: "2"
+    limits.memory: 4Gi
+    pods: "10"
+    services: "5"
+    persistentvolumeclaims: "3"
+    secrets: "10"
+    configmaps: "10"
+---
+# Resource quota for dev-shared
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: dev-shared-quota
+  namespace: dev-shared
+spec:
+  hard:
+    requests.cpu: "4"
+    requests.memory: 8Gi
+    limits.cpu: "4"
+    limits.memory: 8Gi
+    pods: "20"
+    services: "10"
+    persistentvolumeclaims: "5"
+    secrets: "20"
+    configmaps: "20"
+---
+# Resource quota for staging
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: staging-quota
+  namespace: staging
+spec:
+  hard:
+    requests.cpu: "8"
+    requests.memory: 16Gi
+    limits.cpu: "8"
+    limits.memory: 16Gi
+    pods: "50"
+    services: "20"
+    persistentvolumeclaims: "10"
+    secrets: "30"
+    configmaps: "30"
+---
+# Resource quota for prod
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: prod-quota
+  namespace: prod
+spec:
+  hard:
+    requests.cpu: "8"
+    requests.memory: 16Gi
+    limits.cpu: "8"
+    limits.memory: 16Gi
+    pods: "50"
+    services: "20"
+    persistentvolumeclaims: "10"
+    secrets: "30"
+    configmaps: "30"

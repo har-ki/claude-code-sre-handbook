@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ecommerce
+  labels:
+    team: platform
+    environment: staging
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: database
+  labels:
+    team: platform
+    environment: staging
