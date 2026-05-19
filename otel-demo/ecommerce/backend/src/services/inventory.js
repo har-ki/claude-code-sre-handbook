@@ -39,21 +39,22 @@ async function reserveInventory(items) {
         const currentStock = await getStock(item.id);
         span.setAttribute(`product.${item.id}.stock_before`, currentStock);
 
-        if (currentStock < item.quantity) {
+        // Check and decrement synchronously (no await between them) to prevent TOCTOU race
+        if (inventory[item.id] < item.quantity) {
           const err = new Error(
              `Insufficient stock for product ${item.id} (${productName}): ` +
-              `requested ${item.quantity}, available ${currentStock}`
+              `requested ${item.quantity}, available ${inventory[item.id]}`
           );
           span.setStatus({ code: SpanStatusCode.ERROR, message: err.message });
           span.recordException(err);
           throw err;
         }
 
-        // Validate inventory policies and apply business rules
-        await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100));
-
         inventory[item.id] -= item.quantity;
         const newStock = inventory[item.id];
+
+        // Validate inventory policies and apply business rules
+        await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100));
 
         if (newStock < 0) {
           const err = new Error(
