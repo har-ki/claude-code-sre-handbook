@@ -925,7 +925,7 @@
 
 <h1 id="05-building-the-always-on-watcher">05 — Building the Always-On Watcher<a class="headerlink" href="#05-building-the-always-on-watcher" title="Anchor link">¶</a></h1>
 <p><em>A Python daemon, two Claude Code invocations, a draft PR.</em></p>
-<p><em>A Python daemon watches error rates, hands broken services to Claude Code in two phases, and produces a draft PR. Six minutes, $0.68, one human review step. The reference implementation is in the repo — fork it before pointing it at a real service.</em></p>
+<p><em>A Python daemon watches error rates, hands broken services to Claude Code in two phases, and produces a draft PR. Five minutes, $0.62, one human review step. The reference implementation is in the repo — fork it before pointing it at a real service.</em></p>
 <p>A human SRE team works a well-worn loop. A monitoring system fires an alert. The on-call engineer opens a laptop, checks dashboards and logs, reads the relevant source code, identifies the root cause, writes a fix, opens a pull request, and hands it to a teammate for review. The fix doesn't go to production until that teammate approves.</p>
 <p>This post builds the same loop with Claude Code. A Python daemon watches error rates. When something breaks, it hands the problem to Claude in two phases: investigate, then propose a fix. The result is a draft pull request with a root-cause analysis and a working code change. A human still reviews and merges. The system cannot deploy its own work.</p>
 <table>
@@ -969,7 +969,7 @@
 </tr>
 </tbody>
 </table>
-<p>We ran it against a live race condition in an ecommerce checkout service. Six minutes from alert to a draft PR containing root-cause analysis, trace correlation, and a working fix. Total cost: $0.68. That's a page that never wakes anyone up, and MTTR measured in minutes instead of hours. <a href="https://github.com/har-ki/claude-code-sre-handbook/pull/28">PR #28</a> is the evidence — open it, read the investigation, inspect the diff.</p>
+<p>We ran it against a live race condition in an ecommerce checkout service. Five minutes from alert to a draft PR containing root-cause analysis, trace correlation, and a working fix. Total cost: $0.62. That's a page that never wakes anyone up, and MTTR measured in minutes instead of hours. <a href="https://github.com/har-ki/claude-code-sre-handbook/pull/3">PR #3</a> is the evidence — open it, read the investigation, inspect the diff.</p>
 <p>The architecture decision is <a href="../04-on-demand-vs-always-on-choosing/">Post 4</a>. The scenario is <a href="../02-investigation-to-pr/">Post 2's</a> ecommerce TOCTOU bug, now running headless. The reference implementation lives in <a href="https://github.com/har-ki/claude-code-sre-handbook/tree/main/watcher-example"><code>watcher-example/</code></a>. The rest of this post is the technical how-to.</p>
 <h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Anchor link">¶</a></h2>
 <p>Four components, one <code>docker compose up</code>:</p>
@@ -1033,7 +1033,7 @@
 <p>Before opening a PR, the watcher queries open PRs labeled <code>incident-fp:&lt;hash&gt;</code>. If one exists, it comments the new sample count and returns. Labels are created on demand by <code>gh pr create --label</code>.</p>
 <p>If a phase fails — git push rejected, rate limit, API timeout — the watcher comments the audit-log path on the PR and retries on the next poll. Dedup keeps the retries on the same PR. The loop is self-healing. It is also slower when it heals: a failed phase typically adds a poll interval (60 seconds) plus a few dedup-hit comments before the retry lands.</p>
 <p>On Phase 2 success, one line appends to <code>memory-store/incidents.jsonl</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2026-05-17T21:28:00.001141+00:00&quot;</span><span class="p">,</span><span class="nt">&quot;fingerprint&quot;</span><span class="p">:</span><span class="s2">&quot;ecommerce-api|Error&quot;</span><span class="p">,</span><span class="nt">&quot;fp_hash&quot;</span><span class="p">:</span><span class="s2">&quot;6e14cf73&quot;</span><span class="p">,</span><span class="nt">&quot;pr_url&quot;</span><span class="p">:</span><span class="s2">&quot;https://github.com/har-ki/claude-code-sre-handbook/pull/28&quot;</span><span class="p">,</span><span class="nt">&quot;incident_report_path&quot;</span><span class="p">:</span><span class="s2">&quot;docs/incidents/2026-05-17-6e14cf73.md&quot;</span><span class="p">,</span><span class="nt">&quot;root_cause&quot;</span><span class="p">:</span><span class="s2">&quot;TOCTOU race condition in inventory.js:reserveInventory() — non-atomic check-then-act under concurrent load&quot;</span><span class="p">,</span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span><span class="nt">&quot;phase_durations_sec&quot;</span><span class="p">:{</span><span class="nt">&quot;phase1&quot;</span><span class="p">:</span><span class="mf">237.3</span><span class="p">,</span><span class="nt">&quot;phase2&quot;</span><span class="p">:</span><span class="mf">100.0</span><span class="p">}}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2026-05-19T22:05:37.338764+00:00&quot;</span><span class="p">,</span><span class="nt">&quot;fingerprint&quot;</span><span class="p">:</span><span class="s2">&quot;ecommerce-api|Error&quot;</span><span class="p">,</span><span class="nt">&quot;fp_hash&quot;</span><span class="p">:</span><span class="s2">&quot;6e14cf73&quot;</span><span class="p">,</span><span class="nt">&quot;pr_url&quot;</span><span class="p">:</span><span class="s2">&quot;https://github.com/har-ki/claude-code-sre-handbook/pull/3&quot;</span><span class="p">,</span><span class="nt">&quot;incident_report_path&quot;</span><span class="p">:</span><span class="s2">&quot;docs/incidents/2026-05-19-6e14cf73.md&quot;</span><span class="p">,</span><span class="nt">&quot;root_cause&quot;</span><span class="p">:</span><span class="s2">&quot;TOCTOU race condition in inventory.js:reserveInventory() — non-atomic check-then-act under concurrent load&quot;</span><span class="p">,</span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span><span class="nt">&quot;phase_durations_sec&quot;</span><span class="p">:{</span><span class="nt">&quot;phase1&quot;</span><span class="p">:</span><span class="mf">136.0</span><span class="p">,</span><span class="nt">&quot;phase2&quot;</span><span class="p">:</span><span class="mf">143.3</span><span class="p">}}</span>
 </code></pre></div>
 <p>Not a vector store, not a graph — an append-only log to grep. A future Phase 1 prompt can read this file and link prior incidents. Not shipped yet.</p>
 <h2 id="what-the-reviewer-sees">What the reviewer sees<a class="headerlink" href="#what-the-reviewer-sees" title="Anchor link">¶</a></h2>
@@ -1067,24 +1067,24 @@
 <p>The labels are simple but composable. A team can wire Slack notifications on <code>fix-proposed</code>, build a "time to first fix" dashboard, or use the fingerprint label to link related incidents across services.</p>
 <h2 id="what-the-watcher-did">What the watcher did<a class="headerlink" href="#what-the-watcher-did" title="Anchor link">¶</a></h2>
 <p>Scale the load generator to 3 replicas. Watch.</p>
-<p><a href="https://github.com/har-ki/claude-code-sre-handbook/pull/28">PR #28</a> opened at 21:22 UTC on branch <code>incident/6e14cf73</code>. Three commits land on it:</p>
-<div class="highlight"><pre><span></span><code>939a056  incident: ecommerce-api elevated error rate (19%)
-e66e699  fix(inventory): prevent TOCTOU race in reserveInventory
-1e59470  docs(incidents): add incident report for 2026-05-17-6e14cf73
+<p><a href="https://github.com/har-ki/claude-code-sre-handbook/pull/3">PR #3</a> opened at 22:00 UTC on branch <code>incident/6e14cf73</code>. Three commits land on it:</p>
+<div class="highlight"><pre><span></span><code>839e5e6  incident: ecommerce-api elevated error rate (20%)
+3029310  fix(inventory): eliminate TOCTOU race in reserveInventory()
+df6cede  docs(incidents): add incident report for 2026-05-19-6e14cf73
 </code></pre></div>
 <p>Phase 1's investigation, abridged:</p>
 <div class="highlight"><pre><span></span><code>Minute (UTC)   Errors   Total   Rate
-21:21             48      251    19.1%  ← race fires at 21:21:21, stock → -3
-21:22             36      191    18.8%  ← trigger fired 21:22:12Z
+21:59             20       —          ← race fires at 21:59:35, stock → -3
+22:00             68       —          ← trigger fired 22:00:46Z
 </code></pre></div>
-<p>Two race-condition log entries, five milliseconds apart, captured the onset:</p>
-<div class="highlight"><pre><span></span><code>21:21:21.633  StockMismatchError: stock for product 7 is -1
+<p>Two race-condition log entries, one millisecond apart, captured the onset:</p>
+<div class="highlight"><pre><span></span><code>21:59:35.231  StockMismatchError: stock for product 7 is -1
               &quot;stock was read as 5 but another request decremented it&quot;
-21:21:21.638  StockMismatchError: stock for product 7 is -3
+21:59:35.232  StockMismatchError: stock for product 7 is -3
               (second concurrent write resolves)
 </code></pre></div>
 <p>Root cause: TOCTOU race in <code>inventory.js</code> between an async <code>getStock()</code> and a non-atomic decrement. Confidence stated as high, with the millisecond-precision log entries cited as supporting evidence. Phase 2's fix adds a synchronous re-read of inventory immediately before the decrement — no <code>await</code> in the gap, no interleave.</p>
-<p>Cost: ~$0.68 end-to-end. Phase 1 $0.44, Phase 2 $0.24.</p>
+<p>Cost: ~$0.62 end-to-end. Phase 1 $0.30, Phase 2 $0.32.</p>
 <h2 id="production-considerations">Production considerations<a class="headerlink" href="#production-considerations" title="Anchor link">¶</a></h2>
 <p>The reference implementation works. It is not production-hardened. Here's what to add before pointing it at a real service.</p>
 <h3 id="guardrails-to-add">Guardrails to add<a class="headerlink" href="#guardrails-to-add" title="Anchor link">¶</a></h3>
@@ -1144,7 +1144,7 @@ e66e699  fix(inventory): prevent TOCTOU race in reserveInventory
 <ul>
 <li><strong>Alert fatigue 2.0.</strong> If the watcher creates PRs faster than humans can review them, the backlog grows and PRs become stale. While deduplication stops exact duplicates, similar but distinct issues can still accumulate.</li>
 <li><strong>Confident but wrong.</strong> The model may claim "high confidence" in a root cause that's actually just a symptom. Human reviewers are the safeguard — but only if they read the investigation section, not just the code diff.</li>
-<li><strong>Cost at scale.</strong> $0.68 per incident is inexpensive, but with twenty incidents a day across ten services, that's $14 per day or about $400 per month. This is manageable for most teams, but costs scale linearly. Noisy services with frequent alerts will need a circuit breaker.</li>
+<li><strong>Cost at scale.</strong> $0.62 per incident is inexpensive, but with twenty incidents a day across ten services, that's $12 per day or about $370 per month. This is manageable for most teams, but costs scale linearly. Noisy services with frequent alerts will need a circuit breaker.</li>
 </ul>
 <h2 id="try-it-yourself">Try it yourself<a class="headerlink" href="#try-it-yourself" title="Anchor link">¶</a></h2>
 <p>Start by testing with the bundled demo before connecting to a live service. The prompts, allowedTools strings, and gate policy are tuned for demo scenarios.</p>
@@ -1159,7 +1159,7 @@ e66e699  fix(inventory): prevent TOCTOU race in reserveInventory
 <div class="highlight"><pre><span></span><code><span class="c1"># Follow the watcher logs</span>
 docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>alert-watcher
 </code></pre></div>
-<p>Within about six minutes you should see a draft PR appear on your repo with a root-cause investigation and a proposed fix. Open it, read the investigation section, inspect the diff, and check the incident report in <code>docs/incidents/</code>. When you're satisfied, mark it ready for review and merge — that's the one human step.</p>
+<p>Within about five minutes you should see a draft PR appear on your repo with a root-cause investigation and a proposed fix. Open it, read the investigation section, inspect the diff, and check the incident report in <code>docs/incidents/</code>. When you're satisfied, mark it ready for review and merge — that's the one human step.</p>
 <p>Three config knobs in <code>alert-watcher/config.yaml</code>: <strong><code>threshold</code></strong> (error rate to trigger, default 0.15), <strong><code>max_turns</code></strong> (turns per phase, default 40), and <strong><code>poll_interval_seconds</code></strong> (polling frequency, default 60).</p>
 <p>Teardown: <code>./teardown-post05.sh</code></p>
 <p>Full setup details: <a href="https://github.com/har-ki/claude-code-sre-handbook/tree/main/watcher-example">watcher-example README</a>.</p>
