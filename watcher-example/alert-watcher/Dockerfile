@@ -17,6 +17,9 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends gh docker-ce-cli && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+RUN git config --global user.email "watcher@claude-sre" && \
+    git config --global user.name "SRE Watcher"
+
 WORKDIR /app
 
 COPY requirements.txt .
