@@ -177,12 +177,8 @@ Who should run this:
 
 The completed run here was gated by a 36 GiB laptop, not by the approach. On a Mac with more memory and faster silicon, the limits I hit are the first ones to move. If you've got the hardware, this is worth trying — and I'd genuinely like to hear how it runs for you.
 
-What this post deliberately doesn't settle is whether the local model is good enough at the work — setup and quality are different claims. The next post runs the same five Kubernetes incidents from earlier in the series on this exact stack and puts numbers on it, frontier versus local, side by side. The end-to-end demo that closes the loop gets its own full walkthrough later in Part 2.
+What this post deliberately doesn't settle is whether the local model is good enough at the work — setup and quality are different claims. The next post takes the same investigation-to-PR demo from Post 2 and runs it air-gapped on this exact stack, end to end: same scenario, local model, nothing leaving the machine.
 
 ---
 
-The full setup notes, the environment file, and the raw Ollama logs behind every number here are in the repo at `shared/ollama-setup.md` — reproduce it on your own Apple Silicon box.
-
----
-
-*Working through this on your own infrastructure? I help teams operationalize Claude Code for Kubernetes operations. [contact link]*
+*Working through this on your own infrastructure? Happy to jam — [drop me a line](https://github.com/har-ki).*
