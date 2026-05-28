@@ -81,4 +81,7 @@ nav:
       - "3. Claude Code on k8s-ai-bench": handbook/03-five-incidents-frontier.md
       - "4. On-Demand vs Always-On — Choosing": handbook/04-on-demand-vs-always-on-choosing.md
       - "5. Building the Always-On Watcher": handbook/05-building-the-always-on-watcher.md
+    - "Part 2 — OSS Models":
+      - "6. Air-Gapped Claude Code": handbook/06-air-gapped.md
+      - "7. From Investigation to PR, Air-Gapped": handbook/07-airgapped-pr.md
     - "What's Next": handbook/whats-next.md

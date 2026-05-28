@@ -1,3 +1,3 @@
 # What's Next
 
-In the next posts I plan to run the same experiments with open-source models — served locally by Ollama, fully air-gapped — and report the findings.
+Next up: running Claude Code air-gapped against the full k8s-ai-bench suite — the same Kubernetes incidents from Part 1 — on a local model served by Ollama, and reporting the findings.
