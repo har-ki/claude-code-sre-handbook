@@ -447,6 +447,9 @@
 .md-typeset table:not([class]) td {
   border-top: 1px solid var(--md-default-fg-color--lightest);
 }
+.md-typeset table:not([class]) td:first-child code {
+  white-space: nowrap;
+}
 
 
 /* ── Footer — quiet ─────────────────────────────────────────────── */
