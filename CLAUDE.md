@@ -60,10 +60,30 @@ Every scenario directory under `scenarios/` must contain:
 ## Skills
 
 Three operational skills live in `.claude/skills/`. Load them at the start
-of any investigation session:
+of any investigation session by calling the Skill tool, e.g.
+`Skill(skill="k8s")`, `Skill(skill="clickhouse")`, `Skill(skill="gh")`:
 
 - **clickhouse** — OTel log/trace/metric queries. Use `clickhouse client`
   (two words, not hyphenated). Tables: `otel_logs`, `otel_traces`,
   `otel_metrics_gauge`, `otel_metrics_sum`, `otel_metrics_histogram`.
 - **k8s** — Kubernetes diagnosis and remediation via kubectl.
 - **gh** — GitHub CLI for commits, issues, and PRs.
+
+Always load the relevant skill before starting work. If the user mentions
+GitHub, PR, pull request, commits, or gh cli, call `Skill(skill="gh")`
+before proceeding. If the user mentions Kubernetes, pods, or kubectl, call
+`Skill(skill="k8s")`. If the user mentions ClickHouse, otel, logs, or
+traces, call `Skill(skill="clickhouse")`.
+
+## Tool call budget
+
+Complete tasks in under 20 tool calls per user prompt. If you reach 20,
+STOP and summarize what you have so far. Prefer fewer, targeted tool calls
+over many exploratory ones.
+
+## Investigate vs Fix
+
+When asked to "investigate", "diagnose", or "summarize" — ONLY diagnose
+and report findings. Do NOT edit files, create branches, or open PRs
+unless the user explicitly asks for a fix. Wait for the user to request
+code changes before making them.

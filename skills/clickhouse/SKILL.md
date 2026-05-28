@@ -57,9 +57,20 @@ NEVER use single quotes around `--query` when SQL contains string literals — t
 
 Connection options: `--host`, `--port`, `--user`, `--password`, `--database`, `--format`.
 
+## Early Exit Rule
+
+**STOP investigating as soon as you identify a root cause.** Do not continue
+to the next methodology step. Instead, skip directly to CONCLUDE and present
+your findings with evidence.
+
+- Maximum 10 queries per investigation. If you reach 10, STOP and summarize.
+- Never re-run a query you already executed or a variation of one that returned data.
+- If DRILL (Step 3) reveals the root cause, skip MEASURE and CORRELATE entirely.
+
 ## Investigation Methodology
 
 WORKFLOW: SCOPE → TRIAGE → DRILL → MEASURE → CORRELATE → CONCLUDE
+(Skip to CONCLUDE as soon as root cause is identified — do not complete all steps.)
 
 Execute queries autonomously — do not stop to ask the user for permission between steps.
 
@@ -241,13 +252,6 @@ SELECT DISTINCT MetricName FROM otel_metrics_gauge ORDER BY MetricName;
 SELECT DISTINCT arrayJoin(mapKeys(LogAttributes)) AS key FROM otel_logs LIMIT 100;
 SELECT max(Timestamp) AS latest_log FROM otel_logs;
 ```
-
-## Efficiency Rules
-
-- **Never re-query data you already have.** If a query returned results, use those results — do not run the same or similar query again.
-- **If a table or service returned empty once, do not query it again.**
-- **Deliver your summary as soon as you have evidence for a root cause.** Do not keep querying for confirmation. State what you found, cite the data, and conclude.
-- **Limit total queries to 15.** If you haven't found the root cause in 15 queries, summarize what you know so far and ask the user for guidance.
 
 ## NEVER
 
