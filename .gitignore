@@ -27,6 +27,7 @@ venv/
 env/
 ENV/
 bin/
+!benchmark/bin/
 pyvenv.cfg
 
 # MkDocs
