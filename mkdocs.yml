@@ -84,4 +84,5 @@ nav:
     - "Part 2 — OSS Models":
       - "6. Air-Gapped Claude Code": handbook/06-air-gapped.md
       - "7. From Investigation to PR, Air-Gapped": handbook/07-airgapped-pr.md
+      - "8. Air-Gapped Qwen3.6 on k8s-ai-bench": handbook/08-benchmark-comparison.md
     - "What's Next": handbook/whats-next.md

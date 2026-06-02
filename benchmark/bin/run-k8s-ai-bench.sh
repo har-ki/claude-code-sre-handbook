@@ -127,6 +127,47 @@ run_benchmark() {
     unset CLAUDE_MODEL 2>/dev/null || true
   fi
 
+  # --- Inference proxy for Ollama metrics ---
+  PROXY_PID=""
+  PROXY_PORT=11500
+  TASK_NAME_FILE="/tmp/benchmark-task-$$.txt"
+
+  if [[ "${ANTHROPIC_BASE_URL:-}" == *"localhost"* ]] || \
+     [[ "${ANTHROPIC_BASE_URL:-}" == *"127.0.0.1"* ]]; then
+    UPSTREAM_URL="${ANTHROPIC_BASE_URL}"
+    METRICS_FILE="${run_dir}/inference-metrics.jsonl"
+
+    python3 "${REPO_ROOT}/benchmark/bin/inference-proxy.py" \
+      --listen-port "${PROXY_PORT}" \
+      --upstream "${UPSTREAM_URL}" \
+      --metrics-file "${METRICS_FILE}" \
+      --task-name-file "${TASK_NAME_FILE}" &
+    PROXY_PID=$!
+
+    # Wait for proxy to be ready
+    for _i in $(seq 1 20); do
+      if curl -s "http://127.0.0.1:${PROXY_PORT}/health" >/dev/null 2>&1; then
+        break
+      fi
+      sleep 0.25
+    done
+
+    export ANTHROPIC_BASE_URL="http://127.0.0.1:${PROXY_PORT}"
+    export BENCHMARK_TASK_NAME_FILE="${TASK_NAME_FILE}"
+    echo "  Inference proxy started (PID ${PROXY_PID}, port ${PROXY_PORT})"
+    echo "  Upstream: ${UPSTREAM_URL}"
+  fi
+
+  # Ensure proxy cleanup on exit
+  cleanup_proxy() {
+    if [[ -n "${PROXY_PID:-}" ]]; then
+      kill "${PROXY_PID}" 2>/dev/null || true
+      wait "${PROXY_PID}" 2>/dev/null || true
+    fi
+    rm -f "${TASK_NAME_FILE}"
+  }
+  trap cleanup_proxy EXIT
+
   echo ""
   echo "=============================================="
   echo "  k8s-ai-bench: ${skill_tag} mode"
@@ -170,6 +211,9 @@ run_benchmark() {
     echo ""
     echo "--- Iteration ${i} complete ---"
   done
+
+  # Stop inference proxy
+  cleanup_proxy
 
   # Analyze results
   echo ""
