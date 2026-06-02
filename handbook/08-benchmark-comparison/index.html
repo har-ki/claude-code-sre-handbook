@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../07-airgapped-pr/">
       
       
-        <link rel="next" href="../02-investigation-to-pr/">
+        <link rel="next" href="../whats-next/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>1. The Harness Problem - The Claude Code SRE Handbook</title>
+        <title>8. Air-Gapped Qwen3.6 on k8s-ai-bench - The Claude Code SRE Handbook</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#01-the-harness-problem" class="md-skip">
+        <a href="#08-the-same-problems-locally-air-gapped-qwen36-on-k8s-ai-bench" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              1. The Harness Problem
+              8. Air-Gapped Qwen3.6 on k8s-ai-bench
             
           </span>
         </div>
@@ -336,10 +336,8 @@
                 
   
   
-    
   
   
-  
     
     
       
@@ -359,11 +357,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_2" >
         
           
           <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
@@ -384,7 +384,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -399,37 +399,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    1. The Harness Problem
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../01-harness-problem/" class="md-nav__link">
         
   
   
@@ -445,92 +418,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-ai-sre-means-today" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What "AI SRE" means today
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-harness-problem" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The harness problem
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-claude-code-has-the-right-shape" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why Claude Code has the right shape
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-this-harness-is-missing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What this harness is missing
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#a-checklist-for-evaluating-an-ai-sre-tool" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        A checklist for evaluating an AI SRE tool
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-this-series-covers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What this series covers
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -660,8 +547,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -677,13 +566,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" checked>
         
           
           <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
@@ -704,7 +591,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_1_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -775,10 +662,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../08-benchmark-comparison/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Air-Gapped Qwen3.6 on k8s-ai-bench
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -794,6 +708,142 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-three-it-missed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The three it missed
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The three it missed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-dev-cluster-out-of-clock-not-out-of-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        setup-dev-cluster — out of clock, not out of depth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resize-pvc-the-same-wall-frontier-hit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resize-pvc — the same wall frontier hit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-pod-the-trivial-one-it-keeps-failing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create-pod — the trivial one it keeps failing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix-crashloop-passed-clean-nearly-cheated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fix-crashloop — passed clean, nearly cheated
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#speed-is-the-tax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Speed is the tax
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tool-calls-hold-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tool calls hold up
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-verdict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The verdict
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -869,10 +919,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-ai-sre-means-today" class="md-nav__link">
+  <a href="#setup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What "AI SRE" means today
+        Setup
       
     </span>
   </a>
@@ -880,10 +930,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-harness-problem" class="md-nav__link">
+  <a href="#results" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The harness problem
+        Results
       
     </span>
   </a>
@@ -891,10 +941,71 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-claude-code-has-the-right-shape" class="md-nav__link">
+  <a href="#the-three-it-missed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why Claude Code has the right shape
+        The three it missed
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The three it missed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-dev-cluster-out-of-clock-not-out-of-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        setup-dev-cluster — out of clock, not out of depth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resize-pvc-the-same-wall-frontier-hit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resize-pvc — the same wall frontier hit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-pod-the-trivial-one-it-keeps-failing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create-pod — the trivial one it keeps failing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix-crashloop-passed-clean-nearly-cheated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fix-crashloop — passed clean, nearly cheated
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#speed-is-the-tax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Speed is the tax
       
     </span>
   </a>
@@ -902,10 +1013,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-this-harness-is-missing" class="md-nav__link">
+  <a href="#tool-calls-hold-up" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What this harness is missing
+        Tool calls hold up
       
     </span>
   </a>
@@ -913,21 +1024,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#a-checklist-for-evaluating-an-ai-sre-tool" class="md-nav__link">
+  <a href="#the-verdict" class="md-nav__link">
     <span class="md-ellipsis">
       
-        A checklist for evaluating an AI SRE tool
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-this-series-covers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What this series covers
+        The verdict
       
     </span>
   </a>
@@ -954,143 +1054,244 @@
   
 
 
-<h1 id="01-the-harness-problem">01 — The Harness Problem<a class="headerlink" href="#01-the-harness-problem" title="Anchor link">¶</a></h1>
-<p><em>Why most AI SREs hit a capability cliff</em></p>
-<p>A <code>checkout</code> pod in the <code>ecommerce</code> namespace of a local Kubernetes cluster is crashing. Three AI SRE tools are asked the same question. One returns template advice. One investigates thoroughly and finds the root cause but cannot fix it. One walks the cluster, finds the root cause, and could open the PR.</p>
-<p>The models are comparable. The harness is not.</p>
-<p><strong>Tool 1:</strong> <a href="https://github.com/k8sgpt-ai/k8sgpt">k8sgpt</a> receives the pod error string and returns generic advice: "Check logs, review container image &amp; code, verify resource limits, check env variables." No mention of NetworkPolicy — the model has no way to know about it. The harness gives it one error string and nothing else.</p>
-<p><strong>Tool 2:</strong> <a href="https://github.com/robusta-dev/holmesgpt">HolmesGPT</a> runs 18 tool calls against the live cluster — reads logs, checks the database service across namespaces, finds the <code>restrict-egress</code> NetworkPolicy, inspects its YAML, checks namespace labels, and identifies the root cause: <code>role: data-tier</code> is missing from the <code>database</code> namespace. It even proposes <code>kubectl label namespace database role=data-tier</code>. But when asked to apply the fix, it fails — HolmesGPT is read-only by design. The diagnosis is complete; the remediation boundary is where it stops.</p>
-<p><strong>Tool 3:</strong> <a href="https://claude.com/claude-code">Claude Code</a> follows the same investigation path — CrashLoopBackOff, logs, cross-namespace service checks, NetworkPolicy inspection, namespace label mismatch — and identifies the same root cause. The difference: Claude Code can apply the fix, edit source files, create a branch, and open a PR. The investigation-to-remediation loop closes in one session.</p>
-<p>Same model class, same cluster. The first tool sees only an error string. The second two see the full cluster, and both find the root cause. The difference is what happens next — this is the harness problem.</p>
+<h1 id="08-the-same-problems-locally-air-gapped-qwen36-on-k8s-ai-bench">08 — The Same Problems, Locally: Air-Gapped Qwen3.6 on k8s-ai-bench<a class="headerlink" href="#08-the-same-problems-locally-air-gapped-qwen36-on-k8s-ai-bench" title="Anchor link">¶</a></h1>
+<p><em>Frontier vs. air-gapped on the same 24-scenario benchmark.</em></p>
+<p>A 35B coding model running fully air-gapped on a laptop achieved 21 out of 24 on the Kubernetes benchmark—just two short of Frontier Sonnet, both using the same Skill. None of the misses was a reasoning failure. Going air-gapped doesn't cost you capability; it costs you speed and hardware. That's the core trade-off, clearly illustrated by the three failures.</p>
+<p>Post 3 ran k8s-ai-bench on frontier models with the SRE Skill; Sonnet 4.6 reached 23 out of 24. This post repeats all 24 scenarios using the same Skill and harness, but now Claude Code runs qwen3.6:35b-a3b-coding-nvfp4 locally on an M3 Pro laptop with Ollama.</p>
+<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Anchor link">¶</a></h2>
+<p>Same runner, harness, and hardware as Post 3—the only change is model and endpoint:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_BASE_URL</span><span class="o">=</span>http://localhost:11434
+claude<span class="w"> </span>-p<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--dangerously-skip-permissions<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--allowedTools<span class="w"> </span><span class="s2">&quot;Bash&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model<span class="w"> </span>qwen3.6:35b-a3b-coding-nvfp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--append-system-prompt<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>skills/sre/SKILL.md<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>&lt;<span class="w"> </span>&lt;<span class="o">(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PROMPT</span><span class="s2">&quot;</span><span class="o">)</span>
+</code></pre></div>
+<p>Each task gets a fresh kind cluster; exit 0 from verify.sh means pass. Ollama tuning (OLLAMA_MLX, multi-user cache, 32K context) is detailed in Post 6.</p>
+<p>Quick note on what counts as a "pass": In Post 3, all frontier runs finished within a 10-minute timeout and a $5 budget—API-fast. Local inference ran slower, with five tasks exceeding those limits. I re-ran those with a 20-minute timeout and a $10 budget, changing nothing else. On the first try, 16 out of 24 tasks passed; with the relaxed limits, it was 21 out of 24. Air-gapped runs have no per-token cost, so patience is the only real limit. I'm reporting both results, but 21/24 is what counts.</p>
+<h2 id="results">Results<a class="headerlink" href="#results" title="Anchor link">¶</a></h2>
 <table>
 <thead>
 <tr>
-<th>Capability</th>
-<th>k8sgpt</th>
-<th>HolmesGPT</th>
-<th>Claude Code</th>
+<th>Scenario</th>
+<th>Qwen3.6 + Skill</th>
+<th>Sonnet 4.6 + Skill</th>
+<th>Opus 4.6 (no Skill)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Read logs</td>
-<td>No (receives error string only)</td>
-<td>Yes</td>
-<td>Yes</td>
+<td>create-canary-deployment</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
 </tr>
 <tr>
-<td>Cross-namespace check</td>
-<td>No</td>
-<td>Yes</td>
-<td>Yes</td>
+<td>create-network-policy</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
 </tr>
 <tr>
-<td>Inspected NetworkPolicy</td>
-<td>No</td>
-<td>Yes</td>
-<td>Yes</td>
+<td>create-pod</td>
+<td><strong>FAIL</strong></td>
+<td>PASS</td>
+<td>PASS</td>
 </tr>
 <tr>
-<td>Found the label mismatch</td>
-<td>No</td>
-<td>Yes</td>
-<td>Yes</td>
+<td>create-pod-mount-configmaps</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
 </tr>
 <tr>
-<td>Root cause identified</td>
-<td>No</td>
-<td>Yes</td>
-<td>Yes</td>
+<td>create-pod-resources-limits</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
 </tr>
 <tr>
-<td>Can apply the fix</td>
-<td>No</td>
-<td>No — read-only by design</td>
-<td>Yes</td>
+<td>create-simple-rbac</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
 </tr>
 <tr>
-<td>Can write code and open a PR</td>
-<td>No</td>
-<td>No</td>
-<td>Yes</td>
+<td>debug-app-logs</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>deployment-traffic-switch</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>fix-crashloop</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>fix-image-pull</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>fix-pending-pod</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>fix-probes</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>fix-rbac-wrong-resource</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>fix-service-routing</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>fix-service-with-no-endpoints</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>horizontal-pod-autoscaler</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>list-images-for-pods</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>multi-container-pod-communication</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>resize-pvc</td>
+<td><strong>FAIL</strong></td>
+<td>PASS</td>
+<td><strong>FAIL</strong></td>
+</tr>
+<tr>
+<td>rolling-update-deployment</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>scale-deployment</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>scale-down-deployment</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>setup-dev-cluster</td>
+<td><strong>FAIL</strong></td>
+<td><strong>FAIL</strong></td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>statefulset-lifecycle</td>
+<td>PASS</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>21/24 (88%)</strong></td>
+<td><strong>23/24 (96%)</strong></td>
+<td><strong>23/24 (96%)</strong></td>
 </tr>
 </tbody>
 </table>
-<p>The scenario, transcripts, and manifests are in the repo at <a href="https://github.com/har-ki/claude-code-sre-handbook/tree/main/scenarios/harness-vs-model"><code>scenarios/harness-vs-model/</code></a> — reproduce it yourself.</p>
-<h2 id="what-ai-sre-means-today">What "AI SRE" means today<a class="headerlink" href="#what-ai-sre-means-today" title="Anchor link">¶</a></h2>
-<p>A handful of projects have staked out the "AI for Kubernetes operations" space, with three distinct architectures:</p>
-<ul>
-<li><a href="https://github.com/k8sgpt-ai/k8sgpt">k8sgpt</a> (CNCF Sandbox): Utilizes analyzers that focus on known Kubernetes resource failures via rule-based Go code. The <code>--explain</code> flag uses an LLM to rephrase findings but does not enhance investigation or tool access.</li>
-<li><a href="https://github.com/robusta-dev/holmesgpt">HolmesGPT</a> (CNCF Sandbox): An agentic investigator. The LLM iteratively calls tools from a configurable toolset (Kubernetes, Prometheus, Grafana, Datadog, GitHub Actions) for multi-turn investigations. Read-only by design; respects RBAC. In the opener's experiment, HolmesGPT ran 18 tool calls and found the root cause — diagnosis matches Claude Code. The read-only boundary is where the two diverge: HolmesGPT cannot apply the fix.</li>
-<li>Observability vendor AI: Most vendors offer an AI assistant built on alerting and metrics. These tools mainly summarize alerts and provide limited investigative depth compared to dedicated SRE solutions.</li>
-</ul>
-<p>Some of these tools diagnose well — HolmesGPT's investigation in the opener is thorough. But none combine diagnosis and fix into a single, seamless process that ends with a code change.</p>
-<h2 id="the-harness-problem">The harness problem<a class="headerlink" href="#the-harness-problem" title="Anchor link">¶</a></h2>
-<p>A <em>harness</em> is scaffolding that lets a model interact with its tools, prompts, and operations.</p>
-<p>The harness problem limits a model: it knows much but acts only through its tools.</p>
-<p>If the harness blocks an action, the model simply gives its best answer, not an error.</p>
-<p>AI SRE tools tend to hit three cliffs:</p>
-<ul>
-<li>Cross-domain issues. k8sgpt-class tools can't connect findings because analyzers run independently. HolmesGPT's agentic loop crosses domains — in the opener it followed a connection failure across namespaces to a NetworkPolicy and identified the label mismatch. This cliff varies by tool design, and HolmesGPT clears it.</li>
-<li>Application code issues. Cluster problems may come from bugs in app code. Most tools can't access the codebase and miss the cause. HolmesGPT can do some code investigation, but most tools can't cross between cluster and code.</li>
-<li>
-<p>Writing a fix. Closing the loop. No tool in the AI SRE category writes a patch and opens a PR:</p>
-<ul>
-<li>HolmesGPT — finds the root cause, proposes the fix command, but cannot execute it. Read-only by design.</li>
-<li>k8sgpt — detection-and-explanation.</li>
-<li>Observability AI — summarization-of-alert layers.</li>
-</ul>
-<p>Even when an agent identifies the exact fix, the output is prose. An engineer must still apply the change, create a branch, commit, and PR.</p>
-</li>
-</ul>
-<p>The third cliff is the one that matters most. HolmesGPT proves that agentic investigation can match a general-purpose harness on diagnosis. But without write access, the loop stays open. This gap — between knowing the fix and applying it — is what separates AI assistance from a complete SRE process. The series will focus on closing it.</p>
-<h2 id="why-claude-code-has-the-right-shape">Why Claude Code has the right shape<a class="headerlink" href="#why-claude-code-has-the-right-shape" title="Anchor link">¶</a></h2>
-<p><img alt="Engineer-shaped harness" src="../../assets/01-engineer-shaped-harness.svg" /></p>
-<p><a href="https://claude.com/claude-code">Claude Code</a> does not ship an SRE toolset. Its built-in tools are general-purpose:</p>
-<ul>
-<li>a shell</li>
-<li>file read, write, and edit</li>
-<li>search primitives</li>
-<li>free-form reasoning</li>
-</ul>
-<p>None of it is SRE-specific. There is no <code>analyze_pod</code>. There is no <code>check_image_pull</code>. There is no theory of operational categories.</p>
-<p>This isn't a missing feature; it's by design.</p>
-<p>Given a shell and file read, an agent investigating the opening case does what an engineer would do: it runs <code>kubectl describe pod</code>, sees the registry pull failure, then runs <code>kubectl get networkpolicy -A</code>, sees the recent change, then <code>kubectl get networkpolicy &lt;name&gt; -o yaml</code>, reads it, and explains the egress restriction. Nobody pre-decided that <code>ImagePullBackOff</code> and <code>NetworkPolicy</code> were composable categories. The composition emerged from reasoning over a general action space.</p>
-<p>Given file read and edit, the same agent can <code>cat</code> a source file, find the bug, propose a patch, and — with a shell and <code>gh</code> available — open a PR. The "investigation → root cause → code fix → PR" arc is one continuous session, not three handoffs across three tools.</p>
-<p>In 2019, Rich Sutton wrote an essay called <a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html">The Bitter Lesson</a>, arguing that general methods consistently outpace hand-engineered knowledge in AI. Chess, Go, speech, vision — domain expertise is surpassed as general methods get more compute.</p>
-<p>Key lesson: general-purpose harnesses capture complexity and outperform fixed-scope tools over time. The gap will widen as models strengthen.</p>
-<h2 id="what-this-harness-is-missing">What this harness is missing<a class="headerlink" href="#what-this-harness-is-missing" title="Anchor link">¶</a></h2>
-<p>The harness shape is correct, but supporting systems are still needed. Three gaps matter:</p>
-<ul>
-<li>Memory. Claude Code lacks automatic memory across incidents. Continuity depends on what's in the workspace. For on-call teams, deliberate design is needed.</li>
-<li>Guardrails. A general-purpose shell is general-purpose. Tool-use approval prompts exist, and permission scoping is configurable, but the harder pieces have to be built around the harness, not assumed in it:<ul>
-<li>read-only defaults for cluster operations</li>
-<li>approval gates for state-changing calls</li>
-<li>dry-run for code patches</li>
-<li>audit trails</li>
-</ul>
-</li>
-<li>Triggers. Claude Code is on-demand: you start a session, you type. SRE work has another mode — push, event-driven, alert-fired at three in the morning. Hooking the harness to alert webhooks, <code>kube-event-exporter</code>, or scheduled scans turns it into an always-on system. That is a different beast with different failure modes (runaway loops, alert fatigue 2.0, cost), and it deserves its own post. It will get one.</li>
-</ul>
-<p>Supporting systems matter just as much as harness shape. A terminal-only solution lacks operational value without memory, guardrails, and triggers.</p>
-<h2 id="a-checklist-for-evaluating-an-ai-sre-tool">A checklist for evaluating an AI SRE tool<a class="headerlink" href="#a-checklist-for-evaluating-an-ai-sre-tool" title="Anchor link">¶</a></h2>
-<p>If you are looking at an AI SRE product today — your own or a vendor's — five questions will tell you what kind of harness it has:</p>
-<ol>
-<li>How does the tool behave when the problem does not match any category in its toolset or analyzer library? If the answer is "we add a new analyzer," the product lags every novel incident by one release cycle.</li>
-<li>Can the agent read arbitrary files in your repositories, including service source code, by default? If only with a custom toolset configuration, the default user experience stops at the cluster boundary.</li>
-<li>Can it write a patch and open a pull request? If no, the diagnosis is the deliverable, and a human still does the work.</li>
-<li>How does the action space change when the underlying model gets stronger? If the answer is "it does not, our tools are fixed," the product is decoupled from the trend line it depends on.</li>
-<li>What does a session transcript look like when the tool fails? Vendors who will not show you a failure transcript have not earned the demo.</li>
-</ol>
-<h2 id="what-this-series-covers">What this series covers<a class="headerlink" href="#what-this-series-covers" title="Anchor link">¶</a></h2>
-<ul>
-<li>Build a Skill that takes Claude Code from investigation to pull request on an ecommerce incident.</li>
-<li>Benchmark it across canonical Kubernetes failure scenarios.</li>
-<li>Re-run the same work air-gapped — Qwen3.6 served by Ollama on a laptop, no API calls leaving the machine — with an honest account of what holds up and what breaks.</li>
-<li>Close with on-demand versus always-on architectures and a reference watcher.</li>
-</ul>
-<p>Every post ships an artifact: code, transcripts, benchmark data, or a demo.</p>
-<p>Next: <a href="../02-investigation-to-pr/">Post 2</a> puts a real Kubernetes cluster in front of this argument and times the loop — investigation to pull request in under six minutes.</p>
+<p>All models scored similarly, but each failed different tasks—no clear winner across the board. On an apples-to-apples test, the 35B laptop model trailed by just two scenarios, a smaller and less predictable gap than hardware specs suggest.</p>
+<h2 id="the-three-it-missed">The three it missed<a class="headerlink" href="#the-three-it-missed" title="Anchor link">¶</a></h2>
+<h3 id="setup-dev-cluster-out-of-clock-not-out-of-depth">setup-dev-cluster — out of clock, not out of depth<a class="headerlink" href="#setup-dev-cluster-out-of-clock-not-out-of-depth" title="Anchor link">¶</a></h3>
+<p>This multi-tenant RBAC scenario also tripped up Frontier Sonnet. I expected the local model to struggle, but it didn't—Qwen3.6 generated the full build (six namespaces, three service accounts, twelve RBAC resources, six quotas, twenty-five network policies, plus setup and teardown scripts). However, it was still generating after 30 minutes, so I stopped it before verification. Result: no-score, not a clean fail—the manifests looked good, but nothing was verified.</p>
+<p>The architecture was sound. By this point, context had exceeded the 32K limit, reaching 73K tokens, memory was within 1.45 GiB of the max, and per-turn latency ranged from 2–4.5 minutes. The issue wasn't reasoning — it was memory pressure, fixable by capping context, splitting the task, or better hardware.</p>
+<h3 id="resize-pvc-the-same-wall-frontier-hit">resize-pvc — the same wall frontier hit<a class="headerlink" href="#resize-pvc-the-same-wall-frontier-hit" title="Anchor link">¶</a></h3>
+<p>In Post 3, this failed for every model, including frontier Opus: kind's local-path provisioner can't expand volumes. Qwen3.6 hit the same wall. The verifier issues the resize, then waits for the volume to actually report the new capacity—and on local-path it never does, so the wait runs until the 20-minute timeout. The timeout isn't the model running out of steam; it's the verifier correctly waiting on an expansion the provisioner can't perform. (The first attempt is a separate, mundane failure—it died on the $5 budget before reaching the resize at all.)</p>
+<p>So this isn't a local-model weakness. It's an unwinnable scenario on kind, and Qwen3.6 failed it exactly the way the strongest frontier model did.</p>
+<h3 id="create-pod-the-trivial-one-it-keeps-failing">create-pod — the trivial one it keeps failing<a class="headerlink" href="#create-pod-the-trivial-one-it-keeps-failing" title="Anchor link">¶</a></h3>
+<p>The simplest task: run a pod on nginx. The model did—right name, namespace, Running and Ready—but failed both attempts on one detail: it wrote nginx:latest, but the verifier matched only bare nginx:</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$IMAGE</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;nginx&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Pod is using incorrect image: </span><span class="nv">$IMAGE</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</code></pre></div>
+<p>It's not confusion—the opposite. The model is more explicit than the verifier wants, appending :latest as a default and reporting it. It passes fix-rbac-wrong-resource and statefulset-lifecycle, then trips on a tag convention—a deterministic quirk to design around, not a reasoning gap.</p>
+<h3 id="fix-crashloop-passed-clean-nearly-cheated">fix-crashloop — passed clean, nearly cheated<a class="headerlink" href="#fix-crashloop-passed-clean-nearly-cheated" title="Anchor link">¶</a></h3>
+<p>The pass was a real fix: keep the nginx image, replace the broken python3 command with nginx -g 'daemon off;'. Both failed attempts tried to swap in python:3.11-slim—the same verifier-gaming shortcut frontier Sonnet used in Post 3. The verifier checks readiness, not image identity; the swap would have passed had it finished. The successful run earned the pass. The instinct to game was present in the failures too.</p>
+<h2 id="speed-is-the-tax">Speed is the tax<a class="headerlink" href="#speed-is-the-tax" title="Anchor link">¶</a></h2>
+<p>The median wall-clock time per task was 5 minutes 39 seconds, but the real bottleneck was per-turn latency. Each task required several back-and-forths; the median LLM turn took 53.7 seconds.</p>
+<p>Frontier models finish most tasks in under a minute. Here, a single turn nearly hits a minute, and the toughest tasks stretched to 2–4.5 minutes per turn—so ten turns could mean half an hour on one task. That's what dragged down setup-dev-cluster.</p>
+<p>But the slowness wasn't just inefficiency—it was resource starvation. Memory usage climbed steadily as the KV cache grew:</p>
+<table>
+<thead>
+<tr>
+<th>Memory</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model weights</td>
+<td>20.4 GiB</td>
+</tr>
+<tr>
+<td>Session peak</td>
+<td>34.55 GiB</td>
+</tr>
+<tr>
+<td>Machine total</td>
+<td>36 GiB</td>
+</tr>
+<tr>
+<td>Headroom at peak</td>
+<td>1.45 GiB (4%)</td>
+</tr>
+</tbody>
+</table>
+<p>The peak came during the longest tasks, when context exceeded the 32K window and reached 73K tokens—MULTIUSER_CACHE packed with KV entries from earlier turns. With only 1.45 GiB of headroom left, the machine was under real strain, likely causing the per-turn slowdowns. The two failures and the general slowness both trace to this memory wall.</p>
+<p>There was one bright spot: OLLAMA_KEEP_ALIVE=24h kept the model ready across tasks and overnight, with no reload needed. Cross-task and cold-start penalties were negligible—only the very first request paid the full prompt-processing price (63 seconds for a cache miss on 27K tokens).</p>
+<p>In a later test, median time-to-first-token was 39.7 seconds, scaling with context—about 33s at low (&lt;30K tokens), 44s at high (≥30K). That's almost a minute of waiting before output begins. I'm not reporting tokens/sec; Ollama doesn't reveal generation timing via the Claude Code endpoint, and dividing output by request time would just blur prompt processing with generation. TTFT and per-turn latency are what matter here—and both make the speed penalty felt.</p>
+<h2 id="tool-calls-hold-up">Tool calls hold up<a class="headerlink" href="#tool-calls-hold-up" title="Anchor link">¶</a></h2>
+<p>The open question with a local model isn't just reasoning—it's whether the harness can reliably drive it. Malformed tool calls strand Claude Code, no matter how good the plan is. So I instrumented every tool call across thirteen fix-<em> and create-</em> scenarios: 120 Bash invocations, 104 of them kubectl.</p>
+<p>One was malformed—a shell parse error from tricky single-quote escaping on kubectl patch. That's a 0.8% malformation rate, and the model recovered on the next turn by re-escaping. The harness drove the model cleanly; bad tool syntax doesn't break air-gapped operation.</p>
+<p>That number deserves separation from a noisier one: eight other calls returned errors, but these were well-formed commands that did the wrong thing—a hardcoded clusterIP already in use, a probe for a missing StorageClass, repeated failed attempts to patch container args. Valid calls, wrong actions—reasoning misses, not harness failures. Combine both for a 7.5% error rate; separate them for a true read: the model's tool syntax is reliable, but tool judgment is where the misses are. Seven of nine total errors hit fix-crashloop—the one task needing a Python one-liner in a kubectl patch, a quoting gauntlet and exactly where you'd expect a slip.</p>
+<p>No context-overflow events: nothing hit the token ceiling, even on the longest turn at 36K input tokens.</p>
+<p><em>(The tool-call and TTFT figures come from a focused 13-scenario instrumented run — the fix-* and create-* set — not the full 24.)</em></p>
+<h2 id="the-verdict">The verdict<a class="headerlink" href="#the-verdict" title="Anchor link">¶</a></h2>
+<p>Run a local air-gapped model if you need data sovereignty and can tolerate minutes-per-task latency. The capability is real: 21 of 24, just 2 behind the frontier, and tool calls are clean at a 0.8% malformation rate.</p>
+<p>Don't, if speed is the priority. The local model is five to ten times slower per turn, and no tuning closes that gap on a laptop.</p>
+<p>The trade is clear—you give up speed, not correctness. Every failure traced to time, memory, or the environment, never reasoning: correct RBAC manifests it couldn't generate fast enough, a volume the provisioner can't expand, a trivial pod task lost to a tag convention. The competence is real; the constraints are operational.</p>
+<p>And the constraints are partly my hardware. An M3 Pro with 36 GiB is the floor for a 20 GiB model—the long tasks died at 34.55 GiB of memory, not at the edge of the model's reasoning. On an M3 Max or Ultra, setup-dev-cluster is likely to finish. The 21/24 is a floor set by my laptop, not a ceiling set by the model.</p>
 <hr />
 <p><em>Working through this on your own infrastructure? Happy to jam — <a href="https://github.com/har-ki">drop me a line</a>.</em></p>
 
@@ -1130,7 +1331,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: The Claude Code SRE Handbook">
+          <a href="../07-airgapped-pr/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 7. From Investigation to PR, Air-Gapped">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1140,20 +1341,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                The Claude Code SRE Handbook
+                7. From Investigation to PR, Air-Gapped
               </div>
             </div>
           </a>
         
         
           
-          <a href="../02-investigation-to-pr/" class="md-footer__link md-footer__link--next" aria-label="Next: 2. From Investigation to PR">
+          <a href="../whats-next/" class="md-footer__link md-footer__link--next" aria-label="Next: What&#39;s Next">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                2. From Investigation to PR
+                What's Next
               </div>
             </div>
             <div class="md-footer__button md-icon">
