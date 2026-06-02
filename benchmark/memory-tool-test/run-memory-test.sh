@@ -177,32 +177,41 @@ if [[ "${STEP}" == "1" ]]; then
 
   write_jsonl "${FULL_RESULT}" "${OUTPUT_FILE}"
 
-  # Hard stop check for Ollama path
-  TOOL_PRESENT=$(echo "${PROBE_RESULT}" | jq -r '.tool_type_present')
-  if [[ "${TOOL_PRESENT}" == "false" ]]; then
+  # Always archive trace for inspection
+  ARCHIVE_TRACE="${RAW_DATA_DIR}/${DATE_STAMP}-T-memtest-${MODEL_SLUG}-stack-probe-trace.jsonl"
+  cp "${TRACE_JSONL}" "${ARCHIVE_TRACE}"
+  echo "    Trace archived: ${ARCHIVE_TRACE}"
+
+  # Evaluate stack probe results
+  FILE_TOOLS_COUNT=$(echo "${PROBE_RESULT}" | jq -r '.file_tools_present | length')
+  MEMORY_ACCESSED=$(echo "${PROBE_RESULT}" | jq -r '.memory_access_emitted')
+
+  if [[ "${FILE_TOOLS_COUNT}" -eq 0 ]]; then
     IS_LOCAL=$(echo "${ANTHROPIC_BASE_URL:-}" | grep -c "localhost" || true)
     if [[ "${IS_LOCAL}" -gt 0 ]]; then
       echo ""
       echo "╔══════════════════════════════════════════════════════════════╗"
-      echo "║  HARD STOP: Memory tool NOT exposed via Ollama path.       ║"
+      echo "║  HARD STOP: No file tools exposed via Ollama path.         ║"
       echo "║  This is finding (a) — a stack finding.                    ║"
+      echo "║  Without file tools, memory operations are impossible.     ║"
       echo "║  Do NOT proceed to Step 2 for this profile.               ║"
-      echo "║  The raw stream-json is captured; the negative is the     ║"
-      echo "║  result. Post 12 likely becomes the honest-limits piece.  ║"
       echo "╚══════════════════════════════════════════════════════════════╝"
       echo ""
-      # Copy trace to raw data for archival
-      cp "${TRACE_JSONL}" "${RAW_DATA_DIR}/${DATE_STAMP}-T-memtest-${MODEL_SLUG}-stack-probe-trace.jsonl"
       exit 0
     fi
     echo ""
-    echo "WARNING: Memory tool not found in tools list for API profile."
-    echo "This may indicate a Claude Code version or flag issue."
-    echo "Check: --dangerously-skip-permissions may suppress memory tool."
+    echo "WARNING: No file tools found in tools list for API profile."
+    echo ""
+  elif [[ "${MEMORY_ACCESSED}" == "true" ]]; then
+    echo ""
+    echo "==> File tools present, memory directory accessed. Step 2 is a go."
+    MEM_OPS=$(echo "${PROBE_RESULT}" | jq -c '.memory_operations')
+    echo "    Memory operations: ${MEM_OPS}"
     echo ""
   else
     echo ""
-    echo "==> Memory tool found in tools list. Step 2 is a go."
+    echo "==> File tools present (${FILE_TOOLS_COUNT}), but model did not access memory directory."
+    echo "    This may still be fine for Step 2 (model wasn't prompted to use memory)."
     echo ""
   fi
 
