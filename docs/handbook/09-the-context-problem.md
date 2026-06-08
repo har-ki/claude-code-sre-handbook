@@ -62,4 +62,4 @@ By the end you'll have a worked method for constructing context for an SRE agent
 
 ---
 
-Working through this on your own infrastructure? Happy to jam — drop me a line.
+*Working through this on your own infrastructure? Happy to jam — [drop me a line](https://github.com/har-ki).*
