@@ -85,4 +85,6 @@ nav:
       - "6. Air-Gapped Claude Code": handbook/06-air-gapped.md
       - "7. From Investigation to PR, Air-Gapped": handbook/07-airgapped-pr.md
       - "8. Air-Gapped Qwen3.6 on k8s-ai-bench": handbook/08-benchmark-comparison.md
+    - "Part 3 — Context":
+      - "9. The Context Problem": handbook/09-the-context-problem.md
     - "What's Next": handbook/whats-next.md
