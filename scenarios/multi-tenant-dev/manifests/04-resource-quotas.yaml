@@ -1,0 +1,123 @@
+---
+# Resource quotas for Alice's namespace (dev)
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: dev-alice-quota
+  namespace: dev-alice
+  labels:
+    tenant: alice
+    tier: dev
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: "4Gi"
+    limits.cpu: "2"
+    limits.memory: "4Gi"
+    pods: "10"
+    services: "5"
+    persistentvolumeclaims: "5"
+    secrets: "10"
+    configmaps: "10"
+---
+# Resource quotas for Bob's namespace (dev)
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: dev-bob-quota
+  namespace: dev-bob
+  labels:
+    tenant: bob
+    tier: dev
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: "4Gi"
+    limits.cpu: "2"
+    limits.memory: "4Gi"
+    pods: "10"
+    services: "5"
+    persistentvolumeclaims: "5"
+    secrets: "10"
+    configmaps: "10"
+---
+# Resource quotas for Charlie's namespace (dev)
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: dev-charlie-quota
+  namespace: dev-charlie
+  labels:
+    tenant: charlie
+    tier: dev
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: "4Gi"
+    limits.cpu: "2"
+    limits.memory: "4Gi"
+    pods: "10"
+    services: "5"
+    persistentvolumeclaims: "5"
+    secrets: "10"
+    configmaps: "10"
+---
+# Resource quotas for shared development namespace
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: dev-shared-quota
+  namespace: dev-shared
+  labels:
+    tier: shared
+spec:
+  hard:
+    requests.cpu: "4"
+    requests.memory: "8Gi"
+    limits.cpu: "4"
+    limits.memory: "8Gi"
+    pods: "20"
+    services: "10"
+    persistentvolumeclaims: "10"
+    secrets: "20"
+    configmaps: "20"
+---
+# Resource quotas for staging namespace
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: staging-quota
+  namespace: staging
+  labels:
+    tier: staging
+spec:
+  hard:
+    requests.cpu: "8"
+    requests.memory: "16Gi"
+    limits.cpu: "8"
+    limits.memory: "16Gi"
+    pods: "50"
+    services: "20"
+    persistentvolumeclaims: "20"
+    secrets: "50"
+    configmaps: "50"
+---
+# Resource quotas for production namespace
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: prod-quota
+  namespace: prod
+  labels:
+    tier: production
+spec:
+  hard:
+    requests.cpu: "8"
+    requests.memory: "16Gi"
+    limits.cpu: "8"
+    limits.memory: "16Gi"
+    pods: "50"
+    services: "20"
+    persistentvolumeclaims: "20"
+    secrets: "50"
+    configmaps: "50"

@@ -1,0 +1,2 @@
+# PVCs are created dynamically via volumeClaimTemplates in the StatefulSet —
+# no static PVCs needed.

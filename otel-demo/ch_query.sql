@@ -1,0 +1,1 @@
+SELECT LogAttributes['exception.type'] AS exc_type, LogAttributes['exception.message'] AS exc_msg, count() AS cnt FROM otel_logs WHERE ServiceName = 'ecommerce-api' AND Timestamp >= now() - INTERVAL 15 MINUTE GROUP BY exc_type, exc_msg ORDER BY cnt DESC LIMIT 10

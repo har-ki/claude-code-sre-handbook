@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce-api
+  namespace: ecommerce
+  labels: { app: ecommerce-api }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: ecommerce-api } }
+  template:
+    metadata: { labels: { app: ecommerce-api } }
+    spec:
+      containers:
+        - name: api
+          image: ecommerce-api:latest
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 3000 }]
+          command: ["node", "-r", "./src/instrumentation.js", "src/nearmiss-loader.js"]
+          env:
+            - { name: OTEL_SERVICE_NAME, value: ecommerce-api }
+            - { name: OTEL_EXPORTER_OTLP_ENDPOINT, value: "http://otel-clickhouse-bridge.default.svc.cluster.local:4317" }
+            - { name: INVENTORY_VARIANT, value: nearmiss }
+          readinessProbe:
+            httpGet: { path: /api/health, port: 3000 }
+            initialDelaySeconds: 3
+            periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecommerce-api
+  namespace: ecommerce
+spec:
+  selector: { app: ecommerce-api }
+  ports: [{ port: 3000, targetPort: 3000 }]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: load-generator
+  namespace: ecommerce
+  labels: { app: load-generator }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: load-generator } }
+  template:
+    metadata: { labels: { app: load-generator } }
+    spec:
+      containers:
+        - name: load
+          image: ecommerce-api:latest
+          imagePullPolicy: IfNotPresent
+          command: ["node", "src/load-generator.js"]
+          env:
+            - { name: API_URL, value: "http://ecommerce-api.ecommerce.svc.cluster.local:3000" }

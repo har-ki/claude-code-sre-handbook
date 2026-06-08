@@ -1,0 +1,273 @@
+---
+# ============================================================
+# Roles: Full access for each developer in their own namespace
+# ============================================================
+
+# Developer full-access role (dev-alice)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: dev-alice
+  name: developer-full-access
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+# Developer full-access role (dev-bob)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: dev-bob
+  name: developer-full-access
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+# Developer full-access role (dev-charlie)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: dev-charlie
+  name: developer-full-access
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+# Read-only role for shared namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: dev-shared
+  name: developer-readonly
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "endpoints", "configmaps", "secrets", "persistentvolumeclaims", "namespaces", "events"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets", "statefulsets", "daemonsets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["extensions", "networking.k8s.io"]
+  resources: ["ingresses", "networkpolicies"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["autoscaling"]
+  resources: ["horizontalpodautoscalers"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["batch"]
+  resources: ["jobs", "cronjobs"]
+  verbs: ["get", "list", "watch"]
+---
+# Admin role for staging namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: staging
+  name: admin-full-access
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+# Admin role for prod namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: prod
+  name: admin-full-access
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+# ============================================================
+# RoleBindings: Developer full access to their own namespaces
+# ============================================================
+
+# Alice: full access in dev-alice
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: alice-full-access
+  namespace: dev-alice
+subjects:
+- kind: User
+  name: alice
+  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: alice-sa
+  namespace: dev-alice
+roleRef:
+  kind: Role
+  name: developer-full-access
+  apiGroup: rbac.authorization.k8s.io
+---
+# Bob: full access in dev-bob
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: bob-full-access
+  namespace: dev-bob
+subjects:
+- kind: User
+  name: bob
+  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: bob-sa
+  namespace: dev-bob
+roleRef:
+  kind: Role
+  name: developer-full-access
+  apiGroup: rbac.authorization.k8s.io
+---
+# Charlie: full access in dev-charlie
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: charlie-full-access
+  namespace: dev-charlie
+subjects:
+- kind: User
+  name: charlie
+  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: charlie-sa
+  namespace: dev-charlie
+roleRef:
+  kind: Role
+  name: developer-full-access
+  apiGroup: rbac.authorization.k8s.io
+---
+# Alice: read-only in dev-shared
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: alice-shared-readonly
+  namespace: dev-shared
+subjects:
+- kind: User
+  name: alice
+  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: alice-sa
+  namespace: dev-alice
+roleRef:
+  kind: Role
+  name: developer-readonly
+  apiGroup: rbac.authorization.k8s.io
+---
+# Bob: read-only in dev-shared
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: bob-shared-readonly
+  namespace: dev-shared
+subjects:
+- kind: User
+  name: bob
+  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: bob-sa
+  namespace: dev-bob
+roleRef:
+  kind: Role
+  name: developer-readonly
+  apiGroup: rbac.authorization.k8s.io
+---
+# Charlie: read-only in dev-shared
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: charlie-shared-readonly
+  namespace: dev-shared
+subjects:
+- kind: User
+  name: charlie
+  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: charlie-sa
+  namespace: dev-charlie
+roleRef:
+  kind: Role
+  name: developer-readonly
+  apiGroup: rbac.authorization.k8s.io
+---
+# ============================================================
+# Service Account: Read-only to dev-shared
+# Each developer's SA also gets read-only in dev-shared
+# ============================================================
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: alice-sa-shared-readonly
+  namespace: dev-shared
+subjects:
+- kind: ServiceAccount
+  name: alice-sa
+  namespace: dev-alice
+roleRef:
+  kind: Role
+  name: developer-readonly
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: bob-sa-shared-readonly
+  namespace: dev-shared
+subjects:
+- kind: ServiceAccount
+  name: bob-sa
+  namespace: dev-bob
+roleRef:
+  kind: Role
+  name: developer-readonly
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: charlie-sa-shared-readonly
+  namespace: dev-shared
+subjects:
+- kind: ServiceAccount
+  name: charlie-sa
+  namespace: dev-charlie
+roleRef:
+  kind: Role
+  name: developer-readonly
+  apiGroup: rbac.authorization.k8s.io
+---
+# ============================================================
+# ClusterAdmins: Admin access to staging and prod only
+# ============================================================
+
+# ClusterRoleBinding: cluster admins (system:masters group) get admin in staging
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cluster-admins-staging
+roleRef:
+  kind: ClusterRole
+  name: admin
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: Group
+  name: system:masters
+  apiGroup: rbac.authorization.k8s.io
+---
+# ClusterRoleBinding: cluster admins (system:masters group) get admin in prod
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cluster-admins-prod
+roleRef:
+  kind: ClusterRole
+  name: admin
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: Group
+  name: system:masters
+  apiGroup: rbac.authorization.k8s.io

@@ -85,4 +85,8 @@ nav:
       - "6. Air-Gapped Claude Code": handbook/06-air-gapped.md
       - "7. From Investigation to PR, Air-Gapped": handbook/07-airgapped-pr.md
       - "8. Air-Gapped Qwen3.6 on k8s-ai-bench": handbook/08-benchmark-comparison.md
+    - "Part 3 — Context Engineering":
+      - "9. Context Engineering for AI SRE": handbook/09-context-engineering-for-ai-sre.md
+      - "10. Memory for the SRE Loop": handbook/10-memory-for-the-sre-loop.md
+      - "11. When Retrieval Isn't the Bottleneck": handbook/11-similarity-search-and-validation-discipline.md
     - "What's Next": handbook/whats-next.md

@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod1
+  namespace: color-size-settings
+spec:
+  containers:
+    - name: nginx
+      image: nginx:alpine
+      command: ["sh", "-c", "env && cat /etc/sizes/size && sleep infinity"]
+      env:
+        - name: COLOR
+          valueFrom:
+            configMapKeyRef:
+              name: color-settings
+              key: color
+      volumeMounts:
+        - name: size-vol
+          mountPath: /etc/sizes/
+          readOnly: true
+  volumes:
+    - name: size-vol
+      configMap:
+        name: size-settings

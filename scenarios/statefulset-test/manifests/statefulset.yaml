@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-headless
+  namespace: statefulset-test
+  labels:
+    app: db
+spec:
+  clusterIP: None
+  selector:
+    app: db
+  ports: []
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: db
+  namespace: statefulset-test
+spec:
+  replicas: 3
+  serviceName: db-headless
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      initContainers:
+      - name: init-data
+        image: busybox
+        command:
+        - sh
+        - -c
+        - echo initial_data > /data/test
+        volumeMounts:
+        - name: data
+          mountPath: /data
+      containers:
+      - name: db
+        image: busybox
+        command:
+        - sh
+        - -c
+        - |
+          echo "db pod $HOSTNAME running..."
+          cat /data/test
+          sleep 3600
+        volumeMounts:
+        - name: data
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: standard
+      resources:
+        requests:
+          storage: 1Gi

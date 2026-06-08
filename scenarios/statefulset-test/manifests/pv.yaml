@@ -1,0 +1,2 @@
+# Pre-provisioned PVs are no longer needed — dynamic provisioning via
+# local-path storage class handles PV creation at runtime.

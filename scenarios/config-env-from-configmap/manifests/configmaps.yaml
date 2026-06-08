@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: color-settings
+  namespace: color-size-settings
+data:
+  color: "blue"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: size-settings
+  namespace: color-size-settings
+data:
+  size: "medium"

@@ -1,0 +1,63 @@
+---
+# Alice's development namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-alice
+  labels:
+    environment: development
+    tenant: alice
+    tier: dev
+    access: restricted
+---
+# Bob's development namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-bob
+  labels:
+    environment: development
+    tenant: bob
+    tier: dev
+    access: restricted
+---
+# Charlie's development namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-charlie
+  labels:
+    environment: development
+    tenant: charlie
+    tier: dev
+    access: restricted
+---
+# Shared development namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-shared
+  labels:
+    environment: development
+    tier: shared
+    access: shared
+---
+# Staging environment namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: staging
+  labels:
+    environment: staging
+    tier: staging
+    access: admin-only
+---
+# Production environment namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prod
+  labels:
+    environment: production
+    tier: production
+    access: admin-only

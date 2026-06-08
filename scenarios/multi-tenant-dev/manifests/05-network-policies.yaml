@@ -1,0 +1,312 @@
+---
+# 1. Default Deny All — applied to ALL namespaces (zero-trust baseline)
+# ============================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: dev-alice
+spec:
+  podSelector: {}
+  policyTypes:
+   - Ingress
+   - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: dev-bob
+spec:
+  podSelector: {}
+  policyTypes:
+   - Ingress
+   - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: dev-charlie
+spec:
+  podSelector: {}
+  policyTypes:
+   - Ingress
+   - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: dev-shared
+spec:
+  podSelector: {}
+  policyTypes:
+   - Ingress
+   - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: staging
+spec:
+  podSelector: {}
+  policyTypes:
+   - Ingress
+   - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: prod
+spec:
+  podSelector: {}
+  policyTypes:
+   - Ingress
+   - Egress
+---
+# 2. DNS Access — allow all namespaces to reach kube-system DNS
+# ============================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns
+  namespace: dev-alice
+spec:
+  podSelector: {}
+  policyTypes:
+   - Egress
+  egress:
+   - to:
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+     - protocol: UDP
+       port: 53
+     - protocol: TCP
+       port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns
+  namespace: dev-bob
+spec:
+  podSelector: {}
+  policyTypes:
+   - Egress
+  egress:
+   - to:
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+     - protocol: UDP
+       port: 53
+     - protocol: TCP
+       port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns
+  namespace: dev-charlie
+spec:
+  podSelector: {}
+  policyTypes:
+   - Egress
+  egress:
+   - to:
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+     - protocol: UDP
+       port: 53
+     - protocol: TCP
+       port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns
+  namespace: dev-shared
+spec:
+  podSelector: {}
+  policyTypes:
+   - Egress
+  egress:
+   - to:
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+     - protocol: UDP
+       port: 53
+     - protocol: TCP
+       port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns
+  namespace: staging
+spec:
+  podSelector: {}
+  policyTypes:
+   - Egress
+  egress:
+   - to:
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+     - protocol: UDP
+       port: 53
+     - protocol: TCP
+       port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns
+  namespace: prod
+spec:
+  podSelector: {}
+  policyTypes:
+   - Egress
+  egress:
+   - to:
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+     - protocol: UDP
+       port: 53
+     - protocol: TCP
+       port: 53
+---
+# 3. Dev namespaces — intra-namespace + egress to dev-shared
+# ============================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dev-access
+  namespace: dev-alice
+spec:
+  podSelector: {}
+  policyTypes:
+   - Ingress
+   - Egress
+  ingress:
+   - from:
+     - podSelector: {}
+  egress:
+   - to:
+     - podSelector: {}
+   - to:
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: dev-shared
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dev-access
+  namespace: dev-bob
+spec:
+  podSelector: {}
+  policyTypes:
+   - Ingress
+   - Egress
+  ingress:
+   - from:
+     - podSelector: {}
+  egress:
+   - to:
+     - podSelector: {}
+   - to:
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: dev-shared
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dev-access
+  namespace: dev-charlie
+spec:
+  podSelector: {}
+  policyTypes:
+   - Ingress
+   - Egress
+  ingress:
+   - from:
+     - podSelector: {}
+  egress:
+   - to:
+     - podSelector: {}
+   - to:
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: dev-shared
+---
+# 4. Dev-shared — ingress from dev namespaces + egress back to dev namespaces
+# ============================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dev-shared-access
+  namespace: dev-shared
+spec:
+  podSelector: {}
+  policyTypes:
+   - Ingress
+   - Egress
+  ingress:
+   - from:
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: dev-alice
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: dev-bob
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: dev-charlie
+  egress:
+   - to:
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: dev-alice
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: dev-bob
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: dev-charlie
+---
+# 5. Staging/Prod — deny all ingress (fully isolated from dev)
+# ============================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-from-dev
+  namespace: staging
+spec:
+  podSelector: {}
+  policyTypes:
+   - Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-from-dev
+  namespace: prod
+spec:
+  podSelector: {}
+  policyTypes:
+   - Ingress

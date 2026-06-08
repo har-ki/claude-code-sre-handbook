@@ -1,0 +1,14 @@
+# Combined manifest for multi-tenant development environment
+# All individual manifests can be applied separately or together:
+#
+#   kubectl apply -f manifests/01-namespaces.yaml
+#   kubectl apply -f manifests/02-service-accounts.yaml
+#   kubectl apply -f manifests/03-rbac.yaml
+#   kubectl apply -f manifests/04-resource-quotas.yaml
+#   kubectl apply -f manifests/05-network-policies.yaml
+#
+# Or apply all at once:
+#   kubectl apply -f manifests/
+#
+# Or apply the combined file:
+#   kubectl apply -f manifests.yaml

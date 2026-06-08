@@ -1,0 +1,2 @@
+# Uses the existing `standard` storage class (rancher.io/local-path) —
+# no custom StorageClass needed.
