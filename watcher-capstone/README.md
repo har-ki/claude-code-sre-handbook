@@ -30,7 +30,7 @@ docker compose up --build
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `ANTHROPIC_API_KEY` | Yes | Claude API key |
+| `ANTHROPIC_API_KEY` | Yes | Claude API key — required for `claude -p` inside Docker (OAuth doesn't work in containers) |
 | `GH_TOKEN` | Yes | GitHub token with repo access |
 | `CLICKHOUSE_HOST` | No | ClickHouse host:port (default: `localhost:9000`) |
 | `OLLAMA_URL` | No | Ollama endpoint (default: `http://host.docker.internal:11434`) |
