@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../01-harness-problem/">
+        <link rel="prev" href="../10-runbook-as-context/">
       
       
-        <link rel="next" href="../03-five-incidents-frontier/">
+        <link rel="next" href="../12-the-window-edge/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>2. From Investigation to PR - The Claude Code SRE Handbook</title>
+        <title>11. Collection Isn't Correlation - The Claude Code SRE Handbook</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#02-from-investigation-to-pr" class="md-skip">
+        <a href="#collection-isnt-correlation-but-claude-code-can-correlate" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              2. From Investigation to PR
+              11. Collection Isn't Correlation
             
           </span>
         </div>
@@ -338,10 +338,8 @@
                 
   
   
-    
   
   
-  
     
     
       
@@ -361,11 +359,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_2" >
         
           
           <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
@@ -386,7 +386,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -429,37 +429,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    2. From Investigation to PR
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../02-investigation-to-pr/" class="md-nav__link">
         
   
   
@@ -475,103 +448,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-scenario" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The scenario
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-prompts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The prompts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#baseline-sonnet-46-no-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Baseline: Sonnet 4.6, no Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sonnet-46-with-the-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sonnet 4.6, with the Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#where-it-still-breaks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where it still breaks
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#try-it-yourself" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it yourself
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -824,8 +700,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -847,13 +725,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" checked>
         
           
           <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="0">
@@ -874,7 +750,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_1_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -945,10 +821,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../11-correlation/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Collection Isn't Correlation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -964,6 +867,125 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#first-a-wrong-turn-worth-describing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First, a wrong turn worth describing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-incident-with-no-single-source-of-truth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An incident with no single source of truth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-experiment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The experiment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-happened" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What happened
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-one-miss-is-the-wrong-turn-coming-back" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The one miss is the wrong turn, coming back
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Skill
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-agent-reaches-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the agent reaches for
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#so-why-use-the-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        So why use the Skill?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-this-proves-and-what-it-doesnt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this proves, and what it doesn't
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1123,10 +1145,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-scenario" class="md-nav__link">
+  <a href="#first-a-wrong-turn-worth-describing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The scenario
+        First, a wrong turn worth describing
       
     </span>
   </a>
@@ -1134,10 +1156,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-prompts" class="md-nav__link">
+  <a href="#an-incident-with-no-single-source-of-truth" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The prompts
+        An incident with no single source of truth
       
     </span>
   </a>
@@ -1145,10 +1167,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#baseline-sonnet-46-no-skill" class="md-nav__link">
+  <a href="#the-experiment" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Baseline: Sonnet 4.6, no Skill
+        The experiment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-happened" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What happened
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-one-miss-is-the-wrong-turn-coming-back" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The one miss is the wrong turn, coming back
       
     </span>
   </a>
@@ -1167,10 +1211,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sonnet-46-with-the-skill" class="md-nav__link">
+  <a href="#what-the-agent-reaches-for" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Sonnet 4.6, with the Skill
+        What the agent reaches for
       
     </span>
   </a>
@@ -1178,10 +1222,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#where-it-still-breaks" class="md-nav__link">
+  <a href="#so-why-use-the-skill" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Where it still breaks
+        So why use the Skill?
       
     </span>
   </a>
@@ -1189,10 +1233,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#try-it-yourself" class="md-nav__link">
+  <a href="#what-this-proves-and-what-it-doesnt" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Try it yourself
+        What this proves, and what it doesn't
       
     </span>
   </a>
@@ -1219,177 +1263,173 @@
   
 
 
-<h1 id="02-from-investigation-to-pr">02 — From Investigation to PR<a class="headerlink" href="#02-from-investigation-to-pr" title="Anchor link">¶</a></h1>
-<p><em>Skills for Claude Code</em></p>
-<p><em>Three prompts, three Skill files, a real ecommerce bug. Six minutes later, a PR with a fix is open.</em></p>
-<p>Claude Code with Sonnet 4.6 and a small Skill resolved a race condition in inventory management from a vague error report — no prior codebase exposure, one continuous session from investigation through PR. Without the Skill, the same model and bug took over 13 minutes. With it, under six. That gap is the difference between an engineer context-switching vs. staying in flow.</p>
-<p><a href="../01-harness-problem/">Post 1</a> argued that the harness shape matters more than the model behind it. This post puts a real Kubernetes cluster in front of that argument and times the loop. The Skill itself and its impact are introduced midway through the process.</p>
-<h2 id="the-scenario">The scenario<a class="headerlink" href="#the-scenario" title="Anchor link">¶</a></h2>
-<p>The setup is a local kind cluster running an ecommerce service with observability wired in.</p>
+<h1 id="collection-isnt-correlation-but-claude-code-can-correlate">Collection Isn't Correlation — But Claude Code Can Correlate<a class="headerlink" href="#collection-isnt-correlation-but-claude-code-can-correlate" title="Anchor link">¶</a></h1>
+<p><em>Claude Code connected clues across telemetry, code, and a deploy to find a cause that lived in no single file.</em></p>
+<p>Most tricky production bugs aren't found in one spot. You see symptoms in telemetry, the problem is in code, and the trigger is a deploy. No single clue solves it — you have to connect everything.</p>
+<p>Connecting those clues is a context-engineering challenge. The real test is whether your agent can reason across signals — not just inspect each one separately. This post tests that question, shows where Claude Code falls short, and shares a Skill as a template.</p>
+<p>Short answer: Claude Code can connect signals on its own, often correctly. The Skill's job isn't to make it correlate — it's to make it correlate every time, and to make the join auditable when it does. That's the takeaway: the Skill improves reliability, not capability.</p>
+<h2 id="first-a-wrong-turn-worth-describing">First, a wrong turn worth describing<a class="headerlink" href="#first-a-wrong-turn-worth-describing" title="Anchor link">¶</a></h2>
+<p>I started with the wrong incident.</p>
+<p>The usual example is a race condition in an inventory service: a stock read, a timer, and a non-atomic decrement. I designed an experiment to see whether Claude needed to connect runtime data to code to spot the bug.</p>
+<p>It didn't. It just read the code. The bug was obvious in one file — any good engineer or model would spot it. Telemetry wasn't needed. My test didn't actually test correlation.</p>
+<p>That failure gave me the rule the rest of this post runs on:</p>
+<blockquote>
+<p>Correlation matters only when the cause isn't in one file. If you can find the bug just by reading code, it's not a correlation issue — it's about code being easy to read.</p>
+</blockquote>
+<p>So I created a scenario where reading code alone wouldn't solve the problem.</p>
+<h2 id="an-incident-with-no-single-source-of-truth">An incident with no single source of truth<a class="headerlink" href="#an-incident-with-no-single-source-of-truth" title="Anchor link">¶</a></h2>
+<p>Two services: a gateway calls a processor. Each works fine on its own.</p>
+<p>A deployment changes two things in the gateway: the timeout drops from 1500ms to 800ms, and the number of retries increases from 0 to 2. On paper, this looks fine — shorter timeout, more retries, and even an increased total time budget.</p>
+<p>But the processor is slow: p50 is about 408ms, p90 is 756ms, and p99 is 1060ms. The new 800ms timeout cuts off the slowest requests. The gateway kills the connection, customers get 504 errors, and retries add more load. The problem isn't in either service — it's in how the deploy settings and trace data interact.</p>
+<p>Here's what I checked before starting — no single clue reveals the problem:</p>
+<ul>
+<li>The deployment change looks like a basic resilience tweak. You can't know 800ms is too low without seeing the processor's latency.</li>
+<li>The processor code works — it's just slow sometimes. No bug.</li>
+<li>One trace shows a timeout. Just bad luck — the cause isn't clear.</li>
+<li>The error graph spikes at deploy time. Something changed, but it's unclear what.</li>
+</ul>
+<p>You only see the cause by connecting three things: the deploy timeout, the slowest latency in the traces, and the errors starting during the rollout. That's what makes this a real test of correlation.</p>
+<p><img alt="Incident anatomy — no single clue reveals it" src="../../assets/11-incident-anatomy.png" /></p>
+<h2 id="the-experiment">The experiment<a class="headerlink" href="#the-experiment" title="Anchor link">¶</a></h2>
+<p>Two groups, three runs each. Both get code, telemetry, and deploy events. My first experiment showed that just having the data isn't the issue — if left alone, the agent reads code and stops. The real difference is whether the agent is told to connect the dots.</p>
+<ul>
+<li>Group 1 — No guidance: just "find the root cause."</li>
+<li>Group 2 — Skill On: same prompt, but with a correlation Skill that forces three steps — find the pattern in telemetry, spot the possible cause in code and deploy, then match them up with real data before naming the cause.</li>
+</ul>
+<p>Sonnet 4.6: memory off; identical incident each run; same prompt everywhere except the Skill. Broad tool access on purpose — I wanted to see what the agent reaches for.</p>
+<p>I measured two things each run: did it name the real cause (the cross-service mismatch), and did it actually connect the clues (compare trace latency with deploy settings using numbers), or did it take a shortcut?</p>
+<h2 id="what-happened">What happened<a class="headerlink" href="#what-happened" title="Anchor link">¶</a></h2>
 <table>
 <thead>
 <tr>
-<th>Component</th>
-<th>Detail</th>
+<th>Arm</th>
+<th>Run</th>
+<th>Named the cause</th>
+<th>Correlated</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Kubernetes</td>
-<td>kind, single control-plane node, v1.35.0</td>
+<td>1 — unguided</td>
+<td>1</td>
+<td>partial</td>
+<td>no</td>
 </tr>
 <tr>
-<td>Namespaces</td>
-<td><code>ecommerce</code> (app + load generator), <code>clickhouse</code> (CH + OTel bridge)</td>
+<td>1 — unguided</td>
+<td>2</td>
+<td>yes</td>
+<td>yes</td>
 </tr>
 <tr>
-<td>Observability</td>
-<td>ClickHouse, OpenTelemetry collector, <code>otel-clickhouse-bridge</code></td>
+<td>1 — unguided</td>
+<td>3</td>
+<td>yes</td>
+<td>yes</td>
 </tr>
 <tr>
-<td>Data</td>
-<td><code>otel_logs</code>, <code>otel_traces</code>, <code>otel_metrics_*</code> populated from live load</td>
+<td>2 — Skill-ON</td>
+<td>1</td>
+<td>yes</td>
+<td>yes</td>
 </tr>
 <tr>
-<td>App</td>
-<td>Node.js ecommerce service + checkout + inventory service</td>
+<td>2 — Skill-ON</td>
+<td>2</td>
+<td>yes</td>
+<td>yes</td>
 </tr>
 <tr>
-<td>Failure mode</td>
-<td>TOCTOU race in <code>reserveInventory</code> causing ~50% checkout error rate</td>
+<td>2 — Skill-ON</td>
+<td>3</td>
+<td>yes</td>
+<td>yes</td>
 </tr>
 </tbody>
 </table>
-<p>The bug is in <code>backend/src/services/inventory.js</code>. <code>reserveInventory</code> reads stock, waits 50--150 ms, checks requested quantity, then decrements stock non-atomically. Two concurrent reservations may read the same value, both pass the guard, and both decrement. For product 7 (Ceramic Plant Pot), stock drops to <code>-3</code> under load.</p>
-<p>The model sees none of this in advance. It sees a running cluster with ClickHouse and OTel data, a repo it can clone (<code>ecommerce-app</code>), a <code>gh</code> CLI authenticated as the user, and whatever Skills are loaded in the session. No hints about the schema. No hint about the bug. No scope on the source repo beyond a name.</p>
-<h2 id="the-prompts">The prompts<a class="headerlink" href="#the-prompts" title="Anchor link">¶</a></h2>
-<p>Three turns, identical across every session in this post.</p>
-<div class="highlight"><pre><span></span><code>1. Ecommerce service is showing some errors in my local K8S cluster.
-   Investigate and summarize errors. Use ClickHouse otel logs to
-   identify the problem.
-
-2. Source code for ecommerce service is in the repo ecommerce-app.
-   Suggest a code fix for this issue.
-
-3. Make code fixes in a private branch and create a pull request.
-   Use GitHub integration (gh cli).
-</code></pre></div>
-<p>The prompts name "clickhouse," but no table, a repo but no path, a CLI but no branch convention. The model has to figure all of that out — and the third turn, where the agent does actual work in the world, is the one most demos skip.</p>
-<h2 id="baseline-sonnet-46-no-skill">Baseline: Sonnet 4.6, no Skill<a class="headerlink" href="#baseline-sonnet-46-no-skill" title="Anchor link">¶</a></h2>
-<p>In the baseline run with Sonnet 4.6 and no Skills loaded, the process took 13 minutes and 27 seconds, requiring 99 tool calls over three turns to open a pull request. The process included several missteps that are worth noting.</p>
-<p>Initially, the model attempted to connect to ClickHouse via the cluster’s NodePort but encountered network errors:</p>
-<div class="highlight"><pre><span></span><code>$ clickhouse client --host 127.0.0.1 --port 30900
-Connection refused (NETWORK_ERROR)
-
-$ clickhouse client --host 172.18.0.3 --port 30900
-Network is unreachable (NETWORK_ERROR)
-
-$ kubectl exec -n clickhouse clickhouse-7ccb6ccb7-27x4p -- clickhouse-client
-OK
-</code></pre></div>
-<p>Only after two failed attempts did it succeed by using kubectl exec to access ClickHouse inside the pod.</p>
-<p>Additional time was spent discovering the schema, with several exploratory queries needed to find the relevant tables and columns. The model also used multiple overlapping LIKE queries for a single product, when a single targeted query would have sufficed resulting in unnecessary repetition.</p>
-<p>Despite these challenges, the process ultimately succeeded, albeit inefficiently.</p>
+<p>Five out of six runs made the correlation. They matched the processor's latency from traces to the 800ms timeout in the deploy, calculated the gap, and linked the error spike to the rollout — using real numbers. One run said it simply: "800ms timeout is 81ms below p95 latency," with errors starting right at the deploy. The exact latency varied, but the connection was always clear, and Claude Code connected the clues to the cause. This is the kind of join the earlier example didn't show.</p>
+<p>So yes, Claude Code can connect clues to find a cause that isn't in a single file — and that is what this experiment shows.</p>
+<p>But the bigger lesson is the difference between the groups: the Skill makes the process more reliable, and that reliability strengthens the result. That is the main takeaway, not that the model needed the Skill to correlate at all.</p>
+<p>Without guidance, it correlated two out of three times — on its own. Runs 2 and 3 followed the right steps: checked error rates, deploy events, and latency percentiles, and compared timeouts to latency. So the Skill doesn't give Claude the ability; a capable model with good data often figures it out anyway. The difference is that the guided runs made the result more dependable.</p>
+<p>The Skill made results more consistent: two out of three became three out of three. That's just one extra success, but it clearly shows the takeaway: the Skill helps prevent the shortcut that leads to misses, making correlation more reliable.</p>
+<h2 id="the-one-miss-is-the-wrong-turn-coming-back">The one miss is the wrong turn, coming back<a class="headerlink" href="#the-one-miss-is-the-wrong-turn-coming-back" title="Anchor link">¶</a></h2>
+<p>The only run that didn't connect the clues — Group 1, Run 1 — failed because it just read code.</p>
+<p>Its first telemetry check came up empty. Instead of trying again, the agent gave up, jumped into the pods, and read the source code. It estimated latency from the code itself, never checking real numbers from traces. It got a partial answer — named the timeout — but never used the actual observed latency.</p>
+<p>This is just like the earlier inventory bug: given the chance to read the code, the agent took a shortcut by skipping the step of connecting the clues.</p>
+<p>This is what the Skill prevents. By making the agent use telemetry first and cite both signals, it blocks the code-reading shortcut and keeps the investigation on the cross-signal path.</p>
 <h2 id="the-skill">The Skill<a class="headerlink" href="#the-skill" title="Anchor link">¶</a></h2>
-<p>I designed Skills to solve common problems—like tricky connection setups, unclear schemas, repetitive workflows, and error recovery.
-In Claude Code, a Skill is a markdown file with YAML frontmatter, stored either globally (in ~/.claude/skills/SKILL.md) or for a specific repository. At the start of each session, Claude Code loads any Skills that match the current context.
-This repository includes three example Skills: ClickHouse, k8s, and gh. </p>
-<p>For instance, the ClickHouse Skill highlights important conventions and critical rules right at the top.</p>
-<div class="highlight"><span class="filename">skills/clickhouse/SKILL.md</span><pre><span></span><code><span class="nn">---</span>
-<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clickhouse</span>
-<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
-<span class="w">  </span><span class="no">Query OTel observability data (logs, traces, metrics) via ClickHouse to</span>
-<span class="w">  </span><span class="no">investigate incidents. Use when the user mentions clickhouse, otel logs,</span>
-<span class="w">  </span><span class="no">otel traces, observability data, investigate traces, query metrics, or</span>
-<span class="w">  </span><span class="no">clickstack.</span>
-<span class="nn">---</span>
+<p>Here's the core of it — three phases, in order, no conclusion until the third holds cross-signal evidence. This is an excerpt; the complete file, with the kubectl/ClickHouse query helpers, is in the repo at <a href="https://github.com/har-ki/claude-code-sre-handbook"><code>skills/correlation-skill.md</code></a>. Copy it, point it at your stack, adapt the queries.</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># Signal Correlation Investigation</span>
 
-<span class="c1">## Critical Rules</span>
+You are investigating an incident on a Kubernetes cluster with OTel observability data.
+You must complete three phases before stating a root cause. No phase may be skipped.
+No root cause may be stated until the reconciliation box in Phase 3 contains cross-signal evidence.
 
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Tables</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">otel_logs`, `otel_traces`, `otel_metrics_gauge`,</span>
-<span class="w">  </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">otel_metrics_sum`, `otel_metrics_histogram`</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Time columns</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">Timestamp` (logs, traces) vs `TimeUnix` (metrics)</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Service name</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">ServiceName` (logs, traces) vs</span>
-<span class="w">  </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">ResourceAttributes[&#39;service.name&#39;]` (metrics)</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">SeverityText` varies — match with `IN (&#39;ERROR&#39;,&#39;Error&#39;,&#39;error&#39;)`</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Exception details live in `LogAttributes` (Map), not in `Body`.</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">Use bracket syntax, not LIKE.</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">CLI binary</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">clickhouse client` (two words, not hyphenated)</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Read-only access only; always include LIMIT and a time window</span>
+<span class="gu">## Phase 1: FIRING PATTERN — from telemetry alone</span>
 
-<span class="c1">## Investigation Methodology</span>
+Establish the temporal and quantitative signature of the failure using only
+telemetry (logs, traces, metrics, deploy events). Do not read source code yet.
 
-<span class="l l-Scalar l-Scalar-Plain">SCOPE -&gt; TRIAGE -&gt; DRILL -&gt; MEASURE -&gt; CORRELATE -&gt; CONCLUDE</span>
+Answer these questions with evidence:
+<span class="k">1.</span> <span class="gs">**When**</span> did the failure start? Is there a step, ramp, or spike?
+<span class="k">2.</span> <span class="gs">**What**</span> is the error shape — which services, which span names, what status codes?
+<span class="k">3.</span> <span class="gs">**Did anything deploy or change**</span> at or near the failure start time?
 
-<span class="l l-Scalar l-Scalar-Plain">(Each phase has 1-2 canonical query templates...)</span>
+<span class="gu">## Phase 2: CANDIDATE MECHANISM — from code and deploy artifacts</span>
+
+Now read source code, inspect deployment manifests, and examine deploy diffs.
+
+<span class="k">1.</span> <span class="gs">**What changed**</span> in the deploy identified in Phase 1?
+<span class="k">2.</span> <span class="gs">**What code path**</span> could produce the error pattern observed in Phase 1?
+<span class="k">3.</span> Form a candidate mechanism: a specific, testable claim about how the change
+   causes the failure pattern.
+
+<span class="gu">## Phase 3: RECONCILIATION — cross-signal evidence required</span>
+
+**You may not state a root cause until you fill this box with specific cross-signal
+evidence that connects Phase 1 and Phase 2.**
+
+<span class="k">-</span><span class="w"> </span>Name a specific value from telemetry (Phase 1) and a specific value from
+  code/deploy (Phase 2) that together explain the failure.
+<span class="k">-</span><span class="w"> </span>The connection must be evidenced, not asserted. &quot;The timeout is probably too low&quot;
+  is not sufficient. &quot;The timeout is 800ms (from deploy diff) but the processor&#39;s
+  observed p99 is 1060ms (from traces query X)&quot; is sufficient.
+
+<span class="k">&gt; </span><span class="ge">**Telemetry value:** [specific metric/trace value from Phase 1]</span>
+<span class="k">&gt; </span><span class="ge">**Code/deploy value:** [specific parameter/config from Phase 2]</span>
+<span class="k">&gt; </span><span class="ge">**Connection:** [how these two values interact to produce the failure]</span>
+
+<span class="gu">## Rules</span>
+
+<span class="k">-</span><span class="w"> </span>Complete phases in order. Do not skip ahead.
+<span class="k">-</span><span class="w"> </span>Do not state a root cause from a single signal type.
+<span class="k">-</span><span class="w"> </span>If you cannot fill the reconciliation box, say so explicitly rather than
+  asserting a connection you cannot evidence.
 </code></pre></div>
-<p>A Skill should capture practical tips and “tribal knowledge”: bracket syntax, common CLI commands, or how to handle exceptions. The model learns from these notes instantly, helping it avoid wasted steps and mistakes.
-If you’re creating your own Skill, focus on what usually trips up new team members—quirky connections, column names that don’t match the docs, or query patterns people copy from chat. If it’s in your runbook but often ignored, it’s perfect for a Skill file.</p>
-<p>The repo ships all three Skills (<code>clickhouse</code>, <code>k8s</code>, <code>gh</code>) under <code>skills/</code>. To install:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/har-ki/claude-code-sre-handbook
-mkdir<span class="w"> </span>-p<span class="w"> </span>~/.claude/skills
-cp<span class="w"> </span>-r<span class="w"> </span>claude-code-sre-handbook/skills/*<span class="w"> </span>~/.claude/skills/
-</code></pre></div>
-<p>Modify them to fit your stack. The file structure is more important than the specific contents.</p>
-<h2 id="sonnet-46-with-the-skill">Sonnet 4.6, with the Skill<a class="headerlink" href="#sonnet-46-with-the-skill" title="Anchor link">¶</a></h2>
-<p>Same model, same scenario, same three prompts. Skills loaded from <code>.claude/skills/</code> at session start.</p>
-<p>5 minutes 49 seconds, 9 tool calls in turn one, PR opened on first attempt.</p>
-<p>The first ClickHouse query was no longer a guess:</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">max</span><span class="p">(</span><span class="k">Timestamp</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">otel_logs</span><span class="p">;</span>
-</code></pre></div>
-<p>Correct table and column, <code>clickhouse client</code> directly (no <code>kubectl exec</code>), case-insensitive severity from the next query. Zero schema-discovery round-trips. The model moved SCOPE -&gt; TRIAGE -&gt; DRILL -&gt; MEASURE without looping and found product 7 in eight queries instead of twelve. Turn 3 was six tool calls: checkout, edit, commit, push, <code>gh pr create</code>, PR URL returned.</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th style="text-align: right;">No Skill</th>
-<th style="text-align: right;">With Skill</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>End-to-end wall clock</td>
-<td style="text-align: right;">13:27</td>
-<td style="text-align: right;">5:49</td>
-</tr>
-<tr>
-<td>Turn 1 tool calls</td>
-<td style="text-align: right;">99 (43 + 56 subagent)</td>
-<td style="text-align: right;">9</td>
-</tr>
-<tr>
-<td>Schema-discovery round-trips</td>
-<td style="text-align: right;">3 + 2 failed connections</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td>Turn 3 errors</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td>Root cause correct</td>
-<td style="text-align: right;">Yes</td>
-<td style="text-align: right;">Yes</td>
-</tr>
-</tbody>
-</table>
-<p>Root-cause accuracy didn't change — both sessions identified the TOCTOU and proposed a per-product async mutex. The Skill didn't make Sonnet smarter. It made Sonnet's tools hit the mark: 99 tool calls to 9.</p>
-<h2 id="where-it-still-breaks">Where it still breaks<a class="headerlink" href="#where-it-still-breaks" title="Anchor link">¶</a></h2>
-<p>Two real limitations from these sessions.</p>
-<p><strong>Skill discovery is brittle.</strong> Skills load when their <code>description:</code> keywords match the user message. In the Sonnet+Skill run, a <code>gh</code> Skill never surfaced — Turn 3 said "github integration (gh cli)" but <code>gh</code> didn't load while <code>clickhouse</code> and <code>k8s</code> had loaded on Turn 1. The session succeeded anyway, but the failure mode is real: a Skill that doesn't load can't help, and there's no visible signal that it didn't.</p>
-<p><strong>Skills don't cover phase transitions.</strong> The investigation -&gt; code-fix pivot — <em>clone the repo, read inventory.js, propose a diff</em> — is unguided. Every session figured it out; the figuring was first-principles reasoning.</p>
-<p>Neither is a harness failure. The harness gave the model edit tools, retry, reasoning — all worked when called. The takeaway: a Skill doesn't need to be perfect. A short file that encodes your team's tribal knowledge about one tool cuts the investigation loop in half — and unlike a runbook, it's read every time.</p>
-<h2 id="try-it-yourself">Try it yourself<a class="headerlink" href="#try-it-yourself" title="Anchor link">¶</a></h2>
-<p>Everything in this post is reproducible from the repo. You need Docker, <a href="https://kind.sigs.k8s.io/">kind</a>, kubectl, <a href="https://claude.ai/claude-code">Claude Code</a>, and the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code>).</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/har-ki/claude-code-sre-handbook
-<span class="nb">cd</span><span class="w"> </span>claude-code-sre-handbook/otel-demo
-./setup-post02.sh
-</code></pre></div>
-<p>This stands up the kind cluster, pushes the ecommerce app to your GitHub, installs the Skills, and scales the load generator to trigger the bug. Authenticate <code>gh</code> first if you haven't (<code>gh auth login</code>).</p>
-<p>Then open Claude Code and paste the three prompts one at a time. Compare your session against the results in this post.</p>
-<p>Teardown: <code>./teardown.sh</code></p>
-<p>Your times and tool-call counts will vary — different cluster, different model snapshot, different day. The shape of the session should be the same.</p>
+<p>Every line earns its place from what the experiment showed:</p>
+<ul>
+<li>Phase 1 says "telemetry only, don't read code yet" because the failure mode is the agent jumping to code and never coming back. Front-loading telemetry prevents short-circuiting and keeps the result anchored to observed data.</li>
+<li>Phase 3 is the whole point. The step the agent naturally skips is reconciliation — connecting a runtime number to a code number. Forcing it and demanding that both values be real is what turns "looked at two things" into an actual join, and that is the takeaway: the Skill makes correlation repeatable and auditable.</li>
+<li>The "say so if you can't" rule is there because a forced template invites box-filling. It gives the agent an honest exit instead of a fabricated link.</li>
+</ul>
+<p>Think of this as a starting point, not a final solution. There are two clear limits:</p>
+<p>It enforces the process, not perfect accuracy. In one Skill-On run, the agent made the right connection but added a claim — a retry "feedback loop" — that wasn't backed by telemetry. The Skill makes the agent show its work, but doesn't guarantee every detail is supported. Check the evidence, don't just trust the box is filled.</p>
+<p>It sends the agent into your pods. When Phase 2 says "read the code," the agent does exactly that — every Skill-On run jumped into a container to read source. Which leads to another important point.</p>
+<h2 id="what-the-agent-reaches-for">What the agent reaches for<a class="headerlink" href="#what-the-agent-reaches-for" title="Anchor link">¶</a></h2>
+<p>Across both experiments, one thing stood out: when Claude Code wants data it doesn't have, it goes and gets it — using whatever tools it has.</p>
+<p>In the earlier experiment, one group wasn't supposed to have access to the source code. But it got the code anyway — once by searching the host filesystem, twice by pulling it from the container image. The limit I set didn't hold; the agent just found a way around it.</p>
+<p>In this experiment, every Skill-On run jumped into a pod to read code — but this time, it was harmless or even helpful: the agent had already connected the clues and was just confirming details. Ironically, my own Skill — by saying "examine the code" — is what sent the agent into the pods.</p>
+<p>Same behavior, two meanings. In a demo, it's a resource; in production, it's a risk you must plan for — the agent will exec into pods, pull images, and search file systems to get what it wants. A Skill that says "go look at the code" gives it permission. Limit access at the environment level, not just in the prompt, and assume the agent will follow any instruction literally.</p>
+<h2 id="so-why-use-the-skill">So why use the Skill?<a class="headerlink" href="#so-why-use-the-skill" title="Anchor link">¶</a></h2>
+<p>The unguided two-out-of-three is the strongest argument against the Skill. Take it seriously, then watch it lose on the axis that matters.</p>
+<p>You get one shot, not three. On a real page, you don't average three runs — you get one, and you can't tell in advance whether it's a Run 2 or a Run 1. The Skill doesn't improve the average; it removes the variance. The failure it blocks isn't random bad luck — it's a specific, repeatable reflex (empty query, give up, read code, never come back). Closing the one escape hatch the agent reliably reaches for is worth more than a capability it already has.</p>
+<p>The clean run won't last. It correlated unprompted on the easiest possible incident: two services, clean telemetry, one deploy. The 2/3 is a best-case number. As cross-service depth and competing changes pile up — exactly the conditions I haven't tested — the reflex to bail to code gets more tempting, not less. The Skill is insurance for the conditions that make correlation hard, which is the only time you need it.</p>
+<p>A correct answer and an auditable answer aren't equal. An unguided right answer makes you reverse-engineer the trust. The reconciliation box hands you the join — the timeout, the p99, the rollout timestamp, all cited. When you're handing a postmortem to a team that distrusts "the AI said so," showing the work is the difference between a finding and a guess.</p>
+<p>So the honest version isn't "the Skill made it correlate." It's: the Skill turns an ability the model has into a behavior you can rely on and check. Capability you already had. Predictability and proof, you didn't.</p>
+<h2 id="what-this-proves-and-what-it-doesnt">What this proves, and what it doesn't<a class="headerlink" href="#what-this-proves-and-what-it-doesnt" title="Anchor link">¶</a></h2>
+<p>Claude Code can connect disparate pieces of information to identify causes that aren't obvious. Correlation Skill makes these connections more reliable and prevents it from taking shortcuts. It doesn't guarantee that every step will be fully proven.</p>
+<p>I haven't shown whether this works at scale. This was just one incident, two services, clear data, and a single deployment. Real systems are messier, with more signals and possible causes. This proves only that a clean connection is possible, not that it works in complicated, noisy situations.</p>
+<p>I thought Claude Code wouldn't be able to correlate. My goal is to highlight real limits. Here, the limit is scope, not ability. The Skill adds dependability to an inconsistent model, making it trustworthy for a single run. It worked this time. Whether it works with hidden clues is to be tested in future tests.</p>
 <hr />
 <p><em>Working through this on your own infrastructure? Happy to jam — <a href="https://github.com/har-ki">drop me a line</a>.</em></p>
 
@@ -1429,7 +1469,7 @@ cp<span class="w"> </span>-r<span class="w"> </span>claude-code-sre-handbook/ski
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../01-harness-problem/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1. The Harness Problem">
+          <a href="../10-runbook-as-context/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 10. Runbooks as Context">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1439,20 +1479,20 @@ cp<span class="w"> </span>-r<span class="w"> </span>claude-code-sre-handbook/ski
                 Previous
               </span>
               <div class="md-ellipsis">
-                1. The Harness Problem
+                10. Runbooks as Context
               </div>
             </div>
           </a>
         
         
           
-          <a href="../03-five-incidents-frontier/" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Claude Code on k8s-ai-bench">
+          <a href="../12-the-window-edge/" class="md-footer__link md-footer__link--next" aria-label="Next: 12. The Window Edge">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                3. Claude Code on k8s-ai-bench
+                12. The Window Edge
               </div>
             </div>
             <div class="md-footer__button md-icon">

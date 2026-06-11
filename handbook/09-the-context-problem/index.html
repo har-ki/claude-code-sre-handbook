@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../01-harness-problem/">
+        <link rel="prev" href="../08-benchmark-comparison/">
       
       
-        <link rel="next" href="../03-five-incidents-frontier/">
+        <link rel="next" href="../10-runbook-as-context/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>2. From Investigation to PR - The Claude Code SRE Handbook</title>
+        <title>9. The Context Problem - The Claude Code SRE Handbook</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#02-from-investigation-to-pr" class="md-skip">
+        <a href="#09-the-context-problem" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              2. From Investigation to PR
+              9. The Context Problem
             
           </span>
         </div>
@@ -338,10 +338,8 @@
                 
   
   
-    
   
   
-  
     
     
       
@@ -361,11 +359,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_2" >
         
           
           <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
@@ -386,7 +386,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -429,37 +429,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    2. From Investigation to PR
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../02-investigation-to-pr/" class="md-nav__link">
         
   
   
@@ -475,103 +448,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-scenario" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The scenario
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-prompts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The prompts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#baseline-sonnet-46-no-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Baseline: Sonnet 4.6, no Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sonnet-46-with-the-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sonnet 4.6, with the Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#where-it-still-breaks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where it still breaks
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#try-it-yourself" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it yourself
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -824,8 +700,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -847,13 +725,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" checked>
         
           
           <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="0">
@@ -874,7 +750,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_1_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -889,10 +765,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../09-the-context-problem/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. The Context Problem
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -908,6 +811,81 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#construction-is-three-decisions-not-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Construction is three decisions, not one
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision-1-what-goes-in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decision 1 — What goes in
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision-2-how-you-manage-it-as-it-grows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decision 2 — How you manage it as it grows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision-3-how-you-make-the-agent-reason-over-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decision 3 — How you make the agent reason over it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-youll-have-built-by-the-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you'll have built by the end
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1123,10 +1101,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-scenario" class="md-nav__link">
+  <a href="#construction-is-three-decisions-not-one" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The scenario
+        Construction is three decisions, not one
       
     </span>
   </a>
@@ -1134,10 +1112,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-prompts" class="md-nav__link">
+  <a href="#decision-1-what-goes-in" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The prompts
+        Decision 1 — What goes in
       
     </span>
   </a>
@@ -1145,10 +1123,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#baseline-sonnet-46-no-skill" class="md-nav__link">
+  <a href="#decision-2-how-you-manage-it-as-it-grows" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Baseline: Sonnet 4.6, no Skill
+        Decision 2 — How you manage it as it grows
       
     </span>
   </a>
@@ -1156,10 +1134,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-skill" class="md-nav__link">
+  <a href="#decision-3-how-you-make-the-agent-reason-over-it" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Skill
+        Decision 3 — How you make the agent reason over it
       
     </span>
   </a>
@@ -1167,32 +1145,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sonnet-46-with-the-skill" class="md-nav__link">
+  <a href="#what-youll-have-built-by-the-end" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Sonnet 4.6, with the Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#where-it-still-breaks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where it still breaks
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#try-it-yourself" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it yourself
+        What you'll have built by the end
       
     </span>
   </a>
@@ -1219,177 +1175,47 @@
   
 
 
-<h1 id="02-from-investigation-to-pr">02 — From Investigation to PR<a class="headerlink" href="#02-from-investigation-to-pr" title="Anchor link">¶</a></h1>
-<p><em>Skills for Claude Code</em></p>
-<p><em>Three prompts, three Skill files, a real ecommerce bug. Six minutes later, a PR with a fix is open.</em></p>
-<p>Claude Code with Sonnet 4.6 and a small Skill resolved a race condition in inventory management from a vague error report — no prior codebase exposure, one continuous session from investigation through PR. Without the Skill, the same model and bug took over 13 minutes. With it, under six. That gap is the difference between an engineer context-switching vs. staying in flow.</p>
-<p><a href="../01-harness-problem/">Post 1</a> argued that the harness shape matters more than the model behind it. This post puts a real Kubernetes cluster in front of that argument and times the loop. The Skill itself and its impact are introduced midway through the process.</p>
-<h2 id="the-scenario">The scenario<a class="headerlink" href="#the-scenario" title="Anchor link">¶</a></h2>
-<p>The setup is a local kind cluster running an ecommerce service with observability wired in.</p>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Detail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Kubernetes</td>
-<td>kind, single control-plane node, v1.35.0</td>
-</tr>
-<tr>
-<td>Namespaces</td>
-<td><code>ecommerce</code> (app + load generator), <code>clickhouse</code> (CH + OTel bridge)</td>
-</tr>
-<tr>
-<td>Observability</td>
-<td>ClickHouse, OpenTelemetry collector, <code>otel-clickhouse-bridge</code></td>
-</tr>
-<tr>
-<td>Data</td>
-<td><code>otel_logs</code>, <code>otel_traces</code>, <code>otel_metrics_*</code> populated from live load</td>
-</tr>
-<tr>
-<td>App</td>
-<td>Node.js ecommerce service + checkout + inventory service</td>
-</tr>
-<tr>
-<td>Failure mode</td>
-<td>TOCTOU race in <code>reserveInventory</code> causing ~50% checkout error rate</td>
-</tr>
-</tbody>
-</table>
-<p>The bug is in <code>backend/src/services/inventory.js</code>. <code>reserveInventory</code> reads stock, waits 50--150 ms, checks requested quantity, then decrements stock non-atomically. Two concurrent reservations may read the same value, both pass the guard, and both decrement. For product 7 (Ceramic Plant Pot), stock drops to <code>-3</code> under load.</p>
-<p>The model sees none of this in advance. It sees a running cluster with ClickHouse and OTel data, a repo it can clone (<code>ecommerce-app</code>), a <code>gh</code> CLI authenticated as the user, and whatever Skills are loaded in the session. No hints about the schema. No hint about the bug. No scope on the source repo beyond a name.</p>
-<h2 id="the-prompts">The prompts<a class="headerlink" href="#the-prompts" title="Anchor link">¶</a></h2>
-<p>Three turns, identical across every session in this post.</p>
-<div class="highlight"><pre><span></span><code>1. Ecommerce service is showing some errors in my local K8S cluster.
-   Investigate and summarize errors. Use ClickHouse otel logs to
-   identify the problem.
-
-2. Source code for ecommerce service is in the repo ecommerce-app.
-   Suggest a code fix for this issue.
-
-3. Make code fixes in a private branch and create a pull request.
-   Use GitHub integration (gh cli).
-</code></pre></div>
-<p>The prompts name "clickhouse," but no table, a repo but no path, a CLI but no branch convention. The model has to figure all of that out — and the third turn, where the agent does actual work in the world, is the one most demos skip.</p>
-<h2 id="baseline-sonnet-46-no-skill">Baseline: Sonnet 4.6, no Skill<a class="headerlink" href="#baseline-sonnet-46-no-skill" title="Anchor link">¶</a></h2>
-<p>In the baseline run with Sonnet 4.6 and no Skills loaded, the process took 13 minutes and 27 seconds, requiring 99 tool calls over three turns to open a pull request. The process included several missteps that are worth noting.</p>
-<p>Initially, the model attempted to connect to ClickHouse via the cluster’s NodePort but encountered network errors:</p>
-<div class="highlight"><pre><span></span><code>$ clickhouse client --host 127.0.0.1 --port 30900
-Connection refused (NETWORK_ERROR)
-
-$ clickhouse client --host 172.18.0.3 --port 30900
-Network is unreachable (NETWORK_ERROR)
-
-$ kubectl exec -n clickhouse clickhouse-7ccb6ccb7-27x4p -- clickhouse-client
-OK
-</code></pre></div>
-<p>Only after two failed attempts did it succeed by using kubectl exec to access ClickHouse inside the pod.</p>
-<p>Additional time was spent discovering the schema, with several exploratory queries needed to find the relevant tables and columns. The model also used multiple overlapping LIKE queries for a single product, when a single targeted query would have sufficed resulting in unnecessary repetition.</p>
-<p>Despite these challenges, the process ultimately succeeded, albeit inefficiently.</p>
-<h2 id="the-skill">The Skill<a class="headerlink" href="#the-skill" title="Anchor link">¶</a></h2>
-<p>I designed Skills to solve common problems—like tricky connection setups, unclear schemas, repetitive workflows, and error recovery.
-In Claude Code, a Skill is a markdown file with YAML frontmatter, stored either globally (in ~/.claude/skills/SKILL.md) or for a specific repository. At the start of each session, Claude Code loads any Skills that match the current context.
-This repository includes three example Skills: ClickHouse, k8s, and gh. </p>
-<p>For instance, the ClickHouse Skill highlights important conventions and critical rules right at the top.</p>
-<div class="highlight"><span class="filename">skills/clickhouse/SKILL.md</span><pre><span></span><code><span class="nn">---</span>
-<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clickhouse</span>
-<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
-<span class="w">  </span><span class="no">Query OTel observability data (logs, traces, metrics) via ClickHouse to</span>
-<span class="w">  </span><span class="no">investigate incidents. Use when the user mentions clickhouse, otel logs,</span>
-<span class="w">  </span><span class="no">otel traces, observability data, investigate traces, query metrics, or</span>
-<span class="w">  </span><span class="no">clickstack.</span>
-<span class="nn">---</span>
-
-<span class="c1">## Critical Rules</span>
-
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Tables</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">otel_logs`, `otel_traces`, `otel_metrics_gauge`,</span>
-<span class="w">  </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">otel_metrics_sum`, `otel_metrics_histogram`</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Time columns</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">Timestamp` (logs, traces) vs `TimeUnix` (metrics)</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Service name</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">ServiceName` (logs, traces) vs</span>
-<span class="w">  </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">ResourceAttributes[&#39;service.name&#39;]` (metrics)</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">SeverityText` varies — match with `IN (&#39;ERROR&#39;,&#39;Error&#39;,&#39;error&#39;)`</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Exception details live in `LogAttributes` (Map), not in `Body`.</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">Use bracket syntax, not LIKE.</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">CLI binary</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">clickhouse client` (two words, not hyphenated)</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Read-only access only; always include LIMIT and a time window</span>
-
-<span class="c1">## Investigation Methodology</span>
-
-<span class="l l-Scalar l-Scalar-Plain">SCOPE -&gt; TRIAGE -&gt; DRILL -&gt; MEASURE -&gt; CORRELATE -&gt; CONCLUDE</span>
-
-<span class="l l-Scalar l-Scalar-Plain">(Each phase has 1-2 canonical query templates...)</span>
-</code></pre></div>
-<p>A Skill should capture practical tips and “tribal knowledge”: bracket syntax, common CLI commands, or how to handle exceptions. The model learns from these notes instantly, helping it avoid wasted steps and mistakes.
-If you’re creating your own Skill, focus on what usually trips up new team members—quirky connections, column names that don’t match the docs, or query patterns people copy from chat. If it’s in your runbook but often ignored, it’s perfect for a Skill file.</p>
-<p>The repo ships all three Skills (<code>clickhouse</code>, <code>k8s</code>, <code>gh</code>) under <code>skills/</code>. To install:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/har-ki/claude-code-sre-handbook
-mkdir<span class="w"> </span>-p<span class="w"> </span>~/.claude/skills
-cp<span class="w"> </span>-r<span class="w"> </span>claude-code-sre-handbook/skills/*<span class="w"> </span>~/.claude/skills/
-</code></pre></div>
-<p>Modify them to fit your stack. The file structure is more important than the specific contents.</p>
-<h2 id="sonnet-46-with-the-skill">Sonnet 4.6, with the Skill<a class="headerlink" href="#sonnet-46-with-the-skill" title="Anchor link">¶</a></h2>
-<p>Same model, same scenario, same three prompts. Skills loaded from <code>.claude/skills/</code> at session start.</p>
-<p>5 minutes 49 seconds, 9 tool calls in turn one, PR opened on first attempt.</p>
-<p>The first ClickHouse query was no longer a guess:</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">max</span><span class="p">(</span><span class="k">Timestamp</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">otel_logs</span><span class="p">;</span>
-</code></pre></div>
-<p>Correct table and column, <code>clickhouse client</code> directly (no <code>kubectl exec</code>), case-insensitive severity from the next query. Zero schema-discovery round-trips. The model moved SCOPE -&gt; TRIAGE -&gt; DRILL -&gt; MEASURE without looping and found product 7 in eight queries instead of twelve. Turn 3 was six tool calls: checkout, edit, commit, push, <code>gh pr create</code>, PR URL returned.</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th style="text-align: right;">No Skill</th>
-<th style="text-align: right;">With Skill</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>End-to-end wall clock</td>
-<td style="text-align: right;">13:27</td>
-<td style="text-align: right;">5:49</td>
-</tr>
-<tr>
-<td>Turn 1 tool calls</td>
-<td style="text-align: right;">99 (43 + 56 subagent)</td>
-<td style="text-align: right;">9</td>
-</tr>
-<tr>
-<td>Schema-discovery round-trips</td>
-<td style="text-align: right;">3 + 2 failed connections</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td>Turn 3 errors</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td>Root cause correct</td>
-<td style="text-align: right;">Yes</td>
-<td style="text-align: right;">Yes</td>
-</tr>
-</tbody>
-</table>
-<p>Root-cause accuracy didn't change — both sessions identified the TOCTOU and proposed a per-product async mutex. The Skill didn't make Sonnet smarter. It made Sonnet's tools hit the mark: 99 tool calls to 9.</p>
-<h2 id="where-it-still-breaks">Where it still breaks<a class="headerlink" href="#where-it-still-breaks" title="Anchor link">¶</a></h2>
-<p>Two real limitations from these sessions.</p>
-<p><strong>Skill discovery is brittle.</strong> Skills load when their <code>description:</code> keywords match the user message. In the Sonnet+Skill run, a <code>gh</code> Skill never surfaced — Turn 3 said "github integration (gh cli)" but <code>gh</code> didn't load while <code>clickhouse</code> and <code>k8s</code> had loaded on Turn 1. The session succeeded anyway, but the failure mode is real: a Skill that doesn't load can't help, and there's no visible signal that it didn't.</p>
-<p><strong>Skills don't cover phase transitions.</strong> The investigation -&gt; code-fix pivot — <em>clone the repo, read inventory.js, propose a diff</em> — is unguided. Every session figured it out; the figuring was first-principles reasoning.</p>
-<p>Neither is a harness failure. The harness gave the model edit tools, retry, reasoning — all worked when called. The takeaway: a Skill doesn't need to be perfect. A short file that encodes your team's tribal knowledge about one tool cuts the investigation loop in half — and unlike a runbook, it's read every time.</p>
-<h2 id="try-it-yourself">Try it yourself<a class="headerlink" href="#try-it-yourself" title="Anchor link">¶</a></h2>
-<p>Everything in this post is reproducible from the repo. You need Docker, <a href="https://kind.sigs.k8s.io/">kind</a>, kubectl, <a href="https://claude.ai/claude-code">Claude Code</a>, and the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code>).</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/har-ki/claude-code-sre-handbook
-<span class="nb">cd</span><span class="w"> </span>claude-code-sre-handbook/otel-demo
-./setup-post02.sh
-</code></pre></div>
-<p>This stands up the kind cluster, pushes the ecommerce app to your GitHub, installs the Skills, and scales the load generator to trigger the bug. Authenticate <code>gh</code> first if you haven't (<code>gh auth login</code>).</p>
-<p>Then open Claude Code and paste the three prompts one at a time. Compare your session against the results in this post.</p>
-<p>Teardown: <code>./teardown.sh</code></p>
-<p>Your times and tool-call counts will vary — different cluster, different model snapshot, different day. The shape of the session should be the same.</p>
+<h1 id="09-the-context-problem">09 — The Context Problem<a class="headerlink" href="#09-the-context-problem" title="Anchor link">¶</a></h1>
+<p><em>Context engineering for AI SRE: how to construct what the agent reasons against.</em></p>
+<p>You've said context matters most—and you're right. Part 3 shows how to build it: what to include, what to leave out, what happens when the window fills up, and how to keep the agent from trusting the wrong information. Five posts, five examples, one laptop, one clear result.</p>
+<p>Here's where things broke. The model worked well, and the harness was solid—Parts 1 and 2 proved it. But when I gave the agent a memory of past incidents, a new problem arose. The agent remembered a similar case and stopped searching, even though that memory was only partly correct. For example, it spotted a familiar StockMismatchError, but missed a second bug—a stale cache—because it thought it already had the answer. The fix wasn't wrong, just incomplete. In production, that's still a failure.</p>
+<p>This wasn't a model or harness problem. The agent made good decisions—but based on the wrong information, shaped by its memory. Context engineering builds the world the agent sees, and it's the key to everything an SRE agent does. A fancy model with bad context loses to a simple model with good context. Part 8 proved this: the local model solved the same incidents as the advanced one when it had the right context. The memory failure above shows the flip side—give a smart agent slightly wrong context, and it fails just as smartly.</p>
+<p>Everyone agrees: context is the real challenge. The pitch is simple—the agent's value isn't running kubectl; it's finding the context a human on-call would spend 25 minutes gathering. They're right about the problem. But few talk about how context is built, since that's often the secret sauce. This series shows the process, using Claude Code as shipped and hardware you already have—including where things break.</p>
+<h2 id="construction-is-three-decisions-not-one">Construction is three decisions, not one<a class="headerlink" href="#construction-is-three-decisions-not-one" title="Anchor link">¶</a></h2>
+<p>It's easy to answer 'How do I build context?' with a list—telemetry, topology, code, runbooks, past incidents—and call that the recipe. The list is real (see below), but ingredients aren't the method. Context is built through three key decisions, each with its own risk: first, what goes in; second, how you manage it as it grows; third, how you make the agent use it.</p>
+<ol>
+<li><strong>What goes in.</strong> Which facts about the system, the failure, and the history earn a place in a finite window — and which you deliberately leave out.</li>
+<li><strong>How you manage it as it grows.</strong> What you do when a forty-minute session fills the window: what gets correlated, summarized, evicted, or fetched on demand.</li>
+<li><strong>How you make the agent reason over it.</strong> What discipline prevents the model from trusting a recalled finding that's only half-right?</li>
+</ol>
+<p><strong>A note on models.</strong> Part 3 runs across two models — Claude Sonnet 4.6 on the frontier, and Qwen3.6 locally via Ollama — but not as alternating arcs the way Parts 1 and 2 were. Here the model is a condition of the experiment, not the subject of it. Each post picks whichever model makes its context decision <em>visible</em> and says which and why up front. Some findings only appear on a small local window; others are measured on frontier with local replication still ahead. Every post opens with a one-line Setup so you always know what you're looking at and why — the model varies, but the incident, the phases, and the discipline stay fixed throughout.</p>
+<p>Most writing on agentic SRE treats these as one problem: 'give the agent good context.' But they're three separate engineering challenges. You can get the inputs right and still fail on management—maybe you summarized away the log line that mattered. You can manage the window perfectly and still fail on discipline—the agent trusted an incomplete memory and stopped searching, just like the failure above. Each post in Part 3 tackles one decision and shows how to fix its failure mode.</p>
+<h2 id="decision-1-what-goes-in">Decision 1 — What goes in<a class="headerlink" href="#decision-1-what-goes-in" title="Anchor link">¶</a></h2>
+<p>The raw material you assemble before and during an incident: first, a model of the environment (cluster state, manifests, resource limits); second, the evidence to investigate with (logs, traces, metrics); third, the source of the failing service; fourth, procedural knowledge; and fifth, recall of past incidents.</p>
+<p>Two pieces here deserve a flag now. Runbooks are among the strongest levers in the field — a phase-structured procedure prevents the agent from exploring at random and makes its investigation repeatable. The Skill files from Part 1 were already doing this; Part 3 names it and shows how to write one that constrains without straitjacketing. And service topology — the dependency graph every vendor leads with — is the one thing a single-service demo can't honestly prove. I'll show where it belongs and scope it out rather than fake a dependency graph that isn't there.</p>
+<h2 id="decision-2-how-you-manage-it-as-it-grows">Decision 2 — How you manage it as it grows<a class="headerlink" href="#decision-2-how-you-manage-it-as-it-grows" title="Anchor link">¶</a></h2>
+<p>Inputs are static; a session is not. Tool outputs pile up — kubectl dumps, query results, file reads — and the window fills. That leaves two places to engineer, and two places to fail: correlation and compaction.</p>
+<p>Correlation is the missing piece everyone needs but few build. Gathering logs, traces, and metrics is just collection; connecting a deploy to an error spike to a code change is correlation—and that's what finds the real cause. An agent with all the data but no correlation has all the evidence and still can't tell the story.</p>
+<p>Compaction is what the harness does when the window fills up—it summarizes old tool output to make space. Claude Code surprised me here: it didn't compact when I expected, because it measured against the wrong baseline.</p>
+<h2 id="decision-3-how-you-make-the-agent-reason-over-it">Decision 3 — How you make the agent reason over it<a class="headerlink" href="#decision-3-how-you-make-the-agent-reason-over-it" title="Anchor link">¶</a></h2>
+<p>Same context, same model, but different discipline means different results. The sharp case is what I opened with: the agent recalls a past incident that's partly right—a partial match—and anchors on it, stopping the search. Better retrieval doesn't fix this; I'll show that similarity scores for safe and risky cases are identical, so retrieval can't tell them apart. The fix is forced corroboration: making the agent check a recalled idea against fresh evidence before acting. It's easy to add and makes the difference between helpful memory and harmful memory.</p>
+<h2 id="what-youll-have-built-by-the-end">What you'll have built by the end<a class="headerlink" href="#what-youll-have-built-by-the-end" title="Anchor link">¶</a></h2>
+<p>The posts follow the three decisions in the order you actually build them — get the right things in, manage them as the window fills, impose discipline on the reasoning — and then the one ingredient that needs all three at once.</p>
+<p><strong>Decision 1 — what goes in:</strong></p>
+<ul>
+<li><a href="../10-runbook-as-context/">Post 10</a> — Runbooks as context. Does structured procedural context constrain the agent's exploration and improve the catch? The Skill files from Part 1, measured as a context lever.</li>
+<li><a href="../11-correlation/">Post 11</a> — Collection isn't correlation. An agent with every signal that still can't assemble the story — and the construction that links a deploy to an error to a code change.</li>
+</ul>
+<p><strong>Decision 2 — how you manage it as it grows:</strong></p>
+<ul>
+<li><a href="../12-the-window-edge/">Post 12</a> — The window edge. What Claude Code actually does when context fills, with token traces. Why it didn't compact when I expected it to, and how to fix the baseline.</li>
+</ul>
+<p><strong>Decision 3 — how you make it reason, on the ingredient that needs all three:</strong></p>
+<ul>
+<li><a href="../13-memory/">Post 13</a> — Memory for the SRE loop. Memory is the thread that runs through every decision: you retrieve a past incident (what goes in), you write findings back without poisoning the store (how you manage it), and you have the agent corroborate a recalled finding rather than anchoring on it (how it reasons). Get any one wrong, and the whole thing breaks. This is where the three decisions stop being independent — forced corroboration against partial-match recall.</li>
+<li><a href="../14-the-complete-watcher/">Post 14</a> — The complete watcher. Everything from Part 3, assembled into one watcher you can clone and run on your own cluster.</li>
+</ul>
+<p>By the end, you'll have a practical method for building context for an SRE agent—not a product to buy, but a practice to use—and a clear map of where things still break. That's the point: the failures are the findings, and each one makes the payoff sharper.</p>
 <hr />
 <p><em>Working through this on your own infrastructure? Happy to jam — <a href="https://github.com/har-ki">drop me a line</a>.</em></p>
 
@@ -1429,7 +1255,7 @@ cp<span class="w"> </span>-r<span class="w"> </span>claude-code-sre-handbook/ski
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../01-harness-problem/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1. The Harness Problem">
+          <a href="../08-benchmark-comparison/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 8. Air-Gapped Qwen3.6 on k8s-ai-bench">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1439,20 +1265,20 @@ cp<span class="w"> </span>-r<span class="w"> </span>claude-code-sre-handbook/ski
                 Previous
               </span>
               <div class="md-ellipsis">
-                1. The Harness Problem
+                8. Air-Gapped Qwen3.6 on k8s-ai-bench
               </div>
             </div>
           </a>
         
         
           
-          <a href="../03-five-incidents-frontier/" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Claude Code on k8s-ai-bench">
+          <a href="../10-runbook-as-context/" class="md-footer__link md-footer__link--next" aria-label="Next: 10. Runbooks as Context">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                3. Claude Code on k8s-ai-bench
+                10. Runbooks as Context
               </div>
             </div>
             <div class="md-footer__button md-icon">

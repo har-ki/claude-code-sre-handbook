@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../01-harness-problem/">
+        <link rel="prev" href="../11-correlation/">
       
       
-        <link rel="next" href="../03-five-incidents-frontier/">
+        <link rel="next" href="../13-memory/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>2. From Investigation to PR - The Claude Code SRE Handbook</title>
+        <title>12. The Window Edge - The Claude Code SRE Handbook</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#02-from-investigation-to-pr" class="md-skip">
+        <a href="#the-window-edge" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              2. From Investigation to PR
+              12. The Window Edge
             
           </span>
         </div>
@@ -338,10 +338,8 @@
                 
   
   
-    
   
   
-  
     
     
       
@@ -361,11 +359,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_2" >
         
           
           <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
@@ -386,7 +386,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -429,37 +429,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    2. From Investigation to PR
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../02-investigation-to-pr/" class="md-nav__link">
         
   
   
@@ -475,103 +448,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-scenario" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The scenario
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-prompts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The prompts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#baseline-sonnet-46-no-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Baseline: Sonnet 4.6, no Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sonnet-46-with-the-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sonnet 4.6, with the Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#where-it-still-breaks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where it still breaks
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#try-it-yourself" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it yourself
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -824,8 +700,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -847,13 +725,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" checked>
         
           
           <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="0">
@@ -874,7 +750,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_1_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -973,10 +849,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../12-the-window-edge/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. The Window Edge
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -992,6 +895,131 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-the-window-is-the-thing-that-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why the window is the thing that matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-goes-wrong-the-harness-is-watching-the-wrong-number" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What goes wrong: the harness is watching the wrong number
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-failure-looks-like" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the failure looks like
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-fix-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to fix it
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How to fix it">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#did-the-model-lose-the-thread" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Did the model lose the thread?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-routes-to-the-same-fix-and-a-warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two routes to the same fix, and a warning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reproduce-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reproduce it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-this-stops-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where this stops working
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-takeaway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The takeaway
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1123,10 +1151,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-scenario" class="md-nav__link">
+  <a href="#why-the-window-is-the-thing-that-matters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The scenario
+        Why the window is the thing that matters
       
     </span>
   </a>
@@ -1134,10 +1162,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-prompts" class="md-nav__link">
+  <a href="#what-goes-wrong-the-harness-is-watching-the-wrong-number" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The prompts
+        What goes wrong: the harness is watching the wrong number
       
     </span>
   </a>
@@ -1145,10 +1173,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#baseline-sonnet-46-no-skill" class="md-nav__link">
+  <a href="#what-the-failure-looks-like" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Baseline: Sonnet 4.6, no Skill
+        What the failure looks like
       
     </span>
   </a>
@@ -1156,10 +1184,60 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-skill" class="md-nav__link">
+  <a href="#how-to-fix-it" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Skill
+        How to fix it
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How to fix it">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#did-the-model-lose-the-thread" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Did the model lose the thread?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-routes-to-the-same-fix-and-a-warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two routes to the same fix, and a warning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reproduce-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reproduce it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-this-stops-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where this stops working
       
     </span>
   </a>
@@ -1167,32 +1245,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sonnet-46-with-the-skill" class="md-nav__link">
+  <a href="#the-takeaway" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Sonnet 4.6, with the Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#where-it-still-breaks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where it still breaks
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#try-it-yourself" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it yourself
+        The takeaway
       
     </span>
   </a>
@@ -1219,177 +1275,134 @@
   
 
 
-<h1 id="02-from-investigation-to-pr">02 — From Investigation to PR<a class="headerlink" href="#02-from-investigation-to-pr" title="Anchor link">¶</a></h1>
-<p><em>Skills for Claude Code</em></p>
-<p><em>Three prompts, three Skill files, a real ecommerce bug. Six minutes later, a PR with a fix is open.</em></p>
-<p>Claude Code with Sonnet 4.6 and a small Skill resolved a race condition in inventory management from a vague error report — no prior codebase exposure, one continuous session from investigation through PR. Without the Skill, the same model and bug took over 13 minutes. With it, under six. That gap is the difference between an engineer context-switching vs. staying in flow.</p>
-<p><a href="../01-harness-problem/">Post 1</a> argued that the harness shape matters more than the model behind it. This post puts a real Kubernetes cluster in front of that argument and times the loop. The Skill itself and its impact are introduced midway through the process.</p>
-<h2 id="the-scenario">The scenario<a class="headerlink" href="#the-scenario" title="Anchor link">¶</a></h2>
-<p>The setup is a local kind cluster running an ecommerce service with observability wired in.</p>
+<h1 id="the-window-edge">The Window Edge<a class="headerlink" href="#the-window-edge" title="Anchor link">¶</a></h1>
+<p><em>Your agent thinks it has 200K of room. It has 32K. That gap is where good investigations go to die.</em></p>
+<p>Claude Code won't compact a local model's context because it thinks the window is 200K when it's actually 32K. One environment variable fixes this. Here's how far that fix goes.</p>
+<p><strong>Setup:</strong> Local Qwen3.6 (<code>qwen3.6:35b-a3b-coding-nvfp4</code>) on Ollama, <code>num_ctx=32768</code>, on an M3 Pro with 36GB. Claude Code v2.1.84. One task: <code>fix-crashloop</code> from k8s-ai-bench, with the Kubernetes skill loaded. I chose the local model on purpose—this window issue only appears when the window is small, and 32K is small enough to hit in a single incident. With a frontier model, you rarely hit this limit. That difference is key.</p>
+<h2 id="why-the-window-is-the-thing-that-matters">Why the window is the thing that matters<a class="headerlink" href="#why-the-window-is-the-thing-that-matters" title="Anchor link">¶</a></h2>
+<p>An agent only reasons well with what's inside its context window. A coding agent debugging an incident fills that window fast—every kubectl output, log line, and file it reads gets added to the conversation. If you let it grow unchecked, the session runs past the window's edge, and the model loses the early context it needs to link causes and effects. It keeps answering, but now it's missing pieces it can't see. If you manage the window, the agent keeps a clear picture. If you don't, the picture quietly falls apart.</p>
+<p>This series breaks context engineering into three choices: what to put in the window, how to manage it as it grows, and how the agent reasons over what's inside. Earlier posts covered the first step—using runbooks and signals to get the right things into the window. This post tackles the second step, the one people often skip, and follows it from setup to failure to fix.</p>
+<p>People skip this step because it seems automatic—the harness should handle compaction. On a frontier model, this mostly works; the window is so big you rarely hit its limit in one incident. But when you use a self-hosted model, that assumption breaks. The window is small and fills quickly, and the harness doesn't step in. Now, managing the window is something you must configure. That's why this decision matters, and why it's the first thing to break when you leave frontier models behind.</p>
+<h2 id="what-goes-wrong-the-harness-is-watching-the-wrong-number">What goes wrong: the harness is watching the wrong number<a class="headerlink" href="#what-goes-wrong-the-harness-is-watching-the-wrong-number" title="Anchor link">¶</a></h2>
+<p>Claude Code has a feature called auto-compaction. When a session gets long, it summarizes earlier parts of the conversation so important details stay in view and the rest gets compressed. On a frontier model, this happens quietly, and you don't have to worry about it.</p>
+<p>Run the same Claude Code against a local model, and compaction stops happening. It's not that local models can't compact—they can. But Claude Code never decides it's time. It's waiting for the window to fill, but by its own count, the window never fills.</p>
+<p>Here's why. Claude Code maintains an internal table of each model's context window size. For this local model, that table reports a window of around 200,000 tokens, and auto-compaction won't trigger until the conversation gets deep into it — by default, compaction fires around 90% of the believed window, so roughly 180K. But Ollama is actually running the model with a 32,768-token window — that's what a 36GB machine affords once you account for the model weights and KV cache. Claude Code doesn't ask Ollama for the real number. It trusts its table.</p>
+<p>So auto-compaction is watching for an 180K threshold inside a 200K window that doesn't exist. The conversation climbs past 32K — the real limit — and Claude Code keeps sending the full, uncompacted history at every turn, because, by its own count, it's nowhere near the line.</p>
+<p>This isn't a Claude Code bug. It's a configuration mismatch: a generic default meets a model that doesn't match. The fix is to tell Claude Code the real window size. The next section shows what happens before you do that.</p>
+<h2 id="what-the-failure-looks-like">What the failure looks like<a class="headerlink" href="#what-the-failure-looks-like" title="Anchor link">¶</a></h2>
+<p>I ran <code>fix-crashloop</code> twice on the same machine, with the same task and model. The only difference: one run had the window override set, one didn't.</p>
+<p><strong>Run A — no override.</strong> This is the default behavior, the one most people hit first.</p>
+<p>The conversation kept growing. Input tokens rose each turn—28K, 30K, 32K, 34K—straight past the real 32K window with no compaction anywhere in the trace. By the end, it hit 36,195 tokens, well over the 32,768-token window.</p>
+<p>You can see the consequence on the Ollama side. Every request Claude Code sent, Ollama logged its size. Once the conversation crossed 32K, every request was too big for the window:</p>
+<div class="highlight"><pre><span></span><code>cache hit total=32191   ← over the 32K window
+cache hit total=33627
+cache hit total=34419
+cache hit total=35560   ← peak, 108% of the window
+</code></pre></div>
+<p>Ten of the 24 requests in Run A were too large. Ollama doesn't reject them—it cycles tokens through the cache, evicting older ones to make room. But the evicted tokens are ones the model can't use when generating. The model is reasoning with gaps in its context and doesn't know it.</p>
+<p>The run never converged. It took 28 turns, spawned three subagents, tried different fixes, and the harness killed it at the 20-minute timeout. It failed.</p>
+<h2 id="how-to-fix-it">How to fix it<a class="headerlink" href="#how-to-fix-it" title="Anchor link">¶</a></h2>
+<p><strong>Run B — one variable set:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CLAUDE_CODE_AUTO_COMPACT_WINDOW</span><span class="o">=</span><span class="m">32768</span>
+</code></pre></div>
+<p>That tells Claude Code: the window is 32,768, not 200,000. Now, auto-compaction monitors the correct number and can fire at the right time.</p>
+<p>The difference is immediate. Compaction fired four times during the run. Each time, Claude Code summarized the older conversation and the token count dropped back down. Instead of climbing forever, the session settled into a steady band between 28.4K and 28.9K and stayed there:</p>
 <table>
 <thead>
 <tr>
-<th>Component</th>
-<th>Detail</th>
+<th></th>
+<th>Run A (default)</th>
+<th>Run B (override)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Kubernetes</td>
-<td>kind, single control-plane node, v1.35.0</td>
+<td>Token trend</td>
+<td>grows to 36,195</td>
+<td>flat, ~28.4K–28.9K</td>
 </tr>
 <tr>
-<td>Namespaces</td>
-<td><code>ecommerce</code> (app + load generator), <code>clickhouse</code> (CH + OTel bridge)</td>
+<td>Compaction events</td>
+<td>0</td>
+<td>4</td>
 </tr>
 <tr>
-<td>Observability</td>
-<td>ClickHouse, OpenTelemetry collector, <code>otel-clickhouse-bridge</code></td>
+<td>Requests over 32K</td>
+<td>10 of 24</td>
+<td>0 of 8</td>
 </tr>
 <tr>
-<td>Data</td>
-<td><code>otel_logs</code>, <code>otel_traces</code>, <code>otel_metrics_*</code> populated from live load</td>
+<td>Peak request size</td>
+<td>35,560 (108%)</td>
+<td>30,015 (92%)</td>
 </tr>
 <tr>
-<td>App</td>
-<td>Node.js ecommerce service + checkout + inventory service</td>
-</tr>
-<tr>
-<td>Failure mode</td>
-<td>TOCTOU race in <code>reserveInventory</code> causing ~50% checkout error rate</td>
+<td>Outcome</td>
+<td>failed (20-min timeout)</td>
+<td>passed (8.3 min)</td>
 </tr>
 </tbody>
 </table>
-<p>The bug is in <code>backend/src/services/inventory.js</code>. <code>reserveInventory</code> reads stock, waits 50--150 ms, checks requested quantity, then decrements stock non-atomically. Two concurrent reservations may read the same value, both pass the guard, and both decrement. For product 7 (Ceramic Plant Pot), stock drops to <code>-3</code> under load.</p>
-<p>The model sees none of this in advance. It sees a running cluster with ClickHouse and OTel data, a repo it can clone (<code>ecommerce-app</code>), a <code>gh</code> CLI authenticated as the user, and whatever Skills are loaded in the session. No hints about the schema. No hint about the bug. No scope on the source repo beyond a name.</p>
-<h2 id="the-prompts">The prompts<a class="headerlink" href="#the-prompts" title="Anchor link">¶</a></h2>
-<p>Three turns, identical across every session in this post.</p>
-<div class="highlight"><pre><span></span><code>1. Ecommerce service is showing some errors in my local K8S cluster.
-   Investigate and summarize errors. Use ClickHouse otel logs to
-   identify the problem.
-
-2. Source code for ecommerce service is in the repo ecommerce-app.
-   Suggest a code fix for this issue.
-
-3. Make code fixes in a private branch and create a pull request.
-   Use GitHub integration (gh cli).
+<p>The part that matters most: the fix reached Ollama. This was the question I most wanted answered, because it's easy to imagine a fix that looks good in Claude Code's own numbers but changes nothing on the wire. Compaction summarizes Claude Code's copy of the conversation — but does that actually mean smaller requests hit the model? It does. Run B's requests to Ollama stayed under the window the whole time, peaking at 30,015 tokens — 92% of 32K. After each compaction, you can watch the request size drop in Ollama's own log:</p>
+<div class="highlight"><pre><span></span><code>cache hit total=28838
+cache hit total=27609   ← dropped, just after a compaction
+cache hit total=30015
+cache hit total=28144   ← dropped again
 </code></pre></div>
-<p>The prompts name "clickhouse," but no table, a repo but no path, a CLI but no branch convention. The model has to figure all of that out — and the third turn, where the agent does actual work in the world, is the one most demos skip.</p>
-<h2 id="baseline-sonnet-46-no-skill">Baseline: Sonnet 4.6, no Skill<a class="headerlink" href="#baseline-sonnet-46-no-skill" title="Anchor link">¶</a></h2>
-<p>In the baseline run with Sonnet 4.6 and no Skills loaded, the process took 13 minutes and 27 seconds, requiring 99 tool calls over three turns to open a pull request. The process included several missteps that are worth noting.</p>
-<p>Initially, the model attempted to connect to ClickHouse via the cluster’s NodePort but encountered network errors:</p>
-<div class="highlight"><pre><span></span><code>$ clickhouse client --host 127.0.0.1 --port 30900
-Connection refused (NETWORK_ERROR)
-
-$ clickhouse client --host 172.18.0.3 --port 30900
-Network is unreachable (NETWORK_ERROR)
-
-$ kubectl exec -n clickhouse clickhouse-7ccb6ccb7-27x4p -- clickhouse-client
-OK
+<p>This is the real result, and it holds independent of anything else: with the override, Ollama never sees an oversized request. Without it, most requests are oversized. The fix is genuine, not cosmetic, and the next question is whether the model loses the thread.</p>
+<h3 id="did-the-model-lose-the-thread">Did the model lose the thread?<a class="headerlink" href="#did-the-model-lose-the-thread" title="Anchor link">¶</a></h3>
+<p>A fair worry: if you keep summarizing the conversation, does the agent forget what it was doing? In this run, it didn't. After each compaction, the model picked up cleanly. Reading its reasoning right after a summary, it still knew it had applied a fix and needed to verify it, and at the end it correctly read its own compacted summary and concluded the task was done. It found the root cause (an nginx image running a python3 command), removed the bad command, confirmed the pod came up healthy, and reported success. The summaries kept the diagnostic chain intact.</p>
+<p>But read that carefully: in this run. <code>fix-crashloop</code> is a short, single-cause incident — the diagnostic chain is shallow, and the context that mattered was all recent, exactly the context a summary keeps. That's the easy case for compaction. The hard case comes next.</p>
+<h3 id="two-routes-to-the-same-fix-and-a-warning">Two routes to the same fix, and a warning<a class="headerlink" href="#two-routes-to-the-same-fix-and-a-warning" title="Anchor link">¶</a></h3>
+<p>There are two ways to set up compaction:</p>
+<ul>
+<li>Set <code>CLAUDE_CODE_AUTO_COMPACT_WINDOW</code> to your model's real window size (the direct approach I used), or</li>
+<li>Use <code>CLAUDE_AUTOCOMPACT_PCT_OVERRIDE</code> to set the compaction trigger as a percentage of the default (~180K), calculated as <code>(real_num_ctx / 180000) * 100</code>.</li>
+</ul>
+<p>Both methods aim to trigger compaction before exceeding your true window. Don't use both unless you understand their interaction—choose one and apply it correctly. The key is to base the percentage on the default window size, not your actual window.</p>
+<h3 id="reproduce-it">Reproduce it<a class="headerlink" href="#reproduce-it" title="Anchor link">¶</a></h3>
+<p>Both runs use the same benchmark command. The only difference is the environment variable.</p>
+<p>The failing default — no override:</p>
+<div class="highlight"><pre><span></span><code>./benchmark/bin/run-k8s-ai-bench.sh<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--model<span class="w"> </span><span class="s2">&quot;qwen3.6:35b-a3b-coding-nvfp4&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--skill<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--task-pattern<span class="w"> </span><span class="s2">&quot;fix-crashloop&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--iterations<span class="w"> </span><span class="m">1</span>
 </code></pre></div>
-<p>Only after two failed attempts did it succeed by using kubectl exec to access ClickHouse inside the pod.</p>
-<p>Additional time was spent discovering the schema, with several exploratory queries needed to find the relevant tables and columns. The model also used multiple overlapping LIKE queries for a single product, when a single targeted query would have sufficed resulting in unnecessary repetition.</p>
-<p>Despite these challenges, the process ultimately succeeded, albeit inefficiently.</p>
-<h2 id="the-skill">The Skill<a class="headerlink" href="#the-skill" title="Anchor link">¶</a></h2>
-<p>I designed Skills to solve common problems—like tricky connection setups, unclear schemas, repetitive workflows, and error recovery.
-In Claude Code, a Skill is a markdown file with YAML frontmatter, stored either globally (in ~/.claude/skills/SKILL.md) or for a specific repository. At the start of each session, Claude Code loads any Skills that match the current context.
-This repository includes three example Skills: ClickHouse, k8s, and gh. </p>
-<p>For instance, the ClickHouse Skill highlights important conventions and critical rules right at the top.</p>
-<div class="highlight"><span class="filename">skills/clickhouse/SKILL.md</span><pre><span></span><code><span class="nn">---</span>
-<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clickhouse</span>
-<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
-<span class="w">  </span><span class="no">Query OTel observability data (logs, traces, metrics) via ClickHouse to</span>
-<span class="w">  </span><span class="no">investigate incidents. Use when the user mentions clickhouse, otel logs,</span>
-<span class="w">  </span><span class="no">otel traces, observability data, investigate traces, query metrics, or</span>
-<span class="w">  </span><span class="no">clickstack.</span>
-<span class="nn">---</span>
+<p>The fix — set the window to your model's real context length first:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CLAUDE_CODE_AUTO_COMPACT_WINDOW</span><span class="o">=</span><span class="m">32768</span>
 
-<span class="c1">## Critical Rules</span>
-
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Tables</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">otel_logs`, `otel_traces`, `otel_metrics_gauge`,</span>
-<span class="w">  </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">otel_metrics_sum`, `otel_metrics_histogram`</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Time columns</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">Timestamp` (logs, traces) vs `TimeUnix` (metrics)</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Service name</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">ServiceName` (logs, traces) vs</span>
-<span class="w">  </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">ResourceAttributes[&#39;service.name&#39;]` (metrics)</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">SeverityText` varies — match with `IN (&#39;ERROR&#39;,&#39;Error&#39;,&#39;error&#39;)`</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Exception details live in `LogAttributes` (Map), not in `Body`.</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">Use bracket syntax, not LIKE.</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">CLI binary</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">clickhouse client` (two words, not hyphenated)</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Read-only access only; always include LIMIT and a time window</span>
-
-<span class="c1">## Investigation Methodology</span>
-
-<span class="l l-Scalar l-Scalar-Plain">SCOPE -&gt; TRIAGE -&gt; DRILL -&gt; MEASURE -&gt; CORRELATE -&gt; CONCLUDE</span>
-
-<span class="l l-Scalar l-Scalar-Plain">(Each phase has 1-2 canonical query templates...)</span>
+./benchmark/bin/run-k8s-ai-bench.sh<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--model<span class="w"> </span><span class="s2">&quot;qwen3.6:35b-a3b-coding-nvfp4&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--skill<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--task-pattern<span class="w"> </span><span class="s2">&quot;fix-crashloop&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--iterations<span class="w"> </span><span class="m">1</span>
 </code></pre></div>
-<p>A Skill should capture practical tips and “tribal knowledge”: bracket syntax, common CLI commands, or how to handle exceptions. The model learns from these notes instantly, helping it avoid wasted steps and mistakes.
-If you’re creating your own Skill, focus on what usually trips up new team members—quirky connections, column names that don’t match the docs, or query patterns people copy from chat. If it’s in your runbook but often ignored, it’s perfect for a Skill file.</p>
-<p>The repo ships all three Skills (<code>clickhouse</code>, <code>k8s</code>, <code>gh</code>) under <code>skills/</code>. To install:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/har-ki/claude-code-sre-handbook
-mkdir<span class="w"> </span>-p<span class="w"> </span>~/.claude/skills
-cp<span class="w"> </span>-r<span class="w"> </span>claude-code-sre-handbook/skills/*<span class="w"> </span>~/.claude/skills/
+<p>To watch the fix reach the model server, run Ollama with debug logging and grep for request sizes:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">OLLAMA_DEBUG</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">OLLAMA_CONTEXT_LENGTH</span><span class="o">=</span><span class="m">32768</span><span class="w"> </span>ollama<span class="w"> </span>serve<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>/tmp/ollama.log
+<span class="c1"># in another shell, after a run:</span>
+grep<span class="w"> </span><span class="s2">&quot;cache hit&quot;</span><span class="w"> </span>/tmp/ollama.log<span class="w">   </span><span class="c1"># watch total= stay under 32768 with the override</span>
 </code></pre></div>
-<p>Modify them to fit your stack. The file structure is more important than the specific contents.</p>
-<h2 id="sonnet-46-with-the-skill">Sonnet 4.6, with the Skill<a class="headerlink" href="#sonnet-46-with-the-skill" title="Anchor link">¶</a></h2>
-<p>Same model, same scenario, same three prompts. Skills loaded from <code>.claude/skills/</code> at session start.</p>
-<p>5 minutes 49 seconds, 9 tool calls in turn one, PR opened on first attempt.</p>
-<p>The first ClickHouse query was no longer a guess:</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">max</span><span class="p">(</span><span class="k">Timestamp</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">otel_logs</span><span class="p">;</span>
-</code></pre></div>
-<p>Correct table and column, <code>clickhouse client</code> directly (no <code>kubectl exec</code>), case-insensitive severity from the next query. Zero schema-discovery round-trips. The model moved SCOPE -&gt; TRIAGE -&gt; DRILL -&gt; MEASURE without looping and found product 7 in eight queries instead of twelve. Turn 3 was six tool calls: checkout, edit, commit, push, <code>gh pr create</code>, PR URL returned.</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th style="text-align: right;">No Skill</th>
-<th style="text-align: right;">With Skill</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>End-to-end wall clock</td>
-<td style="text-align: right;">13:27</td>
-<td style="text-align: right;">5:49</td>
-</tr>
-<tr>
-<td>Turn 1 tool calls</td>
-<td style="text-align: right;">99 (43 + 56 subagent)</td>
-<td style="text-align: right;">9</td>
-</tr>
-<tr>
-<td>Schema-discovery round-trips</td>
-<td style="text-align: right;">3 + 2 failed connections</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td>Turn 3 errors</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td>Root cause correct</td>
-<td style="text-align: right;">Yes</td>
-<td style="text-align: right;">Yes</td>
-</tr>
-</tbody>
-</table>
-<p>Root-cause accuracy didn't change — both sessions identified the TOCTOU and proposed a per-product async mutex. The Skill didn't make Sonnet smarter. It made Sonnet's tools hit the mark: 99 tool calls to 9.</p>
-<h2 id="where-it-still-breaks">Where it still breaks<a class="headerlink" href="#where-it-still-breaks" title="Anchor link">¶</a></h2>
-<p>Two real limitations from these sessions.</p>
-<p><strong>Skill discovery is brittle.</strong> Skills load when their <code>description:</code> keywords match the user message. In the Sonnet+Skill run, a <code>gh</code> Skill never surfaced — Turn 3 said "github integration (gh cli)" but <code>gh</code> didn't load while <code>clickhouse</code> and <code>k8s</code> had loaded on Turn 1. The session succeeded anyway, but the failure mode is real: a Skill that doesn't load can't help, and there's no visible signal that it didn't.</p>
-<p><strong>Skills don't cover phase transitions.</strong> The investigation -&gt; code-fix pivot — <em>clone the repo, read inventory.js, propose a diff</em> — is unguided. Every session figured it out; the figuring was first-principles reasoning.</p>
-<p>Neither is a harness failure. The harness gave the model edit tools, retry, reasoning — all worked when called. The takeaway: a Skill doesn't need to be perfect. A short file that encodes your team's tribal knowledge about one tool cuts the investigation loop in half — and unlike a runbook, it's read every time.</p>
-<h2 id="try-it-yourself">Try it yourself<a class="headerlink" href="#try-it-yourself" title="Anchor link">¶</a></h2>
-<p>Everything in this post is reproducible from the repo. You need Docker, <a href="https://kind.sigs.k8s.io/">kind</a>, kubectl, <a href="https://claude.ai/claude-code">Claude Code</a>, and the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code>).</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/har-ki/claude-code-sre-handbook
-<span class="nb">cd</span><span class="w"> </span>claude-code-sre-handbook/otel-demo
-./setup-post02.sh
-</code></pre></div>
-<p>This stands up the kind cluster, pushes the ecommerce app to your GitHub, installs the Skills, and scales the load generator to trigger the bug. Authenticate <code>gh</code> first if you haven't (<code>gh auth login</code>).</p>
-<p>Then open Claude Code and paste the three prompts one at a time. Compare your session against the results in this post.</p>
-<p>Teardown: <code>./teardown.sh</code></p>
-<p>Your times and tool-call counts will vary — different cluster, different model snapshot, different day. The shape of the session should be the same.</p>
+<p>To confirm compaction actually fired, look for <code>compact_boundary</code> events in the run's <code>trace.jsonl</code>. Full token traces and the A/B comparison behind every number here are in <code>benchmark/analysis/compaction-tuning-findings.md</code>.</p>
+<h2 id="where-this-stops-working">Where this stops working<a class="headerlink" href="#where-this-stops-working" title="Anchor link">¶</a></h2>
+<p>This is a real fix, but it's a narrow one, and I'd rather tell you the edges than let you find them in production.</p>
+<p><strong>It's tuned to a tight window.</strong> The Kubernetes skill plus the system prompt already eat about 87% of a 32K window before the first user message. That leaves very little room, so compaction has to fire early and often. On a 64K window, the same skill would use about 43%, compaction would fire later and less often, and the override would matter less. The smaller your window, the more this matters.</p>
+<p><strong>Compaction fires late, by design.</strong> It triggers at ~28K, not at some lower number you might pick, because the token count is checked after a turn finishes — after the model's latest tool output has already been appended. On a task with very large tool outputs, a single turn could push past 32K before the check runs. If your tool outputs are large, set the override to a value lower than the real window to leave headroom.</p>
+<p><strong>Compaction is lossy.</strong> Especially with a small window, it aggressively summarizes past turns, sometimes losing important early details that may be needed later. This creates two risks: if compaction happens too late, the window overflows; if too often, key context is lost. On short incidents, this isn't a problem, but in longer, complex cases, aggressive compaction can hide critical evidence. This trade-off is explored further in the next post.</p>
+<p><strong>The model can still choke.</strong> In one run, after several successful compactions, the prompt became too long and caused an error. This is a known issue, especially with local models and smaller context sizes. Staying under the window limit helps, but doesn't guarantee success. If errors persist, you may need to disable auto-compaction and clear the session manually.</p>
+<p><strong>The task-outcome win is one data point.</strong> While the override consistently keeps requests under 32K, I can't claim it always fixes the task based on a single result. The mechanism is proven, but the task improvement is only suggestive—consider the time savings as an illustration, not a benchmark.</p>
+<p><strong>The override doesn't fix the root number.</strong> Setting <code>CLAUDE_CODE_AUTO_COMPACT_WINDOW</code> corrects the compaction trigger, but Claude Code's table still says 200K. Anything else that reads that number is still reading the wrong one. This patches the symptom that bites hardest; it doesn't correct the registry.</p>
+<h2 id="the-takeaway">The takeaway<a class="headerlink" href="#the-takeaway" title="Anchor link">¶</a></h2>
+<p>If you're running Claude Code against a local model, do this:</p>
+<ol>
+<li>Find your model's real context window—it's whatever <code>num_ctx</code> (or <code>OLLAMA_CONTEXT_LENGTH</code>) Ollama actually uses, not what Claude Code reports.</li>
+<li>Pick one route. Either set <code>CLAUDE_CODE_AUTO_COMPACT_WINDOW</code> to that real number (what I did), or set <code>CLAUDE_AUTOCOMPACT_PCT_OVERRIDE</code> to roughly <code>(real_num_ctx / 180000) * 100</code>. Both make compaction fire while the conversation still fits. Don't set both and assume they compose.</li>
+<li>Restart Claude Code — these variables are read at startup.</li>
+<li>If your tool outputs are large, leave some headroom—set the window override a few thousand below the real window, so the last turn before compaction doesn't overshoot.</li>
+<li>Confirm it worked by looking for <code>compact_boundary</code> events in the trace, or by watching request sizes in your model server's logs stay under the window.</li>
+</ol>
+<p>Setting one variable to your real window size turns a session that grows until it breaks into one that stays steady.</p>
+<p>The main takeaway: the context window is your real limit, especially with small, local models. Unlike frontier models, you must manage the window yourself—but the solution is just one configuration line.</p>
 <hr />
 <p><em>Working through this on your own infrastructure? Happy to jam — <a href="https://github.com/har-ki">drop me a line</a>.</em></p>
 
@@ -1429,7 +1442,7 @@ cp<span class="w"> </span>-r<span class="w"> </span>claude-code-sre-handbook/ski
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../01-harness-problem/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1. The Harness Problem">
+          <a href="../11-correlation/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 11. Collection Isn&#39;t Correlation">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1439,20 +1452,20 @@ cp<span class="w"> </span>-r<span class="w"> </span>claude-code-sre-handbook/ski
                 Previous
               </span>
               <div class="md-ellipsis">
-                1. The Harness Problem
+                11. Collection Isn't Correlation
               </div>
             </div>
           </a>
         
         
           
-          <a href="../03-five-incidents-frontier/" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Claude Code on k8s-ai-bench">
+          <a href="../13-memory/" class="md-footer__link md-footer__link--next" aria-label="Next: 13. Memory for the SRE Loop">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                3. Claude Code on k8s-ai-bench
+                13. Memory for the SRE Loop
               </div>
             </div>
             <div class="md-footer__button md-icon">

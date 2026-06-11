@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../01-harness-problem/">
+        <link rel="prev" href="../09-the-context-problem/">
       
       
-        <link rel="next" href="../03-five-incidents-frontier/">
+        <link rel="next" href="../11-correlation/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>2. From Investigation to PR - The Claude Code SRE Handbook</title>
+        <title>10. Runbooks as Context - The Claude Code SRE Handbook</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#02-from-investigation-to-pr" class="md-skip">
+        <a href="#10-runbooks-as-context" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              2. From Investigation to PR
+              10. Runbooks as Context
             
           </span>
         </div>
@@ -338,10 +338,8 @@
                 
   
   
-    
   
   
-  
     
     
       
@@ -361,11 +359,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_2" >
         
           
           <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
@@ -386,7 +386,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -429,37 +429,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    2. From Investigation to PR
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../02-investigation-to-pr/" class="md-nav__link">
         
   
   
@@ -475,103 +448,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-scenario" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The scenario
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-prompts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The prompts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#baseline-sonnet-46-no-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Baseline: Sonnet 4.6, no Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sonnet-46-with-the-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sonnet 4.6, with the Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#where-it-still-breaks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where it still breaks
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#try-it-yourself" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it yourself
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -824,8 +700,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -847,13 +725,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" checked>
         
           
           <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="0">
@@ -874,7 +750,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_1_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -917,10 +793,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../10-runbook-as-context/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Runbooks as Context
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -936,6 +839,92 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-experiment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The experiment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-runbook-changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the runbook changed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-repeatability-is-the-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why repeatability is the point
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-thin-skill-is-not-a-halfway-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The thin Skill is not a halfway point
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-write-a-runbook-that-helps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to write a runbook that helps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-this-proves-and-what-it-doesnt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this proves, and what it doesn't
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1123,10 +1112,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-scenario" class="md-nav__link">
+  <a href="#the-experiment" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The scenario
+        The experiment
       
     </span>
   </a>
@@ -1134,10 +1123,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-prompts" class="md-nav__link">
+  <a href="#what-the-runbook-changed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The prompts
+        What the runbook changed
       
     </span>
   </a>
@@ -1145,10 +1134,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#baseline-sonnet-46-no-skill" class="md-nav__link">
+  <a href="#why-repeatability-is-the-point" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Baseline: Sonnet 4.6, no Skill
+        Why repeatability is the point
       
     </span>
   </a>
@@ -1156,10 +1145,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-skill" class="md-nav__link">
+  <a href="#the-thin-skill-is-not-a-halfway-point" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Skill
+        The thin Skill is not a halfway point
       
     </span>
   </a>
@@ -1167,10 +1156,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sonnet-46-with-the-skill" class="md-nav__link">
+  <a href="#how-to-write-a-runbook-that-helps" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Sonnet 4.6, with the Skill
+        How to write a runbook that helps
       
     </span>
   </a>
@@ -1178,21 +1167,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#where-it-still-breaks" class="md-nav__link">
+  <a href="#what-this-proves-and-what-it-doesnt" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Where it still breaks
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#try-it-yourself" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it yourself
+        What this proves, and what it doesn't
       
     </span>
   </a>
@@ -1219,177 +1197,75 @@
   
 
 
-<h1 id="02-from-investigation-to-pr">02 — From Investigation to PR<a class="headerlink" href="#02-from-investigation-to-pr" title="Anchor link">¶</a></h1>
-<p><em>Skills for Claude Code</em></p>
-<p><em>Three prompts, three Skill files, a real ecommerce bug. Six minutes later, a PR with a fix is open.</em></p>
-<p>Claude Code with Sonnet 4.6 and a small Skill resolved a race condition in inventory management from a vague error report — no prior codebase exposure, one continuous session from investigation through PR. Without the Skill, the same model and bug took over 13 minutes. With it, under six. That gap is the difference between an engineer context-switching vs. staying in flow.</p>
-<p><a href="../01-harness-problem/">Post 1</a> argued that the harness shape matters more than the model behind it. This post puts a real Kubernetes cluster in front of that argument and times the loop. The Skill itself and its impact are introduced midway through the process.</p>
-<h2 id="the-scenario">The scenario<a class="headerlink" href="#the-scenario" title="Anchor link">¶</a></h2>
-<p>The setup is a local kind cluster running an ecommerce service with observability wired in.</p>
+<h1 id="10-runbooks-as-context">10 — Runbooks as Context<a class="headerlink" href="#10-runbooks-as-context" title="Anchor link">¶</a></h1>
+<p>The first thing to put in an SRE agent's window isn't data—it's a clear procedure. This post shows how having a runbook changes an agent's behavior, and how to write one that actually helps.</p>
+<p>When building context for an agent, the first big decision is what information to show. Most people focus on data or logs, but the often-missed ingredient is procedural knowledge—a runbook showing how to investigate, in what order, and with what checks.</p>
+<p>Most people feel that runbooks are helpful, but this post backs it up with data from a real incident, testing only the effect of procedure. The finding is simple but powerful: a runbook doesn't just help the agent—it makes its actions repeatable. With a runbook, the agent investigates the same way every time, instead of taking a different approach on each run.</p>
+<h2 id="the-experiment">The experiment<a class="headerlink" href="#the-experiment" title="Anchor link">¶</a></h2>
+<p>The experiment used a single incident: the classic StockMismatchError race in inventory.js, where async operations let orders oversell stock. The same model (Claude Sonnet 4.6) was used throughout. The only variable changed was the procedural context given to the agent.</p>
+<ul>
+<li>Arm A: No Skill. The agent had full tool access but no procedure to follow.</li>
+<li>Arm B: Thin Skill. The agent got location hints—what logs and tables to check, what columns mean—but no step-by-step method.</li>
+<li>Arm C: Full Runbook. The agent got a detailed three-phase procedure (INVESTIGATE → CORROBORATE → CONCLUDE), with clear instructions to cross-check at least two kinds of evidence and list every contributing factor before finishing.</li>
+</ul>
+<p>Arms B and C carry the same facts. The only thing C adds is method. That's deliberate: if C had known anything B didn't — an extra table, a hint toward the bug — the experiment would measure knowledge, not structure. It doesn't. It measures structure, and that is what separates the arms.</p>
+<p>Each arm ran three times, for a total of nine runs. Memory was disabled the whole time, so recall couldn't affect the results. The pod was reset between every run so no run picked up inventory issues from another. Total cost: $1.24. The runner, skills, and analysis script are all in the repo — <code>benchmark/bin/run-post10-experiment.sh --all</code> reproduces the full experiment on your own cluster.</p>
+<h2 id="what-the-runbook-changed">What the runbook changed<a class="headerlink" href="#what-the-runbook-changed" title="Anchor link">¶</a></h2>
+<p>Here's what happened. The most important numbers aren't the averages, but how much the results varied between runs—that's where the arms really differ.</p>
 <table>
 <thead>
 <tr>
-<th>Component</th>
-<th>Detail</th>
+<th>Arm</th>
+<th>Mean tool calls</th>
+<th>Tool-call CV</th>
+<th>Path divergence (Jaccard)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Kubernetes</td>
-<td>kind, single control-plane node, v1.35.0</td>
+<td>A — No Skill</td>
+<td>10.3</td>
+<td>0.241</td>
+<td>0.622</td>
 </tr>
 <tr>
-<td>Namespaces</td>
-<td><code>ecommerce</code> (app + load generator), <code>clickhouse</code> (CH + OTel bridge)</td>
+<td>B — Thin Skill</td>
+<td>8.0</td>
+<td>0.177</td>
+<td>0.683</td>
 </tr>
 <tr>
-<td>Observability</td>
-<td>ClickHouse, OpenTelemetry collector, <code>otel-clickhouse-bridge</code></td>
-</tr>
-<tr>
-<td>Data</td>
-<td><code>otel_logs</code>, <code>otel_traces</code>, <code>otel_metrics_*</code> populated from live load</td>
-</tr>
-<tr>
-<td>App</td>
-<td>Node.js ecommerce service + checkout + inventory service</td>
-</tr>
-<tr>
-<td>Failure mode</td>
-<td>TOCTOU race in <code>reserveInventory</code> causing ~50% checkout error rate</td>
+<td>C — Full runbook</td>
+<td>10.7</td>
+<td>0.044</td>
+<td>0.256</td>
 </tr>
 </tbody>
 </table>
-<p>The bug is in <code>backend/src/services/inventory.js</code>. <code>reserveInventory</code> reads stock, waits 50--150 ms, checks requested quantity, then decrements stock non-atomically. Two concurrent reservations may read the same value, both pass the guard, and both decrement. For product 7 (Ceramic Plant Pot), stock drops to <code>-3</code> under load.</p>
-<p>The model sees none of this in advance. It sees a running cluster with ClickHouse and OTel data, a repo it can clone (<code>ecommerce-app</code>), a <code>gh</code> CLI authenticated as the user, and whatever Skills are loaded in the session. No hints about the schema. No hint about the bug. No scope on the source repo beyond a name.</p>
-<h2 id="the-prompts">The prompts<a class="headerlink" href="#the-prompts" title="Anchor link">¶</a></h2>
-<p>Three turns, identical across every session in this post.</p>
-<div class="highlight"><pre><span></span><code>1. Ecommerce service is showing some errors in my local K8S cluster.
-   Investigate and summarize errors. Use ClickHouse otel logs to
-   identify the problem.
-
-2. Source code for ecommerce service is in the repo ecommerce-app.
-   Suggest a code fix for this issue.
-
-3. Make code fixes in a private branch and create a pull request.
-   Use GitHub integration (gh cli).
-</code></pre></div>
-<p>The prompts name "clickhouse," but no table, a repo but no path, a CLI but no branch convention. The model has to figure all of that out — and the third turn, where the agent does actual work in the world, is the one most demos skip.</p>
-<h2 id="baseline-sonnet-46-no-skill">Baseline: Sonnet 4.6, no Skill<a class="headerlink" href="#baseline-sonnet-46-no-skill" title="Anchor link">¶</a></h2>
-<p>In the baseline run with Sonnet 4.6 and no Skills loaded, the process took 13 minutes and 27 seconds, requiring 99 tool calls over three turns to open a pull request. The process included several missteps that are worth noting.</p>
-<p>Initially, the model attempted to connect to ClickHouse via the cluster’s NodePort but encountered network errors:</p>
-<div class="highlight"><pre><span></span><code>$ clickhouse client --host 127.0.0.1 --port 30900
-Connection refused (NETWORK_ERROR)
-
-$ clickhouse client --host 172.18.0.3 --port 30900
-Network is unreachable (NETWORK_ERROR)
-
-$ kubectl exec -n clickhouse clickhouse-7ccb6ccb7-27x4p -- clickhouse-client
-OK
-</code></pre></div>
-<p>Only after two failed attempts did it succeed by using kubectl exec to access ClickHouse inside the pod.</p>
-<p>Additional time was spent discovering the schema, with several exploratory queries needed to find the relevant tables and columns. The model also used multiple overlapping LIKE queries for a single product, when a single targeted query would have sufficed resulting in unnecessary repetition.</p>
-<p>Despite these challenges, the process ultimately succeeded, albeit inefficiently.</p>
-<h2 id="the-skill">The Skill<a class="headerlink" href="#the-skill" title="Anchor link">¶</a></h2>
-<p>I designed Skills to solve common problems—like tricky connection setups, unclear schemas, repetitive workflows, and error recovery.
-In Claude Code, a Skill is a markdown file with YAML frontmatter, stored either globally (in ~/.claude/skills/SKILL.md) or for a specific repository. At the start of each session, Claude Code loads any Skills that match the current context.
-This repository includes three example Skills: ClickHouse, k8s, and gh. </p>
-<p>For instance, the ClickHouse Skill highlights important conventions and critical rules right at the top.</p>
-<div class="highlight"><span class="filename">skills/clickhouse/SKILL.md</span><pre><span></span><code><span class="nn">---</span>
-<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clickhouse</span>
-<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
-<span class="w">  </span><span class="no">Query OTel observability data (logs, traces, metrics) via ClickHouse to</span>
-<span class="w">  </span><span class="no">investigate incidents. Use when the user mentions clickhouse, otel logs,</span>
-<span class="w">  </span><span class="no">otel traces, observability data, investigate traces, query metrics, or</span>
-<span class="w">  </span><span class="no">clickstack.</span>
-<span class="nn">---</span>
-
-<span class="c1">## Critical Rules</span>
-
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Tables</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">otel_logs`, `otel_traces`, `otel_metrics_gauge`,</span>
-<span class="w">  </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">otel_metrics_sum`, `otel_metrics_histogram`</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Time columns</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">Timestamp` (logs, traces) vs `TimeUnix` (metrics)</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Service name</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">ServiceName` (logs, traces) vs</span>
-<span class="w">  </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">ResourceAttributes[&#39;service.name&#39;]` (metrics)</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">SeverityText` varies — match with `IN (&#39;ERROR&#39;,&#39;Error&#39;,&#39;error&#39;)`</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Exception details live in `LogAttributes` (Map), not in `Body`.</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">Use bracket syntax, not LIKE.</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">CLI binary</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">clickhouse client` (two words, not hyphenated)</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Read-only access only; always include LIMIT and a time window</span>
-
-<span class="c1">## Investigation Methodology</span>
-
-<span class="l l-Scalar l-Scalar-Plain">SCOPE -&gt; TRIAGE -&gt; DRILL -&gt; MEASURE -&gt; CORRELATE -&gt; CONCLUDE</span>
-
-<span class="l l-Scalar l-Scalar-Plain">(Each phase has 1-2 canonical query templates...)</span>
-</code></pre></div>
-<p>A Skill should capture practical tips and “tribal knowledge”: bracket syntax, common CLI commands, or how to handle exceptions. The model learns from these notes instantly, helping it avoid wasted steps and mistakes.
-If you’re creating your own Skill, focus on what usually trips up new team members—quirky connections, column names that don’t match the docs, or query patterns people copy from chat. If it’s in your runbook but often ignored, it’s perfect for a Skill file.</p>
-<p>The repo ships all three Skills (<code>clickhouse</code>, <code>k8s</code>, <code>gh</code>) under <code>skills/</code>. To install:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/har-ki/claude-code-sre-handbook
-mkdir<span class="w"> </span>-p<span class="w"> </span>~/.claude/skills
-cp<span class="w"> </span>-r<span class="w"> </span>claude-code-sre-handbook/skills/*<span class="w"> </span>~/.claude/skills/
-</code></pre></div>
-<p>Modify them to fit your stack. The file structure is more important than the specific contents.</p>
-<h2 id="sonnet-46-with-the-skill">Sonnet 4.6, with the Skill<a class="headerlink" href="#sonnet-46-with-the-skill" title="Anchor link">¶</a></h2>
-<p>Same model, same scenario, same three prompts. Skills loaded from <code>.claude/skills/</code> at session start.</p>
-<p>5 minutes 49 seconds, 9 tool calls in turn one, PR opened on first attempt.</p>
-<p>The first ClickHouse query was no longer a guess:</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">max</span><span class="p">(</span><span class="k">Timestamp</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">otel_logs</span><span class="p">;</span>
-</code></pre></div>
-<p>Correct table and column, <code>clickhouse client</code> directly (no <code>kubectl exec</code>), case-insensitive severity from the next query. Zero schema-discovery round-trips. The model moved SCOPE -&gt; TRIAGE -&gt; DRILL -&gt; MEASURE without looping and found product 7 in eight queries instead of twelve. Turn 3 was six tool calls: checkout, edit, commit, push, <code>gh pr create</code>, PR URL returned.</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th style="text-align: right;">No Skill</th>
-<th style="text-align: right;">With Skill</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>End-to-end wall clock</td>
-<td style="text-align: right;">13:27</td>
-<td style="text-align: right;">5:49</td>
-</tr>
-<tr>
-<td>Turn 1 tool calls</td>
-<td style="text-align: right;">99 (43 + 56 subagent)</td>
-<td style="text-align: right;">9</td>
-</tr>
-<tr>
-<td>Schema-discovery round-trips</td>
-<td style="text-align: right;">3 + 2 failed connections</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td>Turn 3 errors</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td>Root cause correct</td>
-<td style="text-align: right;">Yes</td>
-<td style="text-align: right;">Yes</td>
-</tr>
-</tbody>
-</table>
-<p>Root-cause accuracy didn't change — both sessions identified the TOCTOU and proposed a per-product async mutex. The Skill didn't make Sonnet smarter. It made Sonnet's tools hit the mark: 99 tool calls to 9.</p>
-<h2 id="where-it-still-breaks">Where it still breaks<a class="headerlink" href="#where-it-still-breaks" title="Anchor link">¶</a></h2>
-<p>Two real limitations from these sessions.</p>
-<p><strong>Skill discovery is brittle.</strong> Skills load when their <code>description:</code> keywords match the user message. In the Sonnet+Skill run, a <code>gh</code> Skill never surfaced — Turn 3 said "github integration (gh cli)" but <code>gh</code> didn't load while <code>clickhouse</code> and <code>k8s</code> had loaded on Turn 1. The session succeeded anyway, but the failure mode is real: a Skill that doesn't load can't help, and there's no visible signal that it didn't.</p>
-<p><strong>Skills don't cover phase transitions.</strong> The investigation -&gt; code-fix pivot — <em>clone the repo, read inventory.js, propose a diff</em> — is unguided. Every session figured it out; the figuring was first-principles reasoning.</p>
-<p>Neither is a harness failure. The harness gave the model edit tools, retry, reasoning — all worked when called. The takeaway: a Skill doesn't need to be perfect. A short file that encodes your team's tribal knowledge about one tool cuts the investigation loop in half — and unlike a runbook, it's read every time.</p>
-<h2 id="try-it-yourself">Try it yourself<a class="headerlink" href="#try-it-yourself" title="Anchor link">¶</a></h2>
-<p>Everything in this post is reproducible from the repo. You need Docker, <a href="https://kind.sigs.k8s.io/">kind</a>, kubectl, <a href="https://claude.ai/claude-code">Claude Code</a>, and the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code>).</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/har-ki/claude-code-sre-handbook
-<span class="nb">cd</span><span class="w"> </span>claude-code-sre-handbook/otel-demo
-./setup-post02.sh
-</code></pre></div>
-<p>This stands up the kind cluster, pushes the ecommerce app to your GitHub, installs the Skills, and scales the load generator to trigger the bug. Authenticate <code>gh</code> first if you haven't (<code>gh auth login</code>).</p>
-<p>Then open Claude Code and paste the three prompts one at a time. Compare your session against the results in this post.</p>
-<p>Teardown: <code>./teardown.sh</code></p>
-<p>Your times and tool-call counts will vary — different cluster, different model snapshot, different day. The shape of the session should be the same.</p>
+<p>Two columns tell the story.</p>
+<p>The coefficient of variation shows how much the number of tool calls changed between runs. Lower means more consistent. No Skill: 0.241. Full runbook: 0.044—the runbook made tool use much steadier.</p>
+<p>Path divergence shows whether the agent followed the same steps each time, not just the same number. Lower means more similarity. No Skill: 0.622 (the agent took a different path every run). Full runbook: 0.256 (much more consistent routes).</p>
+<p>That's the core result: the full runbook didn't make the agent faster. In fact, it used a few more tool calls than the bare agent. But it made the investigation repeatable—three runs, three similar investigations. Without a runbook, you got three different approaches to the same problem.</p>
+<h2 id="why-repeatability-is-the-point">Why repeatability is the point<a class="headerlink" href="#why-repeatability-is-the-point" title="Anchor link">¶</a></h2>
+<p>For an SRE, a faster investigation is nice. A repeatable one is the thing that matters, and it's worth being clear about why.</p>
+<p>If an agent acts differently every time, you can't trust or improve it. You can't review its work, do a proper postmortem, or pass the output to a teammate and expect clear reasoning. Repeatability is what makes an agent a real tool—you know what it's going to do, and you can spot when it's wrong.</p>
+<p>The bare agent (Arm A) didn't do a bad job—it was just inconsistent. And inconsistency erodes trust faster than almost anything in production. The runbook's job isn't to make the agent smarter; it's to make it predictable.</p>
+<h2 id="the-thin-skill-is-not-a-halfway-point">The thin Skill is not a halfway point<a class="headerlink" href="#the-thin-skill-is-not-a-halfway-point" title="Anchor link">¶</a></h2>
+<p>It's tempting to see the three arms as a simple gradient: more procedure means more benefit. But the data says otherwise.</p>
+<p>The thin Skill (Arm B) made the agent faster and more direct, using fewer tool calls and inspecting fewer files. But its paths varied even more between runs than the bare agent. Hints made the agent quicker, but not more consistent—it just took different shortcuts each time.</p>
+<p>So, hints and methods serve different purposes. Hints save effort—point the agent in the right direction and it goes there quickly. Method (procedure) brings consistency—give it phases and checks, and it follows the same process every time, even if it takes a bit longer. These aren't two ends of a spectrum. If you want speed, hints work. If you want trust and review, you need procedure. The middle arm isn't a halfway point—it's just a different approach.</p>
+<h2 id="how-to-write-a-runbook-that-helps">How to write a runbook that helps<a class="headerlink" href="#how-to-write-a-runbook-that-helps" title="Anchor link">¶</a></h2>
+<p>The full runbook worked because of its structure. Four key elements made the difference:</p>
+<p><strong>Use phases, not checklists.</strong> The runbook had three named phases: INVESTIGATE, CORROBORATE, and CONCLUDE. Phases give the agent clear steps and checkpoints. For example, the CORROBORATE phase forced the agent to double-check its findings before wrapping up. Checklists get skimmed; phases require action.</p>
+<p><strong>Make corroboration explicit.</strong> The runbook told the agent to cross-check at least two kinds of evidence before concluding. Without this, the agent might stop at the first clue. With it, it had to find the same story in logs, traces, and code before wrapping up.</p>
+<p><strong>Add an instruction to enumerate every contributing factor.</strong> This keeps the agent from stopping at the first cause. Real incidents often have more than one thing going wrong, and this step helps catch them all.</p>
+<p><strong>Keep facts and method separate.</strong> The runbook should contain just the procedure. All facts—like table schemas or log locations—should live somewhere else. Mixing them makes runbooks hard to update and bloats your context window. Keep the method stable and update facts as needed.</p>
+<p>One honest note from the runs: the runbook's templated ClickHouse query had a shell-escaping bug — a backslash that broke the SQL on one run. The agent noticed the syntax error and rewrote the query itself. Templated commands in a runbook are conveniences, not contracts; the agent will route around a broken one, but a clean template is one less thing for it to spend a turn fixing.</p>
+<h2 id="what-this-proves-and-what-it-doesnt">What this proves, and what it doesn't<a class="headerlink" href="#what-this-proves-and-what-it-doesnt" title="Anchor link">¶</a></h2>
+<p>This experiment proves that procedural context really matters: the runbook cut path divergence from 0.622 to 0.256, and tool-call variance from 0.241 to 0.044. The agent became repeatable because it had procedure in its context. Repeatability isn't luck—it's engineered.</p>
+<p>It doesn't prove these results hold for every kind of incident—this was just one scenario, tested deeply. It also doesn't claim the runbook made the agent correct; it just made it consistent. Whether speed sacrifices thoroughness is a question for another post.</p>
+<p>The takeaway: don't just give your agent more data—give it a method. Write the procedure in phases, build in corroboration and enumeration, and keep facts separate. That's how you make investigations repeatable—even if it doesn't guarantee perfect answers.</p>
+<p>The next post is about what happens when the agent has every signal and still can't assemble the story — because procedure gets you a repeatable investigation, but repeatable isn't the same as correct.</p>
 <hr />
 <p><em>Working through this on your own infrastructure? Happy to jam — <a href="https://github.com/har-ki">drop me a line</a>.</em></p>
 
@@ -1429,7 +1305,7 @@ cp<span class="w"> </span>-r<span class="w"> </span>claude-code-sre-handbook/ski
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../01-harness-problem/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1. The Harness Problem">
+          <a href="../09-the-context-problem/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 9. The Context Problem">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1439,20 +1315,20 @@ cp<span class="w"> </span>-r<span class="w"> </span>claude-code-sre-handbook/ski
                 Previous
               </span>
               <div class="md-ellipsis">
-                1. The Harness Problem
+                9. The Context Problem
               </div>
             </div>
           </a>
         
         
           
-          <a href="../03-five-incidents-frontier/" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Claude Code on k8s-ai-bench">
+          <a href="../11-correlation/" class="md-footer__link md-footer__link--next" aria-label="Next: 11. Collection Isn&#39;t Correlation">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                3. Claude Code on k8s-ai-bench
+                11. Collection Isn't Correlation
               </div>
             </div>
             <div class="md-footer__button md-icon">

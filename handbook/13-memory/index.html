@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../01-harness-problem/">
+        <link rel="prev" href="../12-the-window-edge/">
       
       
-        <link rel="next" href="../03-five-incidents-frontier/">
+        <link rel="next" href="../14-the-complete-watcher/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>2. From Investigation to PR - The Claude Code SRE Handbook</title>
+        <title>13. Memory for the SRE Loop - The Claude Code SRE Handbook</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#02-from-investigation-to-pr" class="md-skip">
+        <a href="#memory-for-the-sre-loop" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              2. From Investigation to PR
+              13. Memory for the SRE Loop
             
           </span>
         </div>
@@ -338,10 +338,8 @@
                 
   
   
-    
   
   
-  
     
     
       
@@ -361,11 +359,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_2" >
         
           
           <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
@@ -386,7 +386,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -429,37 +429,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    2. From Investigation to PR
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../02-investigation-to-pr/" class="md-nav__link">
         
   
   
@@ -475,103 +448,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-scenario" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The scenario
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-prompts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The prompts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#baseline-sonnet-46-no-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Baseline: Sonnet 4.6, no Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sonnet-46-with-the-skill" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sonnet 4.6, with the Skill
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#where-it-still-breaks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where it still breaks
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#try-it-yourself" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it yourself
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -824,8 +700,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -847,13 +725,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" checked>
         
           
           <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="0">
@@ -874,7 +750,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_1_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1001,10 +877,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../13-memory/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Memory for the SRE Loop
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1020,6 +923,125 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-post" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this post
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-things-memory-has-to-get-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three things memory has to get right
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-is-just-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory is just files
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-plain-files-break" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where plain files break
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#smarter-search-similarity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Smarter search: similarity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-wall-search-cant-tell-safe-from-dangerous" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The wall: search can't tell safe from dangerous
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-fix-make-the-agent-check-not-trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The fix: make the agent check, not trust
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#it-cleans-up-after-itself-too" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        It cleans up after itself, too
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-to-take-away" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What to take away
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1123,10 +1145,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-scenario" class="md-nav__link">
+  <a href="#why-this-post" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The scenario
+        Why this post
       
     </span>
   </a>
@@ -1134,10 +1156,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-prompts" class="md-nav__link">
+  <a href="#three-things-memory-has-to-get-right" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The prompts
+        Three things memory has to get right
       
     </span>
   </a>
@@ -1145,10 +1167,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#baseline-sonnet-46-no-skill" class="md-nav__link">
+  <a href="#memory-is-just-files" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Baseline: Sonnet 4.6, no Skill
+        Memory is just files
       
     </span>
   </a>
@@ -1156,10 +1178,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-skill" class="md-nav__link">
+  <a href="#where-plain-files-break" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Skill
+        Where plain files break
       
     </span>
   </a>
@@ -1167,10 +1189,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sonnet-46-with-the-skill" class="md-nav__link">
+  <a href="#smarter-search-similarity" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Sonnet 4.6, with the Skill
+        Smarter search: similarity
       
     </span>
   </a>
@@ -1178,10 +1200,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#where-it-still-breaks" class="md-nav__link">
+  <a href="#the-wall-search-cant-tell-safe-from-dangerous" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Where it still breaks
+        The wall: search can't tell safe from dangerous
       
     </span>
   </a>
@@ -1189,10 +1211,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#try-it-yourself" class="md-nav__link">
+  <a href="#the-fix-make-the-agent-check-not-trust" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Try it yourself
+        The fix: make the agent check, not trust
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#it-cleans-up-after-itself-too" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        It cleans up after itself, too
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-to-take-away" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What to take away
       
     </span>
   </a>
@@ -1219,177 +1263,133 @@
   
 
 
-<h1 id="02-from-investigation-to-pr">02 — From Investigation to PR<a class="headerlink" href="#02-from-investigation-to-pr" title="Anchor link">¶</a></h1>
-<p><em>Skills for Claude Code</em></p>
-<p><em>Three prompts, three Skill files, a real ecommerce bug. Six minutes later, a PR with a fix is open.</em></p>
-<p>Claude Code with Sonnet 4.6 and a small Skill resolved a race condition in inventory management from a vague error report — no prior codebase exposure, one continuous session from investigation through PR. Without the Skill, the same model and bug took over 13 minutes. With it, under six. That gap is the difference between an engineer context-switching vs. staying in flow.</p>
-<p><a href="../01-harness-problem/">Post 1</a> argued that the harness shape matters more than the model behind it. This post puts a real Kubernetes cluster in front of that argument and times the loop. The Skill itself and its impact are introduced midway through the process.</p>
-<h2 id="the-scenario">The scenario<a class="headerlink" href="#the-scenario" title="Anchor link">¶</a></h2>
-<p>The setup is a local kind cluster running an ecommerce service with observability wired in.</p>
+<h1 id="memory-for-the-sre-loop">Memory for the SRE Loop<a class="headerlink" href="#memory-for-the-sre-loop" title="Anchor link">¶</a></h1>
+<p><em>The hard part of agent memory isn't storing the past. It's stopping the agent from trusting it too much.</em></p>
+<h2 id="why-this-post">Why this post<a class="headerlink" href="#why-this-post" title="Anchor link">¶</a></h2>
+<p>The watcher from <a href="../05-building-the-always-on-watcher/">Post 5</a> takes an alert to a draft PR in five minutes. But it has no memory. The same bug fires on the same service, and the agent works it out from scratch every single time — even though it solved the identical problem last week.</p>
+<p>So the obvious move is to give it memory: save what you learned, load it next time. That part is easy. This post does it in fifty lines.</p>
+<p>The catch is what happens when memory is <em>almost</em> right. A past finding that's relevant but incomplete is more dangerous than no memory at all, because it arrives sounding like an answer and the agent stops looking. That's the real problem, and better storage doesn't fix it.</p>
+<p><strong>The takeaway, up front:</strong> memory is worth adding, but recall is the easy half. The hard half is teaching the agent to treat what it remembers as a lead to check, not a conclusion to accept. Get that wrong and memory makes the agent worse — and keeps doing so, because it writes its mistakes back for next time.</p>
+<h2 id="three-things-memory-has-to-get-right">Three things memory has to get right<a class="headerlink" href="#three-things-memory-has-to-get-right" title="Anchor link">¶</a></h2>
+<p>Adding memory to an agent is really three decisions, not one:</p>
+<ol>
+<li><strong>What to save and load.</strong> What goes into the agent's working context before it starts thinking.</li>
+<li><strong>How to find the right past finding.</strong> When the incident doesn't look exactly like last time, can you still surface the relevant note?</li>
+<li><strong>How the agent should treat what it finds.</strong> Does it accept the recalled note and stop, or check it against what's actually happening now?</li>
+</ol>
+<p>Most of the effort goes to the first two — building the store, making search smarter. This post will show that the third one is where memory actually succeeds or fails. The first two are plumbing. The third is the engineering.</p>
+<p>We'll build memory two ways — plain files, then similarity search — not because you need both, but because the second one is what most people reach for to fix the first, and it's worth seeing exactly how far it gets you (and where it stops).</p>
+<p><strong>Setup:</strong> Claude Sonnet 4.6 · the memory findings here are measured on frontier; local replication on Qwen3.6 is future work, not yet run. The discipline is a prompt convention and is expected to port, but this post claims only what was measured.</p>
+<h2 id="memory-is-just-files">Memory is just files<a class="headerlink" href="#memory-is-just-files" title="Anchor link">¶</a></h2>
+<p>Claude Code has no "memory feature." There's no special command. What it has is the ability to read and write files — the same ability it uses for source code. So memory is a directory:</p>
+<div class="highlight"><pre><span></span><code>memory-store/
+└── incidents/
+    └── e2836e74.md      # what we learned last time this fired
+</code></pre></div>
+<p>The watcher already gives each incident a short fingerprint — a hash of the service name and error type. The inventory race condition fingerprints to <code>e2836e74</code>. We reuse that as the filename. Each file is plain markdown: what the root cause was, what the fix was, when it was resolved.</p>
+<p>Two steps wire it in:</p>
+<ul>
+<li><strong>Before investigating,</strong> the agent reads the file for this fingerprint. If it exists, it's a head start. If not, fresh investigation.</li>
+<li><strong>After fixing,</strong> the agent writes back what it learned.</li>
+</ul>
+<p>That's the whole system. One thing about that second step is worth knowing now, because it surprised me: <strong>the agent reliably reads memory on its own, but it does not reliably write it.</strong> Left to its own judgment, it fixes the bug and moves on without recording anything. The write has to be a explicit, required instruction in the prompt — "save this, this step is mandatory" — or your memory store stays empty. Reading is free; writing needs a push.</p>
+<p>(One housekeeping note: keep two separate stores. <code>memory-store/</code> is what the agent <em>learned</em> and is allowed to reuse. A separate <code>incident-store/</code> holds the human-readable incident reports and an audit log — what <em>happened</em>, for people and compliance, written by the system, not the agent. Don't mix the agent's working memory with your audit trail. This post is about the first one.)</p>
+<h2 id="where-plain-files-break">Where plain files break<a class="headerlink" href="#where-plain-files-break" title="Anchor link">¶</a></h2>
+<p>File memory works perfectly when the incident is an exact repeat. It breaks in two ways the moment reality drifts.</p>
+<p><strong>The name changes but the bug doesn't.</strong> Someone renames the error class in a refactor. New name, new fingerprint, no file found — even though the fix is sitting right there under the old name. Memory misses.</p>
+<p><strong>The name stays but the bug is different.</strong> The same error fires, the file loads, but <em>this</em> time there's a second cause the old note never mentioned. Memory loads a half-right answer and points the agent at an incomplete fix.</p>
+<p>The first problem — missing a relevant note because the surface changed — is a search problem. And search problems have a standard fix.</p>
+<h2 id="smarter-search-similarity">Smarter search: similarity<a class="headerlink" href="#smarter-search-similarity" title="Anchor link">¶</a></h2>
+<p>Instead of matching the exact fingerprint, match on <em>meaning</em>. Convert each past finding into a list of numbers (an embedding) that captures what it's about, and when a new incident comes in, find the stored finding whose numbers are closest. "Stock went negative" and "inventory corrupted under load" come out close even though they share no exact words.</p>
+<p>The whole thing is a local embedding model and a similarity score — no vector database, no new infrastructure. For a store of a few hundred findings, a plain loop comparing numbers is plenty fast:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">cosine_similarity</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">dot</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+    <span class="n">norm_a</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">a</span><span class="p">))</span>
+    <span class="n">norm_b</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">b</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">dot</span> <span class="o">/</span> <span class="p">(</span><span class="n">norm_a</span> <span class="o">*</span> <span class="n">norm_b</span><span class="p">)</span> <span class="k">if</span> <span class="n">norm_a</span> <span class="ow">and</span> <span class="n">norm_b</span> <span class="k">else</span> <span class="mf">0.0</span>
+</code></pre></div>
+<p>And it <strong>works</strong> for the first problem. When the error gets renamed, exact matching misses completely, but similarity still finds the right note — scoring it a strong 0.81. That's a real win. Search got smarter, and the renamed-bug case is solved.</p>
+<p>So if better search fixes the first break, surely it fixes the second one too?</p>
+<p>It does not. And this is the heart of the post.</p>
+<h2 id="the-wall-search-cant-tell-safe-from-dangerous">The wall: search can't tell safe from dangerous<a class="headerlink" href="#the-wall-search-cant-tell-safe-from-dangerous" title="Anchor link">¶</a></h2>
+<p>Here's what the similarity scores actually look like across four incidents:</p>
 <table>
 <thead>
 <tr>
-<th>Component</th>
-<th>Detail</th>
+<th>Incident</th>
+<th>What it is</th>
+<th>Score</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Kubernetes</td>
-<td>kind, single control-plane node, v1.35.0</td>
+<td>Same bug, renamed</td>
+<td>should match</td>
+<td>0.81</td>
 </tr>
 <tr>
-<td>Namespaces</td>
-<td><code>ecommerce</code> (app + load generator), <code>clickhouse</code> (CH + OTel bridge)</td>
+<td>Unrelated incident</td>
+<td>should not match</td>
+<td>0.74</td>
 </tr>
 <tr>
-<td>Observability</td>
-<td>ClickHouse, OpenTelemetry collector, <code>otel-clickhouse-bridge</code></td>
+<td><strong>The real repeat</strong></td>
+<td><strong>safe to reuse</strong></td>
+<td><strong>0.798</strong></td>
 </tr>
 <tr>
-<td>Data</td>
-<td><code>otel_logs</code>, <code>otel_traces</code>, <code>otel_metrics_*</code> populated from live load</td>
-</tr>
-<tr>
-<td>App</td>
-<td>Node.js ecommerce service + checkout + inventory service</td>
-</tr>
-<tr>
-<td>Failure mode</td>
-<td>TOCTOU race in <code>reserveInventory</code> causing ~50% checkout error rate</td>
+<td><strong>The half-right repeat</strong></td>
+<td><strong>dangerous to reuse</strong></td>
+<td><strong>0.798</strong></td>
 </tr>
 </tbody>
 </table>
-<p>The bug is in <code>backend/src/services/inventory.js</code>. <code>reserveInventory</code> reads stock, waits 50--150 ms, checks requested quantity, then decrements stock non-atomically. Two concurrent reservations may read the same value, both pass the guard, and both decrement. For product 7 (Ceramic Plant Pot), stock drops to <code>-3</code> under load.</p>
-<p>The model sees none of this in advance. It sees a running cluster with ClickHouse and OTel data, a repo it can clone (<code>ecommerce-app</code>), a <code>gh</code> CLI authenticated as the user, and whatever Skills are loaded in the session. No hints about the schema. No hint about the bug. No scope on the source repo beyond a name.</p>
-<h2 id="the-prompts">The prompts<a class="headerlink" href="#the-prompts" title="Anchor link">¶</a></h2>
-<p>Three turns, identical across every session in this post.</p>
-<div class="highlight"><pre><span></span><code>1. Ecommerce service is showing some errors in my local K8S cluster.
-   Investigate and summarize errors. Use ClickHouse otel logs to
-   identify the problem.
-
-2. Source code for ecommerce service is in the repo ecommerce-app.
-   Suggest a code fix for this issue.
-
-3. Make code fixes in a private branch and create a pull request.
-   Use GitHub integration (gh cli).
+<p>Look at the last two rows. The genuinely-identical incident and the one that's only <em>partly</em> the same score <strong>exactly the same: 0.798.</strong> There is no cutoff that keeps one and drops the other — they're the same number.</p>
+<p>Why? Because on every feature the search can see — same service, same error, same shape — the two incidents <em>are</em> identical. The thing that makes one dangerous (a second, hidden cause this time) isn't visible to the search at all. No better embedding model changes this. You cannot search your way out of it.</p>
+<p>This is the lesson that matters: <strong>better retrieval solved the search problem and did nothing for the trust problem.</strong> The agent is about to be handed a note that's only half-right, with a confidence score identical to a note that's perfectly right. Storage and search have done all they can. The fix has to live somewhere else.</p>
+<h2 id="the-fix-make-the-agent-check-not-trust">The fix: make the agent check, not trust<a class="headerlink" href="#the-fix-make-the-agent-check-not-trust" title="Anchor link">¶</a></h2>
+<p>The somewhere-else is the prompt. One instruction: before using a recalled finding, the agent must state whether it actually matches what's happening right now, and keep investigating to confirm it.</p>
+<div class="highlight"><pre><span></span><code>Before using the prior finding, classify it against current evidence:
+<span class="k">-</span><span class="w"> </span>VALIDATED — it matches, because &lt;reason&gt;
+<span class="k">-</span><span class="w"> </span>INVALIDATED — it doesn&#39;t match, because &lt;reason&gt;
+Then corroborate with fresh evidence either way.
 </code></pre></div>
-<p>The prompts name "clickhouse," but no table, a repo but no path, a CLI but no branch convention. The model has to figure all of that out — and the third turn, where the agent does actual work in the world, is the one most demos skip.</p>
-<h2 id="baseline-sonnet-46-no-skill">Baseline: Sonnet 4.6, no Skill<a class="headerlink" href="#baseline-sonnet-46-no-skill" title="Anchor link">¶</a></h2>
-<p>In the baseline run with Sonnet 4.6 and no Skills loaded, the process took 13 minutes and 27 seconds, requiring 99 tool calls over three turns to open a pull request. The process included several missteps that are worth noting.</p>
-<p>Initially, the model attempted to connect to ClickHouse via the cluster’s NodePort but encountered network errors:</p>
-<div class="highlight"><pre><span></span><code>$ clickhouse client --host 127.0.0.1 --port 30900
-Connection refused (NETWORK_ERROR)
-
-$ clickhouse client --host 172.18.0.3 --port 30900
-Network is unreachable (NETWORK_ERROR)
-
-$ kubectl exec -n clickhouse clickhouse-7ccb6ccb7-27x4p -- clickhouse-client
-OK
-</code></pre></div>
-<p>Only after two failed attempts did it succeed by using kubectl exec to access ClickHouse inside the pod.</p>
-<p>Additional time was spent discovering the schema, with several exploratory queries needed to find the relevant tables and columns. The model also used multiple overlapping LIKE queries for a single product, when a single targeted query would have sufficed resulting in unnecessary repetition.</p>
-<p>Despite these challenges, the process ultimately succeeded, albeit inefficiently.</p>
-<h2 id="the-skill">The Skill<a class="headerlink" href="#the-skill" title="Anchor link">¶</a></h2>
-<p>I designed Skills to solve common problems—like tricky connection setups, unclear schemas, repetitive workflows, and error recovery.
-In Claude Code, a Skill is a markdown file with YAML frontmatter, stored either globally (in ~/.claude/skills/SKILL.md) or for a specific repository. At the start of each session, Claude Code loads any Skills that match the current context.
-This repository includes three example Skills: ClickHouse, k8s, and gh. </p>
-<p>For instance, the ClickHouse Skill highlights important conventions and critical rules right at the top.</p>
-<div class="highlight"><span class="filename">skills/clickhouse/SKILL.md</span><pre><span></span><code><span class="nn">---</span>
-<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clickhouse</span>
-<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
-<span class="w">  </span><span class="no">Query OTel observability data (logs, traces, metrics) via ClickHouse to</span>
-<span class="w">  </span><span class="no">investigate incidents. Use when the user mentions clickhouse, otel logs,</span>
-<span class="w">  </span><span class="no">otel traces, observability data, investigate traces, query metrics, or</span>
-<span class="w">  </span><span class="no">clickstack.</span>
-<span class="nn">---</span>
-
-<span class="c1">## Critical Rules</span>
-
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Tables</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">otel_logs`, `otel_traces`, `otel_metrics_gauge`,</span>
-<span class="w">  </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">otel_metrics_sum`, `otel_metrics_histogram`</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Time columns</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">Timestamp` (logs, traces) vs `TimeUnix` (metrics)</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Service name</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">ServiceName` (logs, traces) vs</span>
-<span class="w">  </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">ResourceAttributes[&#39;service.name&#39;]` (metrics)</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">SeverityText` varies — match with `IN (&#39;ERROR&#39;,&#39;Error&#39;,&#39;error&#39;)`</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Exception details live in `LogAttributes` (Map), not in `Body`.</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">Use bracket syntax, not LIKE.</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">CLI binary</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">clickhouse client` (two words, not hyphenated)</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Read-only access only; always include LIMIT and a time window</span>
-
-<span class="c1">## Investigation Methodology</span>
-
-<span class="l l-Scalar l-Scalar-Plain">SCOPE -&gt; TRIAGE -&gt; DRILL -&gt; MEASURE -&gt; CORRELATE -&gt; CONCLUDE</span>
-
-<span class="l l-Scalar l-Scalar-Plain">(Each phase has 1-2 canonical query templates...)</span>
-</code></pre></div>
-<p>A Skill should capture practical tips and “tribal knowledge”: bracket syntax, common CLI commands, or how to handle exceptions. The model learns from these notes instantly, helping it avoid wasted steps and mistakes.
-If you’re creating your own Skill, focus on what usually trips up new team members—quirky connections, column names that don’t match the docs, or query patterns people copy from chat. If it’s in your runbook but often ignored, it’s perfect for a Skill file.</p>
-<p>The repo ships all three Skills (<code>clickhouse</code>, <code>k8s</code>, <code>gh</code>) under <code>skills/</code>. To install:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/har-ki/claude-code-sre-handbook
-mkdir<span class="w"> </span>-p<span class="w"> </span>~/.claude/skills
-cp<span class="w"> </span>-r<span class="w"> </span>claude-code-sre-handbook/skills/*<span class="w"> </span>~/.claude/skills/
-</code></pre></div>
-<p>Modify them to fit your stack. The file structure is more important than the specific contents.</p>
-<h2 id="sonnet-46-with-the-skill">Sonnet 4.6, with the Skill<a class="headerlink" href="#sonnet-46-with-the-skill" title="Anchor link">¶</a></h2>
-<p>Same model, same scenario, same three prompts. Skills loaded from <code>.claude/skills/</code> at session start.</p>
-<p>5 minutes 49 seconds, 9 tool calls in turn one, PR opened on first attempt.</p>
-<p>The first ClickHouse query was no longer a guess:</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">max</span><span class="p">(</span><span class="k">Timestamp</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">otel_logs</span><span class="p">;</span>
-</code></pre></div>
-<p>Correct table and column, <code>clickhouse client</code> directly (no <code>kubectl exec</code>), case-insensitive severity from the next query. Zero schema-discovery round-trips. The model moved SCOPE -&gt; TRIAGE -&gt; DRILL -&gt; MEASURE without looping and found product 7 in eight queries instead of twelve. Turn 3 was six tool calls: checkout, edit, commit, push, <code>gh pr create</code>, PR URL returned.</p>
+<p>I ran the half-right incident four times with this rule on, four times with it off. The incident had two causes — the familiar race condition, plus a caching bug the old note never mentioned. Catching it meant finding <em>both</em>.</p>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
-<th style="text-align: right;">No Skill</th>
-<th style="text-align: right;">With Skill</th>
+<th></th>
+<th>Caught both causes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>End-to-end wall clock</td>
-<td style="text-align: right;">13:27</td>
-<td style="text-align: right;">5:49</td>
+<td>Without the rule</td>
+<td>1 of 4</td>
 </tr>
 <tr>
-<td>Turn 1 tool calls</td>
-<td style="text-align: right;">99 (43 + 56 subagent)</td>
-<td style="text-align: right;">9</td>
-</tr>
-<tr>
-<td>Schema-discovery round-trips</td>
-<td style="text-align: right;">3 + 2 failed connections</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td>Turn 3 errors</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td>Root cause correct</td>
-<td style="text-align: right;">Yes</td>
-<td style="text-align: right;">Yes</td>
+<td>With the rule</td>
+<td>4 of 4</td>
 </tr>
 </tbody>
 </table>
-<p>Root-cause accuracy didn't change — both sessions identified the TOCTOU and proposed a per-product async mutex. The Skill didn't make Sonnet smarter. It made Sonnet's tools hit the mark: 99 tool calls to 9.</p>
-<h2 id="where-it-still-breaks">Where it still breaks<a class="headerlink" href="#where-it-still-breaks" title="Anchor link">¶</a></h2>
-<p>Two real limitations from these sessions.</p>
-<p><strong>Skill discovery is brittle.</strong> Skills load when their <code>description:</code> keywords match the user message. In the Sonnet+Skill run, a <code>gh</code> Skill never surfaced — Turn 3 said "github integration (gh cli)" but <code>gh</code> didn't load while <code>clickhouse</code> and <code>k8s</code> had loaded on Turn 1. The session succeeded anyway, but the failure mode is real: a Skill that doesn't load can't help, and there's no visible signal that it didn't.</p>
-<p><strong>Skills don't cover phase transitions.</strong> The investigation -&gt; code-fix pivot — <em>clone the repo, read inventory.js, propose a diff</em> — is unguided. Every session figured it out; the figuring was first-principles reasoning.</p>
-<p>Neither is a harness failure. The harness gave the model edit tools, retry, reasoning — all worked when called. The takeaway: a Skill doesn't need to be perfect. A short file that encodes your team's tribal knowledge about one tool cuts the investigation loop in half — and unlike a runbook, it's read every time.</p>
-<h2 id="try-it-yourself">Try it yourself<a class="headerlink" href="#try-it-yourself" title="Anchor link">¶</a></h2>
-<p>Everything in this post is reproducible from the repo. You need Docker, <a href="https://kind.sigs.k8s.io/">kind</a>, kubectl, <a href="https://claude.ai/claude-code">Claude Code</a>, and the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code>).</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/har-ki/claude-code-sre-handbook
-<span class="nb">cd</span><span class="w"> </span>claude-code-sre-handbook/otel-demo
-./setup-post02.sh
-</code></pre></div>
-<p>This stands up the kind cluster, pushes the ecommerce app to your GitHub, installs the Skills, and scales the load generator to trigger the bug. Authenticate <code>gh</code> first if you haven't (<code>gh auth login</code>).</p>
-<p>Then open Claude Code and paste the three prompts one at a time. Compare your session against the results in this post.</p>
-<p>Teardown: <code>./teardown.sh</code></p>
-<p>Your times and tool-call counts will vary — different cluster, different model snapshot, different day. The shape of the session should be the same.</p>
+<p>Small numbers, clear direction. One run caught it without the rule, so the agent <em>can</em> do this on its own — it just usually doesn't bother once a plausible answer is in front of it. The rule makes it reliable.</p>
+<p>The mechanism is the surprising part. <strong>Three of the four "with the rule" runs said the old finding VALIDATED — it matched — and then found the second cause anyway.</strong> The rule didn't work by making the agent distrust memory. The memory was right, as far as it went. It worked by forcing the agent to <em>look closely enough to confirm it</em>, and looking closely is what surfaced the part the old note left out.</p>
+<p>That's the whole trick. The danger of a half-right memory isn't that it's wrong. It's that it's right enough to end the investigation early. Forcing the agent to check doesn't make it doubt the memory — it makes it finish the job.</p>
+<h2 id="it-cleans-up-after-itself-too">It cleans up after itself, too<a class="headerlink" href="#it-cleans-up-after-itself-too" title="Anchor link">¶</a></h2>
+<p>One more reason this matters. After each incident, the agent writes its finding back to memory for next time.</p>
+<p>The runs that anchored on the half-right answer wrote <em>that</em> back — overwriting the good note with the incomplete one. The next incident then loads an even worse starting point. Bad memory compounds.</p>
+<p>The runs that checked their work wrote the complete finding back. The check doesn't just fix today's incident — it keeps the memory store honest for the next one. That's why this is the capstone of the series: memory touches all three decisions at once, and the discipline that makes recall safe is the same discipline that keeps the store from rotting.</p>
+<h2 id="what-to-take-away">What to take away<a class="headerlink" href="#what-to-take-away" title="Anchor link">¶</a></h2>
+<p>If you're adding memory to an agent, remember three things:</p>
+<ol>
+<li><strong>Reading is free; writing needs a push.</strong> Make saving an explicit, required step or your store stays empty.</li>
+<li><strong>Better search fixes finding, not trusting.</strong> A half-right memory scores just as high as a perfect one — no amount of retrieval tuning separates them.</li>
+<li><strong>The real fix is one instruction:</strong> make the agent check a recalled finding against what's happening now. It works by forcing a proper look, not by breeding distrust — and it keeps your memory clean for next time.</li>
+</ol>
+<p>The store is fifty lines. The search is fifty more. The instruction that makes the whole thing safe to use is a single paragraph in a prompt. Most of the work in agent memory isn't the memory — it's earning the right to trust it.</p>
+<hr />
+<p>Both versions — plain files and similarity search — are in the repo at <a href="https://github.com/har-ki/claude-code-sre-handbook/tree/main/watcher-memory-example"><code>watcher-memory-example/</code></a> and <a href="https://github.com/har-ki/claude-code-sre-handbook/tree/main/watcher-semantic-example"><code>watcher-semantic-example/</code></a>. Clone it, run the half-right incident with the rule on and off, and watch where the agent stops. The final post wires all of this into a watcher you can deploy.</p>
 <hr />
 <p><em>Working through this on your own infrastructure? Happy to jam — <a href="https://github.com/har-ki">drop me a line</a>.</em></p>
 
@@ -1429,7 +1429,7 @@ cp<span class="w"> </span>-r<span class="w"> </span>claude-code-sre-handbook/ski
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../01-harness-problem/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1. The Harness Problem">
+          <a href="../12-the-window-edge/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 12. The Window Edge">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1439,20 +1439,20 @@ cp<span class="w"> </span>-r<span class="w"> </span>claude-code-sre-handbook/ski
                 Previous
               </span>
               <div class="md-ellipsis">
-                1. The Harness Problem
+                12. The Window Edge
               </div>
             </div>
           </a>
         
         
           
-          <a href="../03-five-incidents-frontier/" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Claude Code on k8s-ai-bench">
+          <a href="../14-the-complete-watcher/" class="md-footer__link md-footer__link--next" aria-label="Next: 14. The Complete Watcher">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                3. Claude Code on k8s-ai-bench
+                14. The Complete Watcher
               </div>
             </div>
             <div class="md-footer__button md-icon">
