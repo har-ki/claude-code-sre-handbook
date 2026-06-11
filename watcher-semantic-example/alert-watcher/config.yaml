@@ -1,0 +1,39 @@
+service_name: ecommerce-api
+
+clickhouse:
+  host: localhost
+  port: 9000
+
+github:
+  repo: har-ki/claude-code-sre-handbook
+  base_branch: main
+
+# ── Model and cost controls ──────────────────────────────────────────
+model: claude-sonnet-4-6
+max_turns: 40
+
+# ── Alert tuning ─────────────────────────────────────────────────────
+threshold: 0.15
+min_volume: 100
+lookback_window_minutes: 1
+
+# ── Loop behavior ────────────────────────────────────────────────────
+poll_interval_seconds: 60
+dedup_window_seconds: 1800
+
+# ── Semantic memory config ───────────────────────────────────────────
+# retrieval_mode: exact | similarity
+#   exact:      SHA256-hash lookup (same as watcher-memory-example)
+#   similarity: embed incident description, cosine-search stored findings
+retrieval_mode: similarity
+
+# similarity_threshold: 0.0–1.0
+#   Minimum cosine similarity to surface a finding (similarity mode only).
+#   Below this, no finding is returned (safe silence).
+similarity_threshold: 0.75
+
+# validation_discipline: true | false
+#   When true, Phase 1 must classify the prior finding as
+#   validated / invalidated / inconclusive before using it.
+#   When false, Phase 1 uses the finding as context without forced classification.
+validation_discipline: true

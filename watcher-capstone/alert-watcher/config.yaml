@@ -1,0 +1,38 @@
+service_name: ecommerce-api
+
+clickhouse:
+  host: localhost
+  port: 9000
+
+github:
+  repo: har-ki/claude-code-sre-handbook
+  base_branch: main
+
+# ── Model and cost controls ──────────────────────────────────────────
+model: claude-sonnet-4-6
+max_turns: 40
+
+# ── Alert tuning ─────────────────────────────────────────────────────
+threshold: 0.15
+min_volume: 100
+lookback_window_minutes: 1
+
+# ── Loop behavior ────────────────────────────────────────────────────
+poll_interval_seconds: 60
+dedup_window_seconds: 1800
+
+# ── Storage backend ──────────────────────────────────────────────────
+# storage_backend: json | sqlite
+#   json:   flat JSON vector index (ported from watcher-semantic-example)
+#   sqlite: SQLite with atomic writes, same cosine search in Python
+storage_backend: sqlite
+
+# ── Semantic memory config ───────────────────────────────────────────
+# retrieval_mode: exact | similarity
+retrieval_mode: similarity
+
+# similarity_threshold: 0.0–1.0
+similarity_threshold: 0.75
+
+# validation_discipline: true | false
+validation_discipline: true

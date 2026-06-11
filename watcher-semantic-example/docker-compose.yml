@@ -1,0 +1,48 @@
+services:
+  claude-runner:
+    build:
+      context: ..
+      dockerfile: watcher-semantic-example/claude-runner/Dockerfile
+    entrypoint: ["echo", "claude-runner image ready"]
+    network_mode: host
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GH_TOKEN=${GH_TOKEN}
+    volumes:
+      - ./prompts:/prompts:ro
+      - ./templates:/templates:ro
+      - ./audit-log:/audit-log
+      - ./memory-store:/memory-store
+      - ${HOME}/.kube/config:/home/runner/.kube/config:ro
+      - ${WORKSPACE_DIR:-./workspace}:/workspace
+
+  alert-watcher:
+    build:
+      context: ./alert-watcher
+      dockerfile: Dockerfile
+    network_mode: host
+    depends_on:
+      claude-runner:
+        condition: service_completed_successfully
+    environment:
+      - GH_TOKEN=${GH_TOKEN}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - CLICKHOUSE_HOST=${CLICKHOUSE_HOST:-localhost:9000}
+      - CONFIG_PATH=/app/config.yaml
+      - RUNNER_IMAGE=watcher-semantic-example-claude-runner
+      - WORKSPACE_HOST_DIR=${WORKSPACE_DIR:-${PWD}/workspace}
+      - AUDIT_LOG_HOST_DIR=${PWD}/audit-log
+      - PROMPTS_HOST_DIR=${PWD}/prompts
+      - TEMPLATES_HOST_DIR=${PWD}/templates
+      - MEMORY_STORE_HOST_DIR=${PWD}/memory-store
+      - KUBECONFIG_HOST=${HOME}/.kube/config
+      - OLLAMA_URL=${OLLAMA_URL:-http://host.docker.internal:11434}
+    volumes:
+      - ./alert-watcher/config.yaml:/app/config.yaml:ro
+      - ./memory-store:/memory-store
+      - ./audit-log:/audit-log
+      - ./prompts:/prompts:ro
+      - ./templates:/templates:ro
+      - ${WORKSPACE_DIR:-./workspace}:/workspace
+      - ${HOME}/.kube/config:/root/.kube/config:ro
+      - /var/run/docker.sock:/var/run/docker.sock
