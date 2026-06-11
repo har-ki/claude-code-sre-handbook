@@ -1,0 +1,42 @@
+service_name: ecommerce-api
+
+clickhouse:
+  host: localhost
+  port: 9000
+
+github:
+  repo: har-ki/claude-code-sre-handbook
+  base_branch: main
+
+# ── Model and cost controls ──────────────────────────────────────────
+# Model determines quality vs cost. Sonnet 4.6 is the sweet spot for
+# incident investigation — capable enough to correlate logs with source
+# code, cheap enough to run on every alert.
+model: claude-sonnet-4-6
+
+# Max turns per phase. Each "turn" is one model response (which may
+# contain multiple tool calls). Phase 1 typically uses 25-40 turns;
+# Phase 2 uses 15-25. Set higher than needed — unused turns cost nothing.
+max_turns: 40
+
+# ── Alert tuning ─────────────────────────────────────────────────────
+# Error rate threshold (0.0–1.0). The watcher fires when the rate in
+# the lookback window exceeds this AND min_volume is met.
+threshold: 0.15
+
+# Minimum log count in the lookback window. Prevents firing on low-traffic
+# services where 1 error out of 2 requests = 50%.
+min_volume: 100
+
+# 1-minute window catches burst-driven error spikes above threshold;
+# wider windows (5m) smooth out noise but delay detection.
+lookback_window_minutes: 1
+
+# ── Loop behavior ────────────────────────────────────────────────────
+# How often (seconds) the watcher polls ClickHouse.
+poll_interval_seconds: 60
+
+# Suppress re-triggering for the same fingerprint within this window.
+# Once a PR is open, the dedup check prevents new PRs; this only matters
+# if the PR is closed and the same error re-fires quickly.
+dedup_window_seconds: 1800
