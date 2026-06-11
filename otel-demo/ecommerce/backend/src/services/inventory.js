@@ -49,11 +49,13 @@ async function reserveInventory(items) {
           throw err;
         }
 
-        // Validate inventory policies and apply business rules
-        await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100));
-
+        // Decrement before yielding the event loop to close the TOCTOU window
+        // between the stock check above and the async business-logic delay below.
         inventory[item.id] -= item.quantity;
         const newStock = inventory[item.id];
+
+        // Validate inventory policies and apply business rules
+        await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100));
 
         if (newStock < 0) {
           const err = new Error(
