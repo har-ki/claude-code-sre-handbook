@@ -4,13 +4,15 @@
 
 This post combines context engineering from Part 3 and the learning loop from Part 4 into one watcher. It investigates problems, suggests fixes, and learns from merged fixes. But it can still learn the wrong lesson if someone merges a bad solution.
 
-Here, two important parts come together. There is not much new to build — the focus is on making sure everything fits and works well together.
+Here, two important parts come together, and the focus is on ensuring everything fits and works well.
 
 ## What is the complete watcher?
 
 Until now, everything was separate. [Part 3](14-the-complete-watcher.md) built a watcher that used context — runbooks, correlation, memory, and discipline — to make decisions. [Part 4](16-the-merge-is-the-signal.md) built a learning loop that learns from what gets merged. Now this post brings them together: one watcher in [`watcher-complete/`](https://github.com/har-ki/claude-code-sre-handbook/tree/main/watcher-complete) that does both.
 
 The watcher now follows the same steps as before, but with a new third phase:
+
+![The complete watcher loop](../assets/17-complete-watcher-loop.png)
 
 1. **Detect** — Check ClickHouse for errors, identify the problem, and make sure it's not already being fixed.
 2. **Investigate (Phase 1)** — Use the runbook to look into the error, trace it to the cause, recall any past findings, and double-check them.
@@ -21,11 +23,9 @@ A human still decides what gets merged. The watcher can suggest and learn, but i
 
 ## Keeping memory and audit separate
 
-Two key things from Part 3 had to work with the new learning loop, and they did. These are often where this kind of system fails.
+Memory and audit stores remain separate. The agent learns from its own memory, while the audit trail is strictly for compliance and external review. Outcomes and lessons go only to the agent's store.
 
-First, the two stores stay separate. [Part 3](13-memory.md) kept the agent's memory (`memory-store/`, where the agent reads and writes) apart from the audit trail (`incident-store/`, which is append-only for people and compliance). The learning loop adds outcomes and lessons to the agent's store. It would have been easy to mix these up, but they remain separate. The agent learns from its own store; the audit trail is for others to review what happened. Different uses, different trust, different stores.
-
-Second, recall provides more information, but discipline remains key. In Part 3, recall returned a past finding, but discipline made the agent check it against what is happening now rather than just trust it. Now, recall gives the finding, the outcome, and the lesson. But the rule remains: a lesson is a hypothesis to test, not a fact to trust. This matters — a lot. The failure-mode section explains why.
+Recall now returns the finding, outcome, and lesson — but discipline is still crucial. Every lesson is a hypothesis, not a fact, and must always be verified against reality.
 
 ## Putting the watcher to the test
 
@@ -37,25 +37,21 @@ This matches what [Post 16](16-the-merge-is-the-signal.md) showed, but now it ru
 
 ## When the merge teaches the wrong thing
 
-Here is the most important result — and it is not perfect.
+Merges aren't always correct.
 
-A merge is an outside signal, so it seems more trustworthy than the model's self-grading. But outside does not mean correct. A merge means only that a human approved the change. It does not mean the change is actually right. The system cannot tell if the merge was careful or careless — both look the same.
+A merge only means someone approved the change — not that the fix actually works. If a bad fix gets merged, the system can learn the wrong lesson.
 
-To demonstrate this, I intentionally caused a failure. The watcher investigates and suggests a fix. Then a reviewer quickly approves a bad fix — a `try/catch` that hides the `StockMismatchError` so it no longer appears, without solving the real problem. The symptom goes away, and the PR is merged. In Phase 3, the watcher does what it is supposed to: it compares the original finding to the merged change and writes a confident lesson — "the fix was error handling, not a race condition." But this lesson is wrong, and now it is stored as correct.
+When this happens, the agent may trust the wrong lesson, especially if it came from a merge. Only discipline — double-checking against reality — can catch these mistakes.
 
-When the same fingerprint happens again, recall brings up the bad lesson right next to the still-correct original finding — a clear contradiction in the agent's context. What happens next is the real test.
-
-**What we learned: discipline can catch the mistake, but not always.** The rule says the agent should check the recalled lesson against what is really happening. Since the code still has the race, an agent that reads the code can find the bug the lesson told it to ignore. That is discipline working — the same process that worked in [Part 3](14-the-complete-watcher.md) (4 out of 4 times with discipline, 1 out of 4 without). But a lesson that comes with a merge's authority is a stronger anchor than just a recalled finding. The agent can trust it too much. Nothing forces the agent to double-check.
-
-This is the "merge-grounding wall." It is like Part 3's "retrieval wall." There, retrieval could not tell a real incident from a partial match — both looked the same, and discipline was the only fix. Here, a merge cannot tell a careful review from a careless one, and discipline is the only defense. Both cases show the same lesson: signals are not the truth, and the only real safeguard is for the agent to check against reality every time.
-
-Learning from merges is better than self-grading. Self-grading drifts with nothing to keep it honest; at least merges depend on a human decision. But the watcher still learns whatever quality of merges it gets. If merges are careless, it learns careless lessons. The watcher can follow the merge, but it cannot make merges correct.
+Bottom line: Merges are useful signals, but not the truth. If reviews are careless, the agent will pick up bad habits.
 
 ## The core lesson
 
-[Part 3](09-the-context-problem.md) asked what guides the agent's reasoning and found the answer: context you design on purpose, with discipline, so that memory helps but does not mislead. [Part 4](15-remembering-isnt-learning.md) asked if the agent can improve over time, and answered: yes, as long as it learns from a real signal it cannot fake — like a merge, already part of the workflow. The complete watcher does both.
+[Part 3](09-the-context-problem.md) showed that the agent needs carefully designed context and discipline. Memory should help, not mislead.
 
-The true goal is not a perfect watcher. It is one that uses strong context, learns from real outcomes, and is disciplined enough to question its own memory — because both context and merges are just signals, and signals can be wrong. When those signals fail, only discipline keeps the agent on track. That is the heart of the series.
+[Part 4](15-remembering-isnt-learning.md) demonstrated that the agent can improve by learning from real signals — such as a merge.
+
+The complete watcher combines both: it learns from real outcomes and relies on discipline to question its own memory. The goal isn't perfection, but a system that uses strong context, learns from experience, and always double-checks itself — because signals can be wrong, and only discipline keeps it honest.
 
 ---
 
