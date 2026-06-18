@@ -35,8 +35,8 @@ async function reserveInventory(items) {
         span.setAttribute(`product.${item.id}.name`, productName);
         span.setAttribute(`product.${item.id}.requested`, item.quantity);
 
-        // ---- read current stock ----
-        const currentStock = await getStock(item.id);
+        // ---- read and reserve stock atomically (no await between check and write) ----
+        const currentStock = inventory[item.id];
         span.setAttribute(`product.${item.id}.stock_before`, currentStock);
 
         if (currentStock < item.quantity) {
@@ -49,11 +49,12 @@ async function reserveInventory(items) {
           throw err;
         }
 
-        // Validate inventory policies and apply business rules
-        await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100));
-
+        // Decrement before yielding to prevent concurrent over-deduction
         inventory[item.id] -= item.quantity;
         const newStock = inventory[item.id];
+
+        // Validate inventory policies and apply business rules
+        await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100));
 
         if (newStock < 0) {
           const err = new Error(
