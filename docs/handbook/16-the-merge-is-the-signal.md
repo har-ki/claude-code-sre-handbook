@@ -2,9 +2,9 @@
 
 *For the watcher to truly learn, it needs real feedback. This feedback already exists — it's the merge.*
 
-When a person merges, accepts, or rewrites the watcher's draft PR, it's an outside verdict on whether the suggestion was good. A third Claude Code phase runs at merge, comparing the original suggestion to what actually shipped, and writes down the lesson. On-call engineers don't have to do anything extra — the feedback comes from what they already do.
+When a person merges, accepts, or rewrites the watcher's draft PR, it's an outside signal on whether the suggestion was good. A third Claude Code phase runs at merge, comparing the original suggestion to what actually shipped, and writes down the lesson. On-call engineers don't have to do anything extra — the feedback comes from what they already do.
 
-[Earlier](15-remembering-isnt-learning.md), we saw that if the watcher grades its own work, it quickly drifts off course. This post shows how to fix that by using an outside signal for feedback, building the loop around it, and proving that a merge changes how future investigations begin.
+[Earlier](15-remembering-isnt-learning.md), we said that if the watcher grades its own work, it quickly drifts off course. This post shows how to fix that by using an outside signal for feedback, building the loop around it, and proving that a merge changes how future investigations begin.
 
 ## Why the merge
 
@@ -17,7 +17,7 @@ The merge is that signal, and it has four properties that make it almost too goo
 - **Privileged.** Merging is an action a reviewer takes deliberately, with their name on it. It carries weight that a comment or a thumbs-up doesn't.
 - **Free.** It already happens. Every fix that ships gets merged; every bad diagnosis gets closed. The signal is a byproduct of work the team does anyway.
 
-This is the key idea: The real work happens during review, when a human reads the draft PR and decides to accept, change, or reject it. The merge event gives us real feedback and starts the learning process. We don't ask people to rate the watcher — we just look at what they do with its output.
+This is the key idea: The real work happens during review, when a human reads the draft PR and decides to accept, change, or reject it. The merge event provides real feedback and initiates the learning process. We don't ask people to rate the watcher — we just look at what they do with its output.
 
 ## What gets built
 
@@ -44,6 +44,8 @@ The watcher used to have two steps: investigate, then suggest a fix. Now there's
 
 This is on purpose. The learning step only looks at the diff, because it's always there. It doesn't read commit messages or review comments, and it doesn't care how the bug was fixed — just what actually shipped. The diff is the truth, and only the truth should teach the system. Anything else is extra and not required.
 
+![Phase 3 learning flow](../assets/16-learning-phase-flow.png)
+
 Here's what the learning step does:
 
 - If the merged diff is empty, the fix was accepted as-is. That means the diagnosis was correct. Set `outcome=merged` and note that no changes were needed.
@@ -58,31 +60,27 @@ The main method is a GitHub Action that runs when a pull request closes. It chec
 
 For offline or local setups, there's a simple script that checks the PR status using `gh pr view`. When the PR finishes, it runs the same learning step. Both ways feed into the same process, so the system works the same no matter how the merge is detected.
 
-No webhooks needed. Watching merges is simple — the GitHub Action handles online cases, the script covers the rest. Setting up a webhook server is overkill for this job.
-
 ## Proof: a merge changing a later investigation
 
-A diagram isn't enough — this post has to prove that merging really changes what happens next. Here's how it plays out:
+This proves merges change future investigations:
 
-First, trigger the usual incident: `StockMismatchError` in `ecommerce-api`, fingerprint `e2836e74`. The watcher finds the non-atomic decrement in `inventory.js` and suggests using an in-process mutex around the code. It opens a draft PR. The finding enters the store as `outcome=pending`, with no verdict or lesson yet.
+1. First, trigger the usual incident: `StockMismatchError` in `ecommerce-api`, fingerprint `e2836e74`. The watcher finds a bug (`StockMismatchError`), suggests an in-process mutex, and opens a draft PR. The finding is stored as `outcome=pending`.
 
-Next, a reviewer steps in. They keep the PR but realize an in-process mutex won't work across multiple API servers. Instead, they rewrite the fix to use a database-level `SELECT FOR UPDATE`. They merge the change. The GitHub Action runs. The learning step compares the original mutex suggestion to the merged row-lock, then writes:
+2. A reviewer rewrites the fix to use a database lock (`SELECT FOR UPDATE`) and merges it. The system records: `outcome=merged_modified`, verdict=correct diagnosis but fix needed improvement, lesson=multi-instance race not just threads.
 
-`outcome=merged_modified`. Verdict: the diagnosis was correct (there was a non-atomic decrement), but the fix needed improvement — an in-process mutex was swapped for a database-level lock. Lesson: the real issue spanned multiple instances, not just threads; a single-process lock isn't enough for multi-replica systems.
+3. When the same issue happens again, the system recalls not just the old finding, but also the lesson: the mutex wasn't enough — check for issues across instances.
 
-Now, trigger the same fingerprint again. This time, the system's `recall()` brings back the earlier finding along with its lesson. Before, it would just show `outcome=pending` and no lesson. After the merge and learning, the new investigation starts from "the in-process mutex wasn't enough — check for concurrency across instances," not from scratch. The merge has changed the starting point for future investigations.
-
-This is the proof: the same incident, checked twice, and the merge in between changes what happens the second time. The other two cases also ran: a merged-as-is confirmation (`merged`), and a rejected suggestion (`closed_unmerged`), so all possible outcomes are covered in practice, not just in theory.
+Because of the merge, the next investigation starts smarter. All three outcomes (merged as-is, merged with changes, rejected) were tested and update the system's memory.
 
 ## Where this sits, honestly
 
 There are three real limits to this approach:
 
-**Slow.** Learning is slow because merges take days. The loop only learns as fast as people review and merge code. This isn't a flaw — it's intentional. Fast feedback usually means the system is grading itself, which leads to mistakes. Waiting for real feedback from others is slower but much more reliable.
+**Slow.** Learning becomes slow if merges take days. The loop only learns as fast as people review and merge code. Waiting for real feedback from others is slower but much more reliable.
 
-**Sparse.** Only merged or closed pull requests teach the system. Everything else stays "pending" — findings that go nowhere, incidents that fix themselves, PRs left open. Most findings never get a final outcome. The store has to work even when it's mostly empty. The learning signal is naturally thin, since only a few incidents ever reach a verdict.
+**Sparse.** Only merged or closed pull requests teach the system. Everything else stays "pending".
 
-**Merge isn't proof.** A merge just means a human approved the fix, not that it was actually correct. Careful reviews and quick approvals both count as merges, and the system can't tell the difference. Getting a human sign-off is still better than letting the model judge itself, but it isn't perfect. Sometimes the wrong lesson gets learned if a merge was careless. That's a risk the next part will address.
+**Merge isn't proof.** A merge just means a human approved the fix, not that it was actually correct. Careful reviews and quick approvals both count as merges, and the system can't tell the difference. Getting a human sign-off is still better than letting the model judge itself, but it isn't perfect. Sometimes the wrong lesson gets learned if a merge was careless.
 
 ## Where this sits in the arc
 
