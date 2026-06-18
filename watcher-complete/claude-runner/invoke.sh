@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+#
+# Invokes Claude Code headless for a single phase of an incident.
+# Complete variant: context + learning. Phases 1, 2, and 3.
+#
+# Required env: PHASE, FP, FP_HASH, FINGERPRINT, SERVICE, RATE_PCT,
+#               PR_NUM, GITHUB_REPO, MODEL, DATE
+# Phase 1 also uses: PRIOR_FINDING, RETRIEVAL_INFO
+# Phase 2 also needs: ROOT_CAUSE, EVIDENCE, DETECTION
+# Phase 3 also needs: ORIGINAL_FINDING, MERGED_DIFF, OUTCOME
+#
+set -euo pipefail
+
+: "${PHASE:?PHASE is required (1, 2, or 3)}"
+: "${MODEL:=claude-sonnet-4-6}"
+: "${MAX_TURNS:=40}"
+
+# Resolve prompt file
+PROMPT_DIR="${PROMPT_DIR:-/prompts}"
+PROMPT_FILE=$(ls "${PROMPT_DIR}"/0"${PHASE}"-*.md 2>/dev/null | head -1)
+if [[ -z "$PROMPT_FILE" ]]; then
+  echo '{"ts":"'"$(date -u +%FT%TZ)"'","error":"no prompt file for phase '"${PHASE}"'"}' >&2
+  exit 1
+fi
+
+# envsubst the prompt
+RENDERED_PROMPT=$(envsubst < "$PROMPT_FILE")
+
+# Phase-specific allowedTools
+# gh pr ready is deliberately absent from all phases.
+if [[ "$PHASE" == "1" ]]; then
+  ALLOWED_TOOLS='Bash(clickhouse client*),Bash(kubectl get*),Bash(kubectl describe*),Bash(kubectl logs*),Bash(kubectl exec*),Bash(gh pr view*),Bash(gh pr edit*),Bash(gh pr comment*),Read,Write,Glob,Grep'
+elif [[ "$PHASE" == "2" ]]; then
+  ALLOWED_TOOLS='Bash(git*),Bash(gh pr view*),Bash(gh pr edit*),Bash(gh pr comment*),Edit,Write,Read,Glob,Grep'
+elif [[ "$PHASE" == "3" ]]; then
+  # Learning phase: read-only + store write. No cluster, no PR mutation.
+  ALLOWED_TOOLS='Bash(git diff*),Bash(git log*),Bash(gh pr view*),Read,Write,Glob,Grep'
+  MAX_TURNS=10
+else
+  echo '{"ts":"'"$(date -u +%FT%TZ)"'","error":"invalid PHASE: '"${PHASE}"'"}' >&2
+  exit 1
+fi
+
+# Preflight: kubectl must be able to reach the cluster (phases 1 and 2 only).
+if [[ "$PHASE" == "1" || "$PHASE" == "2" ]]; then
+  if ! kubectl config current-context >/dev/null 2>&1; then
+    echo '{"ts":"'"$(date -u +%FT%TZ)"'","error":"kubectl misconfigured","KUBECONFIG":"'"${KUBECONFIG:-unset}"'"}' >&2
+    exit 65
+  fi
+  if ! kubectl --request-timeout=5s get ns >/dev/null 2>&1; then
+    echo '{"ts":"'"$(date -u +%FT%TZ)"'","error":"kubectl cannot reach cluster API"}' >&2
+    exit 66
+  fi
+fi
+
+# Workspace directory
+WORKSPACE="${WORKSPACE_CLONE_DIR:-/workspace/ecommerce}"
+
+# Phase 2: align local branch to remote
+if [[ "$PHASE" == "2" ]]; then
+  BASE_BRANCH="${BASE_BRANCH:-main}"
+  : "${INCIDENT_BRANCH:=incident/${FP_HASH}}"
+  export INCIDENT_BRANCH
+
+  git -C "$WORKSPACE" fetch origin --prune
+  if git -C "$WORKSPACE" show-ref --verify --quiet "refs/remotes/origin/${INCIDENT_BRANCH}"; then
+    git -C "$WORKSPACE" checkout "$INCIDENT_BRANCH" 2>/dev/null || \
+      git -C "$WORKSPACE" checkout -b "$INCIDENT_BRANCH" "origin/${INCIDENT_BRANCH}"
+    git -C "$WORKSPACE" reset --hard "origin/${INCIDENT_BRANCH}"
+  else
+    git -C "$WORKSPACE" checkout -B "$INCIDENT_BRANCH" "origin/${BASE_BRANCH}"
+  fi
+fi
+
+if [[ "$PHASE" == "1" || "$PHASE" == "2" ]]; then
+  cd "$WORKSPACE"
+fi
+
+TEMPLATES_DIR="${TEMPLATES_DIR:-/templates}"
+if [[ -d "$TEMPLATES_DIR" && "$PHASE" != "3" ]]; then
+  rm -rf "$WORKSPACE/templates"
+  cp -r "$TEMPLATES_DIR" "$WORKSPACE/templates"
+fi
+if [[ "$PHASE" != "3" ]]; then
+  mkdir -p "$WORKSPACE/docs/incidents"
+fi
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+if [[ "$PHASE" != "3" ]]; then
+  if [[ -f "$SCRIPT_DIR/workspace-claude.md" ]]; then
+    mkdir -p "$WORKSPACE/.claude"
+    cp "$SCRIPT_DIR/workspace-claude.md" "$WORKSPACE/.claude/CLAUDE.md"
+  elif [[ -f "/workspace-claude.md" ]]; then
+    mkdir -p "$WORKSPACE/.claude"
+    cp "/workspace-claude.md" "$WORKSPACE/.claude/CLAUDE.md"
+  fi
+fi
+
+exec claude -p "$RENDERED_PROMPT" \
+  --allowedTools "$ALLOWED_TOOLS" \
+  --output-format stream-json \
+  --verbose \
+  --model "$MODEL" \
+  --max-turns "$MAX_TURNS"

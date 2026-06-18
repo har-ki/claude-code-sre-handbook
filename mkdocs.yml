@@ -92,4 +92,7 @@ nav:
       - "12. The Window Edge": handbook/12-the-window-edge.md
       - "13. Memory for the SRE Loop": handbook/13-memory.md
       - "14. The Complete Watcher": handbook/14-the-complete-watcher.md
-    - "What's Next": handbook/whats-next.md
+    - "Part 4 — Learning":
+      - "15. Remembering Isn't Learning": handbook/15-remembering-isnt-learning.md
+      - "16. The Merge Is the Signal": handbook/16-the-merge-is-the-signal.md
+      - "17. The Complete Watcher: Context + Learning": handbook/17-the-complete-watcher-context-learning.md
