@@ -49,9 +49,9 @@ async function reserveInventory(items) {
           throw err;
         }
 
-        // Validate inventory policies and apply business rules
-        await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100));
-
+        // Decrement before the async delay to prevent TOCTOU race: concurrent
+        // requests reading the same pre-decrement stock would all pass the check
+        // above, then all decrement, driving the counter negative.
         inventory[item.id] -= item.quantity;
         const newStock = inventory[item.id];
 
@@ -83,6 +83,9 @@ async function reserveInventory(items) {
           span.recordException(err);
           throw err;
         }
+
+        // Validate inventory policies and apply business rules
+        await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100));
 
         logger.emit({
           severityNumber: SeverityNumber.INFO,
