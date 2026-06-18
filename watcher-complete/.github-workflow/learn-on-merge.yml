@@ -1,0 +1,55 @@
+name: Learn on PR merge/close
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  learn:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.head.ref, 'incident/')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract fingerprint from branch name
+        id: fp
+        run: |
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          # Branch format: incident/<fp_hash>
+          FP_HASH="${BRANCH##incident/}"
+          echo "fp_hash=${FP_HASH}" >> "$GITHUB_OUTPUT"
+          echo "Extracted fingerprint hash: ${FP_HASH}"
+
+      - name: Determine outcome
+        id: outcome
+        run: |
+          if [[ "${{ github.event.pull_request.merged }}" == "true" ]]; then
+            PR_NUM="${{ github.event.pull_request.number }}"
+            REVIEW_COMMITS=$(gh pr view "$PR_NUM" --json commits -q '.commits | length')
+            if [[ "$REVIEW_COMMITS" -gt 2 ]]; then
+              echo "outcome=merged_modified" >> "$GITHUB_OUTPUT"
+            else
+              echo "outcome=merged" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            echo "outcome=closed_unmerged" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build fingerprint string
+        id: fingerprint
+        run: |
+          BODY=$(gh pr view "${{ github.event.pull_request.number }}" --json body -q .body)
+          FP=$(echo "$BODY" | grep -oP 'Fingerprint.*?`\K[^`]+' | head -1 || echo "unknown")
+          echo "fingerprint=${FP}" >> "$GITHUB_OUTPUT"
+
+      - name: Invoke learning phase
+        env:
+          FP_HASH: ${{ steps.fp.outputs.fp_hash }}
+          FINGERPRINT: ${{ steps.fingerprint.outputs.fingerprint }}
+          PR_NUM: ${{ github.event.pull_request.number }}
+          GITHUB_REPO: ${{ github.repository }}
+          OUTCOME: ${{ steps.outcome.outputs.outcome }}
+        run: |
+          chmod +x scripts/invoke-learn.sh
+          ./scripts/invoke-learn.sh

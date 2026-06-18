@@ -1,0 +1,36 @@
+services:
+  claude-runner:
+    build:
+      context: ./claude-runner
+    image: watcher-complete-claude-runner
+
+  alert-watcher:
+    build:
+      context: ./alert-watcher
+    depends_on:
+      - claude-runner
+    network_mode: host
+    volumes:
+      - ./prompts:/prompts:ro
+      - ./templates:/templates:ro
+      - ./memory-store:/memory-store
+      - ./incident-store:/incident-store
+      - ./audit-log:/audit-log
+      - ./workspace:/workspace
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${KUBECONFIG:-${HOME}/.kube/config}:/home/runner/.kube/config:ro
+    environment:
+      - GH_TOKEN
+      - ANTHROPIC_API_KEY
+      - CLICKHOUSE_HOST=${CLICKHOUSE_HOST:-localhost:9000}
+      - OLLAMA_URL=${OLLAMA_URL:-http://host.docker.internal:11434}
+      - WORKSPACE_HOST_DIR=${PWD}/workspace
+      - AUDIT_LOG_HOST_DIR=${PWD}/audit-log
+      - PROMPTS_HOST_DIR=${PWD}/prompts
+      - TEMPLATES_HOST_DIR=${PWD}/templates
+      - KUBECONFIG_HOST=${KUBECONFIG:-${HOME}/.kube/config}
+      - MEMORY_STORE_HOST_DIR=${PWD}/memory-store
+      - RUNNER_IMAGE=watcher-complete-claude-runner
+      # Window-edge tuning (passed through to claude-runner)
+      - CLAUDE_CODE_AUTO_COMPACT_WINDOW=${CLAUDE_CODE_AUTO_COMPACT_WINDOW:-}
+      - CLAUDE_CODE_MAX_CONTEXT_TOKENS=${CLAUDE_CODE_MAX_CONTEXT_TOKENS:-}
