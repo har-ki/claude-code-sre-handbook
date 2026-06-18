@@ -35,8 +35,10 @@ async function reserveInventory(items) {
         span.setAttribute(`product.${item.id}.name`, productName);
         span.setAttribute(`product.${item.id}.requested`, item.quantity);
 
-        // ---- read current stock ----
-        const currentStock = await getStock(item.id);
+        // ---- read and decrement stock synchronously to prevent TOCTOU race ----
+        // Node.js is single-threaded: no await between read and decrement means
+        // no concurrent request can interleave and over-reserve the same stock.
+        const currentStock = inventory[item.id];
         span.setAttribute(`product.${item.id}.stock_before`, currentStock);
 
         if (currentStock < item.quantity) {
@@ -49,11 +51,13 @@ async function reserveInventory(items) {
           throw err;
         }
 
-        // Validate inventory policies and apply business rules
-        await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100));
-
+        // Decrement before the business-rules await so the reservation is
+        // committed before the event loop yields to other requests.
         inventory[item.id] -= item.quantity;
         const newStock = inventory[item.id];
+
+        // Validate inventory policies and apply business rules
+        await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100));
 
         if (newStock < 0) {
           const err = new Error(
