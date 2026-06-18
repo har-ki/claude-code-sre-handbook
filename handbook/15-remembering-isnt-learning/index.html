@@ -1063,10 +1063,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-hole" class="md-nav__link">
+  <a href="#what-the-watcher-cant-do" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The hole
+        What the Watcher Can't Do
       
     </span>
   </a>
@@ -1202,10 +1202,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-hole" class="md-nav__link">
+  <a href="#what-the-watcher-cant-do" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The hole
+        What the Watcher Can't Do
       
     </span>
   </a>
@@ -1257,29 +1257,29 @@
 <h1 id="remembering-isnt-learning">Remembering Isn't Learning<a class="headerlink" href="#remembering-isnt-learning" title="Anchor link">¶</a></h1>
 <p>The watcher we finished Part 3 with has a good memory. Before it investigates an incident, it reads what it found the last time it saw that incident. After it proposes a fix, it writes down what it learned. The memory loop closes, and the discipline keeps it honest — a recalled finding is a hypothesis to confirm, never an answer to trust.</p>
 <p>That watcher remembers. It does not learn. Those are different things, and the gap between them is the whole of Part 4.</p>
-<h2 id="the-hole">The hole<a class="headerlink" href="#the-hole" title="Anchor link">¶</a></h2>
-<p>Here is what the watcher cannot do. It sees <code>StockMismatchError</code> on <code>ecommerce-api</code>, investigates, writes a finding: the stock decrement in <code>inventory.js</code> isn't atomic, two orders race, one wins. It opens a draft PR. A human looks at it.</p>
+<h2 id="what-the-watcher-cant-do">What the Watcher Can't Do<a class="headerlink" href="#what-the-watcher-cant-do" title="Anchor link">¶</a></h2>
+<p>Here is what the watcher cannot do: it sees a <code>StockMismatchError</code> on <code>ecommerce-api</code>, investigates, and writes a finding: the stock decrement in <code>inventory.js</code> isn't atomic; two orders race, and one wins. It opens a draft PR. A human looks at it.</p>
 <p>Then one of two things happens. The human merges the fix — maybe as-is, maybe after rewriting half of it. Or the human closes the PR without merging, because the diagnosis was wrong.</p>
-<p>The watcher never finds out which. Next time <code>StockMismatchError</code> fires, it pulls up the same finding and hands the agent the same starting point — with no idea whether that finding led to a fix that shipped or a fix that got thrown away. A finding that was right and a finding that was wrong are stored identically. The agent reads both with the same confidence.</p>
-<p>That's the difference between a notebook and a teacher. The watcher has a notebook. It records what it thought. It has no way to grade what it thought against what actually happened, so it can't get better — it can only accumulate. Remembering is recording the past. Learning is letting the past change what you do next.</p>
+<p>The watcher never finds out which. Next time <code>StockMismatchError</code> fires, it pulls up the same finding and hands the agent the same starting point — with no idea whether that finding led to a fix that shipped or was thrown away. A finding that was right and a finding that was wrong are stored identically. The agent reads both with the same confidence.</p>
+<p>That's the difference between a notebook and a teacher. The watcher has a notebook. It records what it thought. It has no way to grade its thinking against what actually happened, so it can't get better — it can only accumulate. Remembering is recording the past. Learning is letting the past change what you do next.</p>
 <h2 id="the-obvious-fix-is-the-trap">The obvious fix is the trap<a class="headerlink" href="#the-obvious-fix-is-the-trap" title="Anchor link">¶</a></h2>
 <p>The obvious fix: have the agent grade itself. After the fix is in, ask the model — did your diagnosis hold up? Was the fix good? Write the verdict into memory and weight future recall by it.</p>
 <p>This is exactly the thing not to do, and there's a clean body of work on why.</p>
-<p>The case <em>for</em> an agent learning from its own history is Reflexion (Shinn et al., NeurIPS 2023). An agent attempts a task, fails, writes itself a plain-language note about what went wrong, and tries again with that note in context. It works — the agent improves across attempts without anyone retraining the model. It's the blueprint for the loop we want.</p>
-<p>But read why it works. In Reflexion, the agent doesn't decide for itself whether it failed. An external evaluator does — unit tests pass or they don't, the game is won or lost. The agent writes the lesson, but something outside the agent rules on whether there was a failure to learn from. The reflection is the agent's; the verdict is the world's.</p>
-<p>Take that external verdict away and the result flips. Huang et al. (ICLR 2024) tested whether models can correct their own reasoning with no outside signal — just the model rereading its answer and judging it. Performance got <em>worse</em>. The model talks itself out of right answers as readily as wrong ones, because it has no ground truth to check against — only its own confidence, which is exactly the thing that's unreliable. They also found that several earlier "self-correction works" results had quietly leaned on the answer key to decide when to stop. Remove the key and the effect went with it.</p>
-<p>Put the two papers together and they aren't in conflict. They draw the same line from opposite sides:</p>
+<p>The case for an agent learning from its own history is Reflexion (Shinn et al., NeurIPS 2023). An agent attempts a task, fails, writes itself a plain-language note about what went wrong, and tries again with that note in context. It works — the agent improves across attempts without anyone retraining the model. It's the blueprint for the loop we want.</p>
+<p>But read why it works. In Reflexion, the agent doesn't decide for itself whether it failed. An external evaluator does — unit tests pass, or they don't; the game is won or lost. The agent writes the lesson, but something outside the agent rules on whether there was a failure to learn from. The reflection is the agent's; the verdict is the world's.</p>
+<p>Take that external verdict away, and the result flips. Huang et al. (ICLR 2024) tested whether models can correct their own reasoning with no outside signal — just the model rereading its answer and judging it. Performance got worse. The model talks itself out of right answers as readily as wrong ones, because it has no ground truth to check against — only its own confidence, which is exactly the thing that's unreliable. They also found that several earlier "self-correction works" results had quietly leaned on the answer key to decide when to stop. Remove the key and the effect went with it.</p>
+<p>Put the two papers together, and they aren't in conflict. They draw the same line from opposite sides:</p>
 <blockquote>
 <p>A self-improvement loop is only as good as the grounding of its feedback signal. An external signal — something the agent can't author — drives real improvement. An internal signal, the model grading its own work, drives drift.</p>
 </blockquote>
-<p>A model grading its own diagnosis is marking its own homework. It will tend to confirm what it already believes, and a memory store weighted by that signal doesn't get sharper over time — it gets more confident about whatever it happened to think first. That's not learning. That's the model collapse failure mode wearing a memory loop as a disguise: feed a system its own output as truth and the quality rots.</p>
-<p>So the self-grading fix is off the table — not because it's hard, but because the literature says it makes the watcher worse while looking like it makes it better. The dangerous failures are the ones that look like progress.</p>
+<p>When a model checks its own work, it's just marking its own homework. It keeps agreeing with itself, so its memory doesn't get better — it just gets more certain about whatever it thought first. That's not learning. That's a system stuck in a loop, treating its first answer as fact and slowly getting worse over time.</p>
+<p>So the self-grading fix is off the table — not because it's hard, but because the literature says it makes the watcher worse, even though it looks like it makes them better. The dangerous failures are the ones that look like progress.</p>
 <h2 id="what-this-part-has-to-find">What this part has to find<a class="headerlink" href="#what-this-part-has-to-find" title="Anchor link">¶</a></h2>
-<p>That rules out the easy answer and names the real problem. The watcher needs a feedback signal it can't fake — something outside the agent that says <em>this finding led somewhere good</em> or <em>this one didn't</em> — and it needs to get that signal without inventing a new chore for the on-call engineer who's already had a long night.</p>
-<p>There's a signal like that already sitting in the workflow, and nobody has to do anything new to produce it. That's the next post.</p>
-<p>For now, the honest diagnosis stands: the watcher we shipped at the end of Part 3 is the best version of a system that only remembers. To make it learn, we have to ground it in something it can't talk itself into. Everything in Part 4 is engineering toward that one constraint.</p>
+<p>That rules out the easy answer and names the real problem. The watcher needs a feedback signal from outside that says whether this finding led somewhere good or not — and it needs to get that signal without inventing a new chore for the on-call engineer who's already had a long night.</p>
+<p>There's already a signal like that in the workflow, and nobody has to do anything new to produce it. That's the next post.</p>
+<p>Right now, the watcher we built in Part 3 is as good as a system that only remembers can get. To help it learn, we need to give it feedback it can't create or influence itself. Everything in Part 4 is about solving that challenge.</p>
 <hr />
-<p><em>The shipped watcher is in <a href="https://github.com/har-ki/claude-code-sre-handbook/tree/main/watcher-capstone"><code>watcher-capstone/</code></a> — the system this post diagnoses. It stays as the reference for a watcher that remembers; Part 4 builds the one that learns.</em></p>
+<p><em>The shipped watcher is in <a href="https://github.com/har-ki/claude-code-sre-handbook/tree/main/watcher-capstone"><code>watcher-capstone/</code></a> — the system this post diagnoses. It remains the reference for a watcher who remembers; Part 4 builds the one who learns.</em></p>
 <hr />
 <p><em>Working through this on your own infrastructure? Happy to jam — <a href="https://github.com/har-ki">drop me a line</a>.</em></p>
 

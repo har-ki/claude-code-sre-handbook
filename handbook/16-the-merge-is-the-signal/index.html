@@ -1378,8 +1378,8 @@
 
 <h1 id="the-merge-is-the-signal">The Merge Is the Signal<a class="headerlink" href="#the-merge-is-the-signal" title="Anchor link">¶</a></h1>
 <p><em>For the watcher to truly learn, it needs real feedback. This feedback already exists — it's the merge.</em></p>
-<p>When a person merges, accepts, or rewrites the watcher's draft PR, it's an outside verdict on whether the suggestion was good. A third Claude Code phase runs at merge, comparing the original suggestion to what actually shipped, and writes down the lesson. On-call engineers don't have to do anything extra — the feedback comes from what they already do.</p>
-<p><a href="../15-remembering-isnt-learning/">Earlier</a>, we saw that if the watcher grades its own work, it quickly drifts off course. This post shows how to fix that by using an outside signal for feedback, building the loop around it, and proving that a merge changes how future investigations begin.</p>
+<p>When a person merges, accepts, or rewrites the watcher's draft PR, it's an outside signal on whether the suggestion was good. A third Claude Code phase runs at merge, comparing the original suggestion to what actually shipped, and writes down the lesson. On-call engineers don't have to do anything extra — the feedback comes from what they already do.</p>
+<p><a href="../15-remembering-isnt-learning/">Earlier</a>, we said that if the watcher grades its own work, it quickly drifts off course. This post shows how to fix that by using an outside signal for feedback, building the loop around it, and proving that a merge changes how future investigations begin.</p>
 <h2 id="why-the-merge">Why the merge<a class="headerlink" href="#why-the-merge" title="Anchor link">¶</a></h2>
 <p>Go back to the principle from <a href="../15-remembering-isnt-learning/">last post</a>: a self-improvement loop is only as good as the grounding of its feedback signal. The model can't be the judge of its own diagnosis — that's the failure mode the literature warns about. So the signal has to come from outside the agent.</p>
 <p>The merge is that signal, and it has four properties that make it almost too good to pass up:</p>
@@ -1389,7 +1389,7 @@
 <li><strong>Privileged.</strong> Merging is an action a reviewer takes deliberately, with their name on it. It carries weight that a comment or a thumbs-up doesn't.</li>
 <li><strong>Free.</strong> It already happens. Every fix that ships gets merged; every bad diagnosis gets closed. The signal is a byproduct of work the team does anyway.</li>
 </ul>
-<p>This is the key idea: The real work happens during review, when a human reads the draft PR and decides to accept, change, or reject it. The merge event gives us real feedback and starts the learning process. We don't ask people to rate the watcher — we just look at what they do with its output.</p>
+<p>This is the key idea: The real work happens during review, when a human reads the draft PR and decides to accept, change, or reject it. The merge event provides real feedback and initiates the learning process. We don't ask people to rate the watcher — we just look at what they do with its output.</p>
 <h2 id="what-gets-built">What gets built<a class="headerlink" href="#what-gets-built" title="Anchor link">¶</a></h2>
 <p>Three pieces, all in a new <a href="https://github.com/har-ki/claude-code-sre-handbook/tree/main/watcher-learning"><code>watcher-learning/</code></a> directory. This is the learning mechanism in isolation — not the full watcher. That's the next post.</p>
 <h3 id="the-store-now-tracks-what-happens-next">The store now tracks what happens next<a class="headerlink" href="#the-store-now-tracks-what-happens-next" title="Anchor link">¶</a></h3>
@@ -1408,6 +1408,7 @@
 <li>The final merged code changes (the diff)</li>
 </ul>
 <p>This is on purpose. The learning step only looks at the diff, because it's always there. It doesn't read commit messages or review comments, and it doesn't care how the bug was fixed — just what actually shipped. The diff is the truth, and only the truth should teach the system. Anything else is extra and not required.</p>
+<p><img alt="Phase 3 learning flow" src="../../assets/16-learning-phase-flow.png" /></p>
 <p>Here's what the learning step does:</p>
 <ul>
 <li>If the merged diff is empty, the fix was accepted as-is. That means the diagnosis was correct. Set <code>outcome=merged</code> and note that no changes were needed.</li>
@@ -1418,19 +1419,25 @@
 <h3 id="the-trigger">The trigger<a class="headerlink" href="#the-trigger" title="Anchor link">¶</a></h3>
 <p>The main method is a GitHub Action that runs when a pull request closes. It checks if the PR was merged, finds the fingerprint from the branch name, and starts the learning step. This all happens on GitHub, with no need for extra polling.</p>
 <p>For offline or local setups, there's a simple script that checks the PR status using <code>gh pr view</code>. When the PR finishes, it runs the same learning step. Both ways feed into the same process, so the system works the same no matter how the merge is detected.</p>
-<p>No webhooks needed. Watching merges is simple — the GitHub Action handles online cases, the script covers the rest. Setting up a webhook server is overkill for this job.</p>
 <h2 id="proof-a-merge-changing-a-later-investigation">Proof: a merge changing a later investigation<a class="headerlink" href="#proof-a-merge-changing-a-later-investigation" title="Anchor link">¶</a></h2>
-<p>A diagram isn't enough — this post has to prove that merging really changes what happens next. Here's how it plays out:</p>
-<p>First, trigger the usual incident: <code>StockMismatchError</code> in <code>ecommerce-api</code>, fingerprint <code>e2836e74</code>. The watcher finds the non-atomic decrement in <code>inventory.js</code> and suggests using an in-process mutex around the code. It opens a draft PR. The finding enters the store as <code>outcome=pending</code>, with no verdict or lesson yet.</p>
-<p>Next, a reviewer steps in. They keep the PR but realize an in-process mutex won't work across multiple API servers. Instead, they rewrite the fix to use a database-level <code>SELECT FOR UPDATE</code>. They merge the change. The GitHub Action runs. The learning step compares the original mutex suggestion to the merged row-lock, then writes:</p>
-<p><code>outcome=merged_modified</code>. Verdict: the diagnosis was correct (there was a non-atomic decrement), but the fix needed improvement — an in-process mutex was swapped for a database-level lock. Lesson: the real issue spanned multiple instances, not just threads; a single-process lock isn't enough for multi-replica systems.</p>
-<p>Now, trigger the same fingerprint again. This time, the system's <code>recall()</code> brings back the earlier finding along with its lesson. Before, it would just show <code>outcome=pending</code> and no lesson. After the merge and learning, the new investigation starts from "the in-process mutex wasn't enough — check for concurrency across instances," not from scratch. The merge has changed the starting point for future investigations.</p>
-<p>This is the proof: the same incident, checked twice, and the merge in between changes what happens the second time. The other two cases also ran: a merged-as-is confirmation (<code>merged</code>), and a rejected suggestion (<code>closed_unmerged</code>), so all possible outcomes are covered in practice, not just in theory.</p>
+<p>This proves merges change future investigations:</p>
+<ol>
+<li>
+<p>First, trigger the usual incident: <code>StockMismatchError</code> in <code>ecommerce-api</code>, fingerprint <code>e2836e74</code>. The watcher finds a bug (<code>StockMismatchError</code>), suggests an in-process mutex, and opens a draft PR. The finding is stored as <code>outcome=pending</code>.</p>
+</li>
+<li>
+<p>A reviewer rewrites the fix to use a database lock (<code>SELECT FOR UPDATE</code>) and merges it. The system records: <code>outcome=merged_modified</code>, verdict=correct diagnosis but fix needed improvement, lesson=multi-instance race not just threads.</p>
+</li>
+<li>
+<p>When the same issue happens again, the system recalls not just the old finding, but also the lesson: the mutex wasn't enough — check for issues across instances.</p>
+</li>
+</ol>
+<p>Because of the merge, the next investigation starts smarter. All three outcomes (merged as-is, merged with changes, rejected) were tested and update the system's memory.</p>
 <h2 id="where-this-sits-honestly">Where this sits, honestly<a class="headerlink" href="#where-this-sits-honestly" title="Anchor link">¶</a></h2>
 <p>There are three real limits to this approach:</p>
-<p><strong>Slow.</strong> Learning is slow because merges take days. The loop only learns as fast as people review and merge code. This isn't a flaw — it's intentional. Fast feedback usually means the system is grading itself, which leads to mistakes. Waiting for real feedback from others is slower but much more reliable.</p>
-<p><strong>Sparse.</strong> Only merged or closed pull requests teach the system. Everything else stays "pending" — findings that go nowhere, incidents that fix themselves, PRs left open. Most findings never get a final outcome. The store has to work even when it's mostly empty. The learning signal is naturally thin, since only a few incidents ever reach a verdict.</p>
-<p><strong>Merge isn't proof.</strong> A merge just means a human approved the fix, not that it was actually correct. Careful reviews and quick approvals both count as merges, and the system can't tell the difference. Getting a human sign-off is still better than letting the model judge itself, but it isn't perfect. Sometimes the wrong lesson gets learned if a merge was careless. That's a risk the next part will address.</p>
+<p><strong>Slow.</strong> Learning becomes slow if merges take days. The loop only learns as fast as people review and merge code. Waiting for real feedback from others is slower but much more reliable.</p>
+<p><strong>Sparse.</strong> Only merged or closed pull requests teach the system. Everything else stays "pending".</p>
+<p><strong>Merge isn't proof.</strong> A merge just means a human approved the fix, not that it was actually correct. Careful reviews and quick approvals both count as merges, and the system can't tell the difference. Getting a human sign-off is still better than letting the model judge itself, but it isn't perfect. Sometimes the wrong lesson gets learned if a merge was careless.</p>
 <h2 id="where-this-sits-in-the-arc">Where this sits in the arc<a class="headerlink" href="#where-this-sits-in-the-arc" title="Anchor link">¶</a></h2>
 <p><a href="../14-the-complete-watcher/">Part 3</a> gave the watcher its context — what it reasons against. This post gives it a way to update that context from outcomes it can't fake. Post 17 puts both together into a single production-shaped watcher and confronts the last problem head-on: what happens when the merge teaches the loop the wrong thing.</p>
 <hr />
