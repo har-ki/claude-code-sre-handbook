@@ -12,6 +12,8 @@
         <meta name="author" content="The Claude Code SRE Handbook Authors">
       
       
+        <link rel="canonical" href="https://har-ki.github.io/claude-code-sre-handbook/handbook/05-building-the-always-on-watcher/">
+      
       
         <link rel="prev" href="../04-on-demand-vs-always-on-choosing/">
       
@@ -23,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1523,14 +1525,14 @@
 <p>The watcher is the orchestrator. It creates the draft PR, then makes two blocking calls — one per phase. Phase 1 and Phase 2 are separate Claude Code sessions with no shared memory. The PR body is the only state that crosses the boundary: Phase 1 writes the investigation, the watcher parses out <code>root_cause</code> and <code>confidence</code>, Phase 2 reads the investigation and adds the fix. Neither phase can un-draft the PR.</p>
 <h2 id="the-two-prompts">The two prompts<a class="headerlink" href="#the-two-prompts" title="Anchor link">¶</a></h2>
 <p>Phase 1 — investigate. Read-only on the cluster, read-only on git, writes only the PR body:</p>
-<div class="highlight"><pre><span></span><code>claude<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>envsubst<span class="w"> </span>&lt;<span class="w"> </span>prompts/01-investigate.md<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--allowedTools<span class="w"> </span><span class="s2">&quot;Bash(clickhouse client*),Bash(kubectl get*),Bash(kubectl describe*),Bash(kubectl logs*),Bash(gh pr edit*),Bash(gh pr comment*),Read,Write,Glob,Grep&quot;</span><span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>claude<span class="w"> </span>-p<span class="w"> </span><span class="s2">"</span><span class="k">$(</span>envsubst<span class="w"> </span>&lt;<span class="w"> </span>prompts/01-investigate.md<span class="k">)</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--allowedTools<span class="w"> </span><span class="s2">"Bash(clickhouse client*),Bash(kubectl get*),Bash(kubectl describe*),Bash(kubectl logs*),Bash(gh pr edit*),Bash(gh pr comment*),Read,Write,Glob,Grep"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--output-format<span class="w"> </span>stream-json<span class="w"> </span>--verbose<span class="w"> </span>--max-turns<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--model<span class="w"> </span>claude-sonnet-4-6
 </code></pre></div>
 <p>Phase 2 — propose fix. Writes a feature branch and the PR body, no cluster:</p>
-<div class="highlight"><pre><span></span><code>claude<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>envsubst<span class="w"> </span>&lt;<span class="w"> </span>prompts/02-propose-fix.md<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--allowedTools<span class="w"> </span><span class="s2">&quot;Bash(git*),Bash(gh pr edit*),Bash(gh pr comment*),Edit,Write,Read,Glob,Grep&quot;</span><span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>claude<span class="w"> </span>-p<span class="w"> </span><span class="s2">"</span><span class="k">$(</span>envsubst<span class="w"> </span>&lt;<span class="w"> </span>prompts/02-propose-fix.md<span class="k">)</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--allowedTools<span class="w"> </span><span class="s2">"Bash(git*),Bash(gh pr edit*),Bash(gh pr comment*),Edit,Write,Read,Glob,Grep"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--output-format<span class="w"> </span>stream-json<span class="w"> </span>--verbose<span class="w"> </span>--max-turns<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--model<span class="w"> </span>claude-sonnet-4-6
 </code></pre></div>
@@ -1546,13 +1548,13 @@
 <p>The real gate lives outside Claude Code. Scope the <code>GH_TOKEN</code> so the credential itself cannot mark a PR as ready. GitHub fine-grained personal access tokens let you grant <code>pull_requests: write</code> (create and edit PRs) while branch protection rules on the repo require a human review before merge. If the token can't do it, no amount of prompt creativity helps. <code>--allowedTools</code> reduces noise; token scoping and branch protection enforce the boundary.</p>
 <h2 id="dedup-and-recovery">Dedup and recovery<a class="headerlink" href="#dedup-and-recovery" title="Anchor link">¶</a></h2>
 <p>Fingerprint:</p>
-<div class="highlight"><pre><span></span><code><span class="n">fingerprint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">service_name</span><span class="si">}</span><span class="s2">|</span><span class="si">{</span><span class="n">top_exception_class</span><span class="si">}</span><span class="s2">&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="n">fingerprint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">service_name</span><span class="si">}</span><span class="s2">|</span><span class="si">{</span><span class="n">top_exception_class</span><span class="si">}</span><span class="s2">"</span>
 <span class="n">fp_hash</span>     <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="n">fingerprint</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">8</span><span class="p">]</span>
 </code></pre></div>
 <p>Before opening a PR, the watcher queries open PRs labeled <code>incident-fp:&lt;hash&gt;</code>. If one exists, it comments the new sample count and returns. Labels are created on demand by <code>gh pr create --label</code>.</p>
 <p>If a phase fails — git push rejected, rate limit, API timeout — the watcher comments the audit-log path on the PR and retries on the next poll. Dedup keeps the retries on the same PR. The loop is self-healing. It is also slower when it heals: a failed phase typically adds a poll interval (60 seconds) plus a few dedup-hit comments before the retry lands.</p>
 <p>On Phase 2 success, one line appends to <code>memory-store/incidents.jsonl</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2026-05-19T22:05:37.338764+00:00&quot;</span><span class="p">,</span><span class="nt">&quot;fingerprint&quot;</span><span class="p">:</span><span class="s2">&quot;ecommerce-api|Error&quot;</span><span class="p">,</span><span class="nt">&quot;fp_hash&quot;</span><span class="p">:</span><span class="s2">&quot;6e14cf73&quot;</span><span class="p">,</span><span class="nt">&quot;pr_url&quot;</span><span class="p">:</span><span class="s2">&quot;https://github.com/har-ki/claude-code-sre-handbook/pull/3&quot;</span><span class="p">,</span><span class="nt">&quot;incident_report_path&quot;</span><span class="p">:</span><span class="s2">&quot;docs/incidents/2026-05-19-6e14cf73.md&quot;</span><span class="p">,</span><span class="nt">&quot;root_cause&quot;</span><span class="p">:</span><span class="s2">&quot;TOCTOU race condition in inventory.js:reserveInventory() — non-atomic check-then-act under concurrent load&quot;</span><span class="p">,</span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span><span class="nt">&quot;phase_durations_sec&quot;</span><span class="p">:{</span><span class="nt">&quot;phase1&quot;</span><span class="p">:</span><span class="mf">136.0</span><span class="p">,</span><span class="nt">&quot;phase2&quot;</span><span class="p">:</span><span class="mf">143.3</span><span class="p">}}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">"ts"</span><span class="p">:</span><span class="s2">"2026-05-19T22:05:37.338764+00:00"</span><span class="p">,</span><span class="nt">"fingerprint"</span><span class="p">:</span><span class="s2">"ecommerce-api|Error"</span><span class="p">,</span><span class="nt">"fp_hash"</span><span class="p">:</span><span class="s2">"6e14cf73"</span><span class="p">,</span><span class="nt">"pr_url"</span><span class="p">:</span><span class="s2">"https://github.com/har-ki/claude-code-sre-handbook/pull/3"</span><span class="p">,</span><span class="nt">"incident_report_path"</span><span class="p">:</span><span class="s2">"docs/incidents/2026-05-19-6e14cf73.md"</span><span class="p">,</span><span class="nt">"root_cause"</span><span class="p">:</span><span class="s2">"TOCTOU race condition in inventory.js:reserveInventory() — non-atomic check-then-act under concurrent load"</span><span class="p">,</span><span class="nt">"confidence"</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span><span class="nt">"phase_durations_sec"</span><span class="p">:{</span><span class="nt">"phase1"</span><span class="p">:</span><span class="mf">136.0</span><span class="p">,</span><span class="nt">"phase2"</span><span class="p">:</span><span class="mf">143.3</span><span class="p">}}</span>
 </code></pre></div>
 <p>Not a vector store, not a graph — an append-only log to grep. A future Phase 1 prompt can read this file and link prior incidents. Not shipped yet.</p>
 <h2 id="what-the-reviewer-sees">What the reviewer sees<a class="headerlink" href="#what-the-reviewer-sees" title="Anchor link">¶</a></h2>
@@ -1598,7 +1600,7 @@ df6cede  docs(incidents): add incident report for 2026-05-19-6e14cf73
 </code></pre></div>
 <p>Two race-condition log entries, one millisecond apart, captured the onset:</p>
 <div class="highlight"><pre><span></span><code>21:59:35.231  StockMismatchError: stock for product 7 is -1
-              &quot;stock was read as 5 but another request decremented it&quot;
+              "stock was read as 5 but another request decremented it"
 21:59:35.232  StockMismatchError: stock for product 7 is -3
               (second concurrent write resolves)
 </code></pre></div>
@@ -1670,7 +1672,7 @@ df6cede  docs(incidents): add incident report for 2026-05-19-6e14cf73
 <p>Prerequisites: Docker, <code>kubectl</code> with a kind cluster, a GitHub token (<code>repo</code> scope), and a Claude API key.</p>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/har-ki/claude-code-sre-handbook
 <span class="nb">cd</span><span class="w"> </span>claude-code-sre-handbook/watcher-example
-<span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">"sk-ant-..."</span>
 ./setup-post05.sh
 </code></pre></div>
 <p>This stands up the kind cluster, bootstraps the repo for incident PRs, configures and starts the watcher, and scales the load generator to trigger the bug. The script picks up <code>GH_TOKEN</code> from your <code>gh auth login</code> session automatically. Set <code>ANTHROPIC_API_KEY</code> in the environment or edit <code>.env</code> after the script creates it.</p>
@@ -1784,7 +1786,7 @@ docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "navigation.tracking", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../javascripts/external-links.js"></script>
       

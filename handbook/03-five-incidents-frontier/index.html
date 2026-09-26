@@ -12,6 +12,8 @@
         <meta name="author" content="The Claude Code SRE Handbook Authors">
       
       
+        <link rel="canonical" href="https://har-ki.github.io/claude-code-sre-handbook/handbook/03-five-incidents-frontier/">
+      
       
         <link rel="prev" href="../02-investigation-to-pr/">
       
@@ -23,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1385,9 +1387,9 @@
 <div class="highlight"><pre><span></span><code>claude<span class="w"> </span>-p<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--dangerously-skip-permissions<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--max-budget-usd<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--allowedTools<span class="w"> </span><span class="s2">&quot;Bash&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--append-system-prompt<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>skills/k8s/SKILL.md<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>&lt;<span class="w"> </span>&lt;<span class="o">(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PROMPT</span><span class="s2">&quot;</span><span class="o">)</span>
+<span class="w">  </span>--allowedTools<span class="w"> </span><span class="s2">"Bash"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--append-system-prompt<span class="w"> </span><span class="s2">"</span><span class="k">$(</span>cat<span class="w"> </span>skills/k8s/SKILL.md<span class="k">)</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>&lt;<span class="w"> </span>&lt;<span class="o">(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$PROMPT</span><span class="s2">"</span><span class="o">)</span>
 </code></pre></div>
 <p><code>--allowedTools "Bash"</code> restricts the agent to shell commands only — no file editing or search. The benchmark assesses kubectl-level cluster operations; broader tool access would increase the attack surface without aligning with the task scope.</p>
 <p><code>--append-system-prompt</code> is omitted in the No-Skill condition.</p>
@@ -1607,7 +1609,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "navigation.tracking", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../javascripts/external-links.js"></script>
       

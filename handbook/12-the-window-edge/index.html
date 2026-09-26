@@ -12,6 +12,8 @@
         <meta name="author" content="The Claude Code SRE Handbook Authors">
       
       
+        <link rel="canonical" href="https://har-ki.github.io/claude-code-sre-handbook/handbook/12-the-window-edge/">
+      
       
         <link rel="prev" href="../11-correlation/">
       
@@ -23,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1487,24 +1489,24 @@ cache hit total=28144   ← dropped again
 <p>Both runs use the same benchmark command. The only difference is the environment variable.</p>
 <p>The failing default — no override:</p>
 <div class="highlight"><pre><span></span><code>./benchmark/bin/run-k8s-ai-bench.sh<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--model<span class="w"> </span><span class="s2">&quot;qwen3.6:35b-a3b-coding-nvfp4&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--model<span class="w"> </span><span class="s2">"qwen3.6:35b-a3b-coding-nvfp4"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--skill<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--task-pattern<span class="w"> </span><span class="s2">&quot;fix-crashloop&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--task-pattern<span class="w"> </span><span class="s2">"fix-crashloop"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--iterations<span class="w"> </span><span class="m">1</span>
 </code></pre></div>
 <p>The fix — set the window to your model's real context length first:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CLAUDE_CODE_AUTO_COMPACT_WINDOW</span><span class="o">=</span><span class="m">32768</span>
 
 ./benchmark/bin/run-k8s-ai-bench.sh<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--model<span class="w"> </span><span class="s2">&quot;qwen3.6:35b-a3b-coding-nvfp4&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--model<span class="w"> </span><span class="s2">"qwen3.6:35b-a3b-coding-nvfp4"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--skill<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--task-pattern<span class="w"> </span><span class="s2">&quot;fix-crashloop&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--task-pattern<span class="w"> </span><span class="s2">"fix-crashloop"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--iterations<span class="w"> </span><span class="m">1</span>
 </code></pre></div>
 <p>To watch the fix reach the model server, run Ollama with debug logging and grep for request sizes:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">OLLAMA_DEBUG</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">OLLAMA_CONTEXT_LENGTH</span><span class="o">=</span><span class="m">32768</span><span class="w"> </span>ollama<span class="w"> </span>serve<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>/tmp/ollama.log
 <span class="c1"># in another shell, after a run:</span>
-grep<span class="w"> </span><span class="s2">&quot;cache hit&quot;</span><span class="w"> </span>/tmp/ollama.log<span class="w">   </span><span class="c1"># watch total= stay under 32768 with the override</span>
+grep<span class="w"> </span><span class="s2">"cache hit"</span><span class="w"> </span>/tmp/ollama.log<span class="w">   </span><span class="c1"># watch total= stay under 32768 with the override</span>
 </code></pre></div>
 <p>To confirm compaction actually fired, look for <code>compact_boundary</code> events in the run's <code>trace.jsonl</code>. Full token traces and the A/B comparison behind every number here are in <code>benchmark/analysis/compaction-tuning-findings.md</code>.</p>
 <h2 id="where-this-stops-working">Where this stops working<a class="headerlink" href="#where-this-stops-working" title="Anchor link">¶</a></h2>
@@ -1628,7 +1630,7 @@ grep<span class="w"> </span><span class="s2">&quot;cache hit&quot;</span><span c
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "navigation.tracking", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../javascripts/external-links.js"></script>
       

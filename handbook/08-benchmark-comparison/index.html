@@ -12,6 +12,8 @@
         <meta name="author" content="The Claude Code SRE Handbook Authors">
       
       
+        <link rel="canonical" href="https://har-ki.github.io/claude-code-sre-handbook/handbook/08-benchmark-comparison/">
+      
       
         <link rel="prev" href="../07-airgapped-pr/">
       
@@ -23,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1429,10 +1431,10 @@
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_BASE_URL</span><span class="o">=</span>http://localhost:11434
 claude<span class="w"> </span>-p<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--dangerously-skip-permissions<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--allowedTools<span class="w"> </span><span class="s2">&quot;Bash&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--allowedTools<span class="w"> </span><span class="s2">"Bash"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--model<span class="w"> </span>qwen3.6:35b-a3b-coding-nvfp4<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--append-system-prompt<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>skills/sre/SKILL.md<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>&lt;<span class="w"> </span>&lt;<span class="o">(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PROMPT</span><span class="s2">&quot;</span><span class="o">)</span>
+<span class="w">  </span>--append-system-prompt<span class="w"> </span><span class="s2">"</span><span class="k">$(</span>cat<span class="w"> </span>skills/sre/SKILL.md<span class="k">)</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>&lt;<span class="w"> </span>&lt;<span class="o">(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$PROMPT</span><span class="s2">"</span><span class="o">)</span>
 </code></pre></div>
 <p>Each task gets a fresh kind cluster; exit 0 from verify.sh means pass. Ollama tuning (OLLAMA_MLX, multi-user cache, 32K context) is detailed in Post 6.</p>
 <p>Quick note on what counts as a "pass": In Post 3, all frontier runs finished within a 10-minute timeout and a $5 budget—API-fast. Local inference ran slower, with five tasks exceeding those limits. I re-ran those with a 20-minute timeout and a $10 budget, changing nothing else. On the first try, 16 out of 24 tasks passed; with the relaxed limits, it was 21 out of 24. Air-gapped runs have no per-token cost, so patience is the only real limit. I'm reporting both results, but 21/24 is what counts.</p>
@@ -1609,7 +1611,7 @@ claude<span class="w"> </span>-p<span class="w"> </span><span class="se">\</span
 <p>So this isn't a local-model weakness. It's an unwinnable scenario on kind, and Qwen3.6 failed it exactly the way the strongest frontier model did.</p>
 <h3 id="create-pod-the-trivial-one-it-keeps-failing">create-pod — the trivial one it keeps failing<a class="headerlink" href="#create-pod-the-trivial-one-it-keeps-failing" title="Anchor link">¶</a></h3>
 <p>The simplest task: run a pod on nginx. The model did—right name, namespace, Running and Ready—but failed both attempts on one detail: it wrote nginx:latest, but the verifier matched only bare nginx:</p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$IMAGE</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;nginx&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Pod is using incorrect image: </span><span class="nv">$IMAGE</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$IMAGE</span><span class="s2">"</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">"nginx"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Pod is using incorrect image: </span><span class="nv">$IMAGE</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
 </code></pre></div>
 <p>It's not confusion—the opposite. The model is more explicit than the verifier wants, appending :latest as a default and reporting it. It passes fix-rbac-wrong-resource and statefulset-lifecycle, then trips on a tag convention—a deterministic quirk to design around, not a reasoning gap.</p>
 <h3 id="fix-crashloop-passed-clean-nearly-cheated">fix-crashloop — passed clean, nearly cheated<a class="headerlink" href="#fix-crashloop-passed-clean-nearly-cheated" title="Anchor link">¶</a></h3>
@@ -1760,7 +1762,7 @@ claude<span class="w"> </span>-p<span class="w"> </span><span class="se">\</span
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "navigation.tracking", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../javascripts/external-links.js"></script>
       
