@@ -1,6 +1,7 @@
 site_name: "The Claude Code SRE Handbook"
 site_description: "Notes on running AI agents against real Kubernetes clusters. Code included."
 site_author: "The Claude Code SRE Handbook Authors"
+site_url: "https://har-ki.github.io/claude-code-sre-handbook/"
 repo_url: https://github.com/har-ki/claude-code-sre-handbook
 repo_name: claude-code-sre-handbook
 
